@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
+import { BrowserRouter, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
@@ -729,20 +729,22 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-body">
-      <Navbar />
-      <main className="pb-16 md:pb-0">
-        <Hero />
-        <ServicesSection />
-        <PricingSection />
-        <ReviewsSection />
-        <WhyChooseSection />
-        <ContactSection />
-      </main>
-      <Footer />
-      <StickyMobileCall />
-      <Toaster position="bottom-right" richColors theme="dark" />
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-background text-foreground font-body">
+        <Navbar />
+        <main className="pb-16 md:pb-0">
+          <Hero />
+          <ServicesSection />
+          <PricingSection />
+          <ReviewsSection />
+          <WhyChooseSection />
+          <ContactSection />
+        </main>
+        <Footer />
+        <StickyMobileCall />
+        <Toaster position="bottom-right" richColors theme="dark" />
+      </div>
+    </BrowserRouter>
   )
 }
 
