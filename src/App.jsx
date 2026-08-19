@@ -13,21 +13,12 @@ const EMAIL = "info@primetechauto.ca"
 const DIRECTIONS_URL = "https://www.google.com/maps/dir/?api=1&destination=336+Hilton+Drive+Stoney+Creek+ON+L8E+2N3"
 const GBP_URL = "https://maps.google.com/?q=336+Hilton+Drive,+Stoney+Creek,+ON+L8E+2N3"
 
-// SVG Logo Component that matches the flyer
-const BrandLogo = ({ className = "h-12 w-auto" }) => {
+// Logo Component
+const BrandLogo = ({ className = "" }) => {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {/* Gear + Maple Leaf Logo Symbol */}
-      <svg className="w-10 h-10 text-primary shrink-0" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Logo Image */}
-      <img src="/logo.png" alt="Primetech Auto & Tires Logo" className="h-12 w-auto object-contain" />
+      <img src="/assets/logo-ZdHDG6fE.jpg" alt="Primetech Auto & Tires Logo" className="h-12 w-auto object-contain" />
       <div className="flex flex-col">
-        <div className="flex items-center gap-1.5">
-          {/* Red Car Silhouette */}
-          <svg className="h-4 w-16 text-primary" viewBox="0 0 100 30" fill="currentColor">
-            <path d="M5 22 C 15 22, 20 12, 35 10 C 45 8, 60 8, 75 14 C 85 18, 90 20, 95 22 L 95 25 L 5 25 Z" />
-          </svg>
-        </div>
         <span className="font-display text-xl font-black uppercase tracking-wider text-foreground leading-none">
           PRIMETECH
         </span>
