@@ -6,6 +6,7 @@ import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, 
 import { Toaster, toast } from 'sonner'
 import { BookingSection } from './components/BookingSection'
 import { FloatingAIAssistant } from './components/FloatingAIAssistant'
+import { MagnetizeButton } from './components/ui/magnetize-button'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute } from './context/ProtectedRoute'
 import { AdminLogin } from './pages/admin/AdminLogin'
@@ -177,23 +178,23 @@ const Navbar = () => {
         </div>
         
         <div className="hidden md:flex items-center gap-3">
-          <a
+          <MagnetizeButton
             href={DIRECTIONS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 border border-secondary text-secondary px-4 py-2.5 rounded-md font-display text-sm uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
+            className="border border-secondary text-secondary px-4 py-2.5 font-display text-sm uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
           >
             <MapPin className="w-4 h-4" />
             Get Directions
-          </a>
-          <a
+          </MagnetizeButton>
+          <MagnetizeButton
             href={PHONE_URL}
-            className="flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-md font-display text-sm uppercase tracking-wider hover:opacity-90 transition-opacity glow-red"
+            className="bg-primary text-primary-foreground px-5 py-2.5 font-display text-sm uppercase tracking-wider hover:opacity-90 transition-opacity glow-red"
             id="nav-call-btn"
           >
             <Phone className="w-4 h-4" />
             {PHONE_NUMBER}
-          </a>
+          </MagnetizeButton>
         </div>
         
         <button
