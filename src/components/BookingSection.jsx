@@ -47,8 +47,23 @@ export const BookingSection = () => {
 
     try {
       // Basic validation
-      if (!formData.name || !formData.phone || !formData.vehicle_details || !formData.service_type || !formData.preferred_date || !formData.preferred_time) {
+      if (!formData.name.trim() || !formData.phone.trim() || !formData.vehicle_details.trim() || !formData.service_type || !formData.preferred_date || !formData.preferred_time) {
         toast.error("Please fill in all required fields.")
+        setIsSubmitting(false)
+        return
+      }
+
+      // Regex validation
+      const phoneRegex = /^[0-9\-\+\s\(\)]{10,20}$/
+      if (!phoneRegex.test(formData.phone)) {
+        toast.error("Please enter a valid phone number.")
+        setIsSubmitting(false)
+        return
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (formData.email && !emailRegex.test(formData.email)) {
+        toast.error("Please enter a valid email address.")
         setIsSubmitting(false)
         return
       }

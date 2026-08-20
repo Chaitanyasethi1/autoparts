@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
@@ -850,16 +851,17 @@ const StickyMobileCall = () => {
 const MainWebsite = () => {
   const [showSplash, setShowSplash] = useState(true)
 
-  useEffect(() => {
-    document.title = "Primetech Auto & Tires | Licensed Auto Repair & Tire Services Stoney Creek"
-    const metaDesc = document.querySelector('meta[name="description"]')
-    if (metaDesc) {
-      metaDesc.setAttribute("content", "Professional auto repair and new tires sales in Stoney Creek. Engine diagnostics, brake service, battery, alternator & vehicle safety inspections. Call +1 (289) 834-2838.")
-    }
-  }, [])
-
   return (
     <>
+      <Helmet>
+        <title>Primetech Auto & Tires | Licensed Auto Repair & Tire Services Stoney Creek</title>
+        <meta name="description" content="Professional auto repair and new tires sales in Stoney Creek. Engine diagnostics, brake service, battery, alternator & vehicle safety inspections. Call +1 (289) 834-2838." />
+        <meta property="og:title" content="Primetech Auto & Tires | Stoney Creek" />
+        <meta property="og:description" content="Professional auto repair and new tires sales in Stoney Creek. Walk-ins welcome!" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/assets/hero-mechanic-4RsVa3Uu.jpg" />
+        <link rel="canonical" href="https://primetechauto.ca" />
+      </Helmet>
       <AnimatePresence>
         {showSplash && <SplashAnimation onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
@@ -885,18 +887,20 @@ const MainWebsite = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainWebsite />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
-            <Route index element={<Navigate to="dashboard" replace />} />
-            <Route path="dashboard" element={<AdminDashboard />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainWebsite />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+              <Route index element={<Navigate to="dashboard" replace />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </HelmetProvider>
   )
 }
 
