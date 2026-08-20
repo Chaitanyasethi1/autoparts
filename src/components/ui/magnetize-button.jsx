@@ -6,7 +6,7 @@ import { Button } from "./button";
 
 function MagnetizeButton({
     className,
-    particleCount = 12,
+    particleCount = 24,
     href,
     target,
     rel,
@@ -76,10 +76,10 @@ function MagnetizeButton({
                     initial={{ x: particles[index] ? particles[index].x : 0, y: particles[index] ? particles[index].y : 0 }}
                     animate={particlesControl}
                     className={cn(
-                        "absolute w-1.5 h-1.5 rounded-full",
+                        "absolute w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full",
                         "bg-current",
                         "transition-opacity duration-300 pointer-events-none",
-                        isAttracting ? "opacity-30" : "opacity-0"
+                        isAttracting ? "opacity-90" : "opacity-0"
                     )}
                 />
             ))}

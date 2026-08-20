@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram } from 'lucide-react'
+import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram, ArrowUp, ChevronRight } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
 import { BookingSection } from './components/BookingSection'
 import { FloatingAIAssistant } from './components/FloatingAIAssistant'
 import { MagnetizeButton } from './components/ui/magnetize-button'
+import { TopBar } from './components/TopBar'
+import { AppDownloadSection } from './components/AppDownloadSection'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute } from './context/ProtectedRoute'
 import { AdminLogin } from './pages/admin/AdminLogin'
@@ -158,7 +160,7 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+    <nav className="sticky top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-b border-border shadow-sm">
       <div className="stripe-accent w-full" />
       <div className="container mx-auto flex items-center justify-between py-2 px-4">
         <a href="#" className="flex items-center" aria-label="Primetech Auto & Tires home">
@@ -182,14 +184,14 @@ const Navbar = () => {
             href={DIRECTIONS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="border border-secondary text-secondary px-4 py-2.5 font-display text-sm uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
+            className="rounded-full border border-secondary text-secondary px-6 py-2.5 font-display text-sm uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
           >
             <MapPin className="w-4 h-4" />
             Get Directions
           </MagnetizeButton>
           <MagnetizeButton
             href={PHONE_URL}
-            className="bg-primary text-primary-foreground px-5 py-2.5 font-display text-sm uppercase tracking-wider hover:opacity-90 transition-opacity glow-red"
+            className="rounded-full bg-primary text-primary-foreground px-6 py-2.5 font-display text-sm uppercase tracking-wider hover:opacity-90 transition-opacity glow-red"
             id="nav-call-btn"
           >
             <Phone className="w-4 h-4" />
@@ -777,50 +779,138 @@ const ContactSection = () => {
   )
 }
 
+const ScrollToTopButton = () => {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.scrollY > 300) {
+        setIsVisible(true)
+      } else {
+        setIsVisible(false)
+      }
+    }
+    window.addEventListener("scroll", toggleVisibility)
+    return () => window.removeEventListener("scroll", toggleVisibility)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          onClick={scrollToTop}
+          className="fixed bottom-24 right-4 md:bottom-28 md:right-6 z-[60] bg-primary text-primary-foreground w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-primary/90 transition-colors"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="w-6 h-6" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  )
+}
+
 const Footer = () => {
   return (
-    <footer className="bg-card border-t border-border py-16">
+    <footer className="bg-card border-t border-border pt-16 pb-8">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-10">
-          <div>
-            <BrandLogo />
-            <p className="font-body text-sm text-muted-foreground mt-3 max-w-sm">
-              Your trusted automotive repair and tire shop in Stoney Creek, Ontario. Fully licensed, certified mechanics, and the best prices in town.
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          
+          {/* Column 1: Brand */}
+          <div className="flex flex-col">
+            <BrandLogo className="mb-4 justify-start" />
+            <p className="font-body text-sm text-muted-foreground mt-2 max-w-sm">
+              Stoney Creek's most trusted automotive repair and tire shop. Providing expert, fully licensed services to Hamilton and surrounding areas since day one.
             </p>
-          </div>
-          <div>
-            <h4 className="font-display text-sm uppercase tracking-wider text-foreground mb-4">Services</h4>
-            <ul className="space-y-2 font-body text-sm text-muted-foreground">
-              <li>Vehicle Inspections & Safety</li>
-              <li>Engine Diagnostics & Repair</li>
-              <li>AC Servicing & Repairs</li>
-              <li>Tire Repairs, Installations & Rotations</li>
-              <li>Brake Service & Replacement</li>
-              <li>Battery & Alternator Repairs</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-display text-sm uppercase tracking-wider text-foreground mb-4">Contact Info</h4>
-            <div className="space-y-3 font-body text-sm text-muted-foreground">
-              <p className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-primary shrink-0" />
-                {ADDRESS}
-              </p>
-              <a href={PHONE_URL} className="flex items-center gap-2 hover:text-foreground transition-colors">
-                <Phone className="w-4 h-4 text-primary" />
-                {PHONE_NUMBER}
+            <div className="flex items-center gap-4 mt-6">
+              <a href="#" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
+                <Instagram className="w-5 h-5" />
               </a>
-              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-foreground transition-colors">
-                <Mail className="w-4 h-4 text-primary" />
-                Instagram: @PRIMETECH_AUTO_TIRES
+              <a href="#" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
+                <Mail className="w-5 h-5" />
               </a>
             </div>
           </div>
+
+          {/* Column 2: Quick Links */}
+          <div>
+            <h4 className="font-display text-base font-bold uppercase tracking-wider text-foreground mb-6">Quick Links</h4>
+            <ul className="space-y-3 font-body text-sm text-muted-foreground">
+              {['About Us', 'Our Services', 'Customer Reviews', 'Contact Us', 'Privacy Policy', 'Terms of Service'].map((link) => (
+                <li key={link}>
+                  <a href="#" className="flex items-center gap-2 hover:text-primary transition-colors group">
+                    <ChevronRight className="w-3.5 h-3.5 text-primary opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Top Services */}
+          <div>
+            <h4 className="font-display text-base font-bold uppercase tracking-wider text-foreground mb-6">Top Services</h4>
+            <ul className="space-y-3 font-body text-sm text-muted-foreground">
+              {['Vehicle Inspections & Safety', 'Engine Diagnostics & Repair', 'AC Servicing & Repairs', 'Tire Repairs & Installations', 'Brake Service & Replacement', 'Battery & Alternator Repairs'].map((service) => (
+                <li key={service}>
+                  <a href="#services" className="flex items-center gap-2 hover:text-primary transition-colors group">
+                    <ChevronRight className="w-3.5 h-3.5 text-primary opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                    {service}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Contact Us */}
+          <div>
+            <h4 className="font-display text-base font-bold uppercase tracking-wider text-foreground mb-6">Contact Us</h4>
+            <ul className="space-y-4 font-body text-sm text-muted-foreground">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                <span>{ADDRESS}</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-primary shrink-0" />
+                <a href={PHONE_URL} className="hover:text-primary transition-colors">{PHONE_NUMBER}</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-primary shrink-0" />
+                <a href={`mailto:${EMAIL}`} className="hover:text-primary transition-colors">{EMAIL}</a>
+              </li>
+              <li className="flex items-start gap-3 pt-2">
+                <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold text-foreground">MON to FRI: 9:00 AM - 6:00 PM</p>
+                  <p className="font-bold text-foreground">SAT: 9:00 AM - 3:00 PM</p>
+                  <p>SUN: Closed</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
         </div>
-        <div className="stripe-accent w-full mt-10 mb-6" />
-        <p className="font-body text-xs text-muted-foreground text-center">
-          © {new Date().getFullYear()} Primetech Auto & Tires. All rights reserved. Serving Stoney Creek and Hamilton.
-        </p>
+        
+        <div className="stripe-accent w-full mt-12 mb-6" />
+        
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-body text-muted-foreground">
+          <p>
+            © {new Date().getFullYear()} Primetech Auto & Tires. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6">
+            <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
+          </div>
+        </div>
       </div>
     </footer>
   )
@@ -858,8 +948,9 @@ const MainWebsite = () => {
       <AnimatePresence>
         {showSplash && <SplashAnimation onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
+      <TopBar />
+      <Navbar className="sticky top-0 z-50" />
       <div className="min-h-screen bg-background text-foreground font-body">
-        <Navbar />
         <main className="pb-16 md:pb-0">
           <Hero />
           <ServicesSection />
@@ -869,8 +960,10 @@ const MainWebsite = () => {
           <WhyChooseSection />
           <ContactSection />
         </main>
+        <AppDownloadSection />
         <Footer />
         <StickyMobileCall />
+        <ScrollToTopButton />
         <FloatingAIAssistant />
         <Toaster position="bottom-right" richColors theme="dark" />
       </div>
