@@ -139,45 +139,157 @@ export const TermsOfServicePage = () => (
   </>
 )
 
-// Dynamic Service Detail Page
-export const ServiceDetailPage = () => {
-  const { serviceId } = useParams();
-  
-  // Format the ID to a readable title (e.g., 'brake-service' -> 'Brake Service')
-  const title = serviceId.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+export const VehicleInspectionsPage = () => (
+  <>
+    <Helmet><title>Vehicle Inspections & Safety | Primetech Auto & Tires</title></Helmet>
+    <PageHeader title="Vehicle Inspections & Safety" subtitle="Ensure your vehicle meets all Ontario safety standards." />
+    <ContentWrapper>
+      <Link to="/services" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 no-underline font-bold">
+        <ArrowLeft className="w-4 h-4" /> Back to All Services
+      </Link>
+      <p>We provide comprehensive pre-purchase inspections, visual safety checks, and official safety standards certifications. Whether you're buying a used car or need a mandatory inspection, our licensed mechanics will ensure your vehicle is road-ready and legally compliant.</p>
+      <ul>
+        <li>Ontario Safety Standards Certificates (SSC)</li>
+        <li>Pre-purchase vehicle inspections</li>
+        <li>Comprehensive digital inspection reports</li>
+      </ul>
+      <div className="mt-12 p-8 bg-zinc-900 border border-white/5 rounded-2xl text-center">
+        <h3 className="mt-0">Book an Inspection</h3>
+        <p className="mb-6">Call us to schedule your vehicle inspection today.</p>
+        <a href="tel:+12898342838" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors no-underline">
+          Call +1 (289) 834-2838
+        </a>
+      </div>
+    </ContentWrapper>
+  </>
+)
 
-  return (
-    <>
-      <Helmet><title>{title} | Primetech Auto & Tires</title></Helmet>
-      <PageHeader title={title} subtitle="Expert automotive service you can trust." />
-      <ContentWrapper>
-        <Link to="/services" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 no-underline font-bold">
-          <ArrowLeft className="w-4 h-4" /> Back to All Services
-        </Link>
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center text-primary">
-            <Settings className="w-8 h-8" />
-          </div>
-          <h2 className="m-0 border-none">{title} Details</h2>
-        </div>
-        <p>
-          At Primetech Auto & Tires, we specialize in high-quality {title.toLowerCase()}. 
-          Our licensed mechanics use the latest diagnostic equipment to ensure your vehicle is running at peak performance.
-        </p>
-        <ul>
-          <li>Certified, licensed mechanics</li>
-          <li>Transparent pricing and clear estimates</li>
-          <li>Fast turnaround times</li>
-          <li>Quality OEM or equivalent parts</li>
-        </ul>
-        <div className="mt-12 p-8 bg-zinc-900 border border-white/5 rounded-2xl text-center">
-          <h3 className="mt-0">Need this service?</h3>
-          <p className="mb-6">Walk-ins are welcome, or call us today to secure a spot.</p>
-          <a href="tel:+12898342838" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors no-underline">
-            Call +1 (289) 834-2838
-          </a>
-        </div>
-      </ContentWrapper>
-    </>
-  )
-}
+export const EngineDiagnosticsPage = () => (
+  <>
+    <Helmet><title>Engine Diagnostics & Repair | Primetech Auto & Tires</title></Helmet>
+    <PageHeader title="Engine Diagnostics" subtitle="Advanced computer diagnostics to find and fix the root problem." />
+    <ContentWrapper>
+      <Link to="/services" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 no-underline font-bold">
+        <ArrowLeft className="w-4 h-4" /> Back to All Services
+      </Link>
+      <p>Is your check engine light on? Our advanced diagnostic equipment connects directly to your vehicle's onboard computer to pinpoint the exact issue. From minor sensor replacements to major engine overhauls, we have the expertise to fix it.</p>
+      <ul>
+        <li>Check Engine Light (CEL) scanning and diagnostics</li>
+        <li>Timing belt and chain replacement</li>
+        <li>ECU and BCM programming</li>
+        <li>Major engine repairs and tune-ups</li>
+      </ul>
+      <div className="mt-12 p-8 bg-zinc-900 border border-white/5 rounded-2xl text-center">
+        <h3 className="mt-0">Check Engine Light On?</h3>
+        <p className="mb-6">Don't ignore it. Bring it in for a diagnostic scan.</p>
+        <a href="tel:+12898342838" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors no-underline">
+          Call +1 (289) 834-2838
+        </a>
+      </div>
+    </ContentWrapper>
+  </>
+)
+
+export const ACRepairPage = () => (
+  <>
+    <Helmet><title>AC Servicing & Repairs | Primetech Auto & Tires</title></Helmet>
+    <PageHeader title="AC Servicing & Repairs" subtitle="Stay cool in the summer and warm in the winter." />
+    <ContentWrapper>
+      <Link to="/services" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 no-underline font-bold">
+        <ArrowLeft className="w-4 h-4" /> Back to All Services
+      </Link>
+      <p>A properly functioning heating and cooling system is vital for your comfort and safety. We offer comprehensive AC system checks, gas recharges, and leak detection services for all makes and models.</p>
+      <ul>
+        <li>AC compressor testing and replacement</li>
+        <li>Freon / AC gas recharge services</li>
+        <li>System leak detection and sealing</li>
+        <li>Heater core and blower motor repairs</li>
+      </ul>
+      <div className="mt-12 p-8 bg-zinc-900 border border-white/5 rounded-2xl text-center">
+        <h3 className="mt-0">AC Blowing Warm Air?</h3>
+        <p className="mb-6">Stop by for a quick AC inspection.</p>
+        <a href="tel:+12898342838" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors no-underline">
+          Call +1 (289) 834-2838
+        </a>
+      </div>
+    </ContentWrapper>
+  </>
+)
+
+export const TireServicesPage = () => (
+  <>
+    <Helmet><title>Tire Repairs & Installations | Primetech Auto & Tires</title></Helmet>
+    <PageHeader title="Tire Services" subtitle="Sales, repairs, and professional installations." />
+    <ContentWrapper>
+      <Link to="/services" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 no-underline font-bold">
+        <ArrowLeft className="w-4 h-4" /> Back to All Services
+      </Link>
+      <p>Your tires are the only thing connecting your car to the road. We offer everything from flat tire repairs to brand new tire sales. We carry all major industry brands for passenger cars, SUVs, and light trucks.</p>
+      <ul>
+        <li>Professional tire mounting and computer balancing</li>
+        <li>Seasonal tire changeovers (on or off rims)</li>
+        <li>Flat tire patching and repairs</li>
+        <li>New tire sales at highly competitive prices</li>
+      </ul>
+      <div className="mt-12 p-8 bg-zinc-900 border border-white/5 rounded-2xl text-center">
+        <h3 className="mt-0">Need New Tires?</h3>
+        <p className="mb-6">Call us for a quote on the best tires for your vehicle.</p>
+        <a href="tel:+12898342838" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors no-underline">
+          Call +1 (289) 834-2838
+        </a>
+      </div>
+    </ContentWrapper>
+  </>
+)
+
+export const BrakeServicePage = () => (
+  <>
+    <Helmet><title>Brake Service & Replacement | Primetech Auto & Tires</title></Helmet>
+    <PageHeader title="Brake Services" subtitle="Reliable stopping power when you need it most." />
+    <ContentWrapper>
+      <Link to="/services" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 no-underline font-bold">
+        <ArrowLeft className="w-4 h-4" /> Back to All Services
+      </Link>
+      <p>Never compromise on brakes. If you hear squeaking, grinding, or feel vibrations when braking, it's time for a service. We use premium ceramic or semi-metallic pads and high-quality rotors to ensure safe stopping power.</p>
+      <ul>
+        <li>Brake pad and rotor replacement</li>
+        <li>Brake caliper repair and replacement</li>
+        <li>Brake fluid flushes and bleeding</li>
+        <li>ABS system diagnostics</li>
+      </ul>
+      <div className="mt-12 p-8 bg-zinc-900 border border-white/5 rounded-2xl text-center">
+        <h3 className="mt-0">Hearing Brake Noises?</h3>
+        <p className="mb-6">Come in for a comprehensive brake inspection.</p>
+        <a href="tel:+12898342838" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors no-underline">
+          Call +1 (289) 834-2838
+        </a>
+      </div>
+    </ContentWrapper>
+  </>
+)
+
+export const BatteryRepairPage = () => (
+  <>
+    <Helmet><title>Battery & Alternator Repairs | Primetech Auto & Tires</title></Helmet>
+    <PageHeader title="Battery & Alternator" subtitle="Keep your vehicle's electrical system fully charged." />
+    <ContentWrapper>
+      <Link to="/services" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-8 no-underline font-bold">
+        <ArrowLeft className="w-4 h-4" /> Back to All Services
+      </Link>
+      <p>Having trouble starting your car? The issue could be a dead battery, a failing alternator, or a broken starter motor. We test your entire charging system to find exactly what's wrong before replacing parts.</p>
+      <ul>
+        <li>Battery health testing and replacement</li>
+        <li>Alternator testing and rebuilds</li>
+        <li>Starter motor diagnostics</li>
+        <li>Wiring and electrical system troubleshooting</li>
+      </ul>
+      <div className="mt-12 p-8 bg-zinc-900 border border-white/5 rounded-2xl text-center">
+        <h3 className="mt-0">Car Won't Start?</h3>
+        <p className="mb-6">Call us for fast and reliable electrical repairs.</p>
+        <a href="tel:+12898342838" className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors no-underline">
+          Call +1 (289) 834-2838
+        </a>
+      </div>
+    </ContentWrapper>
+  </>
+)

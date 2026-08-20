@@ -946,7 +946,20 @@ const StickyMobileCall = () => {
   )
 }
 
-import { AboutPage, ServicesPage, ReviewsPage, ContactPage, PrivacyPolicyPage, TermsOfServicePage, ServiceDetailPage } from './pages/PublicPages'
+import { 
+  AboutPage, 
+  ServicesPage, 
+  ReviewsPage, 
+  ContactPage, 
+  PrivacyPolicyPage, 
+  TermsOfServicePage, 
+  VehicleInspectionsPage,
+  EngineDiagnosticsPage,
+  ACRepairPage,
+  TireServicesPage,
+  BrakeServicePage,
+  BatteryRepairPage
+} from './pages/PublicPages'
 
 const MainLayout = () => {
   const location = useLocation();
@@ -1012,7 +1025,12 @@ function App() {
               <Route index element={<HomePage />} />
               <Route path="about" element={<AboutPage />} />
               <Route path="services" element={<ServicesPage />} />
-              <Route path="services/:serviceId" element={<ServiceDetailPage />} />
+              <Route path="services/vehicle-inspections" element={<VehicleInspectionsPage />} />
+              <Route path="services/engine-diagnostics" element={<EngineDiagnosticsPage />} />
+              <Route path="services/ac-repair" element={<ACRepairPage />} />
+              <Route path="services/tire-services" element={<TireServicesPage />} />
+              <Route path="services/brake-service" element={<BrakeServicePage />} />
+              <Route path="services/battery-repair" element={<BatteryRepairPage />} />
               <Route path="reviews" element={<ReviewsPage />} />
               <Route path="contact" element={<ContactPage />} />
               <Route path="privacy" element={<PrivacyPolicyPage />} />
