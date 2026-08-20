@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
 import { BookingSection } from './components/BookingSection'
+import { AuthProvider } from './context/AuthContext'
+import { ProtectedRoute } from './context/ProtectedRoute'
+import { AdminLogin } from './pages/admin/AdminLogin'
+// import { AdminLayout } from './pages/admin/AdminLayout'
+// import { AdminDashboard } from './pages/admin/AdminDashboard'
 
 // Primetech Details
 const PHONE_NUMBER = "+1 (289) 834-2838"
@@ -841,7 +846,7 @@ const StickyMobileCall = () => {
   )
 }
 
-function App() {
+const MainWebsite = () => {
   const [showSplash, setShowSplash] = useState(true)
 
   useEffect(() => {
@@ -853,7 +858,7 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter>
+    <>
       <AnimatePresence>
         {showSplash && <SplashAnimation onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
@@ -872,7 +877,26 @@ function App() {
         <StickyMobileCall />
         <Toaster position="bottom-right" richColors theme="dark" />
       </div>
-    </BrowserRouter>
+    </>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainWebsite />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          {/* Admin routes will be uncommented once subagent finishes building them
+          <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
+          </Route>
+          */}
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
