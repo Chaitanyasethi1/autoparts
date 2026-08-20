@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
 import { BookingSection } from './components/BookingSection'
+import { FloatingAIAssistant } from './components/FloatingAIAssistant'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute } from './context/ProtectedRoute'
 import { AdminLogin } from './pages/admin/AdminLogin'
@@ -875,6 +876,7 @@ const MainWebsite = () => {
         </main>
         <Footer />
         <StickyMobileCall />
+        <FloatingAIAssistant />
         <Toaster position="bottom-right" richColors theme="dark" />
       </div>
     </>
