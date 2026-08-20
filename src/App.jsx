@@ -30,6 +30,93 @@ const BrandLogo = ({ className = "" }) => {
   )
 }
 
+const Wheel = () => (
+  <div className="w-full h-full rounded-full bg-zinc-800 border-[5px] border-zinc-950 flex items-center justify-center shadow-lg relative overflow-hidden">
+    <div className="absolute inset-0.5 rounded-full border border-zinc-700" />
+    <div className="absolute w-full h-[4px] bg-zinc-500 rounded-sm" />
+    <div className="absolute w-full h-[4px] bg-zinc-500 rounded-sm rotate-45" />
+    <div className="absolute w-full h-[4px] bg-zinc-500 rounded-sm rotate-90" />
+    <div className="absolute w-full h-[4px] bg-zinc-500 rounded-sm -rotate-45" />
+    <div className="w-3 h-3 bg-secondary rounded-full z-10 border border-zinc-900" />
+  </div>
+)
+
+const SplashAnimation = ({ onComplete }) => {
+  return (
+    <motion.div
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background overflow-hidden"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+       <motion.div
+          className="relative w-[240px] h-[100px]"
+          animate={{ 
+             x: ["-100vw", "0vw", "0vw", "100vw"],
+             y: [0, 0, 15, -8, 0, 0] 
+          }}
+          transition={{ 
+             x: { times: [0, 0.2, 0.7, 1], duration: 3.5, ease: "easeInOut" },
+             y: { times: [0, 0.44, 0.45, 0.48, 0.52, 1], duration: 3.5 }
+          }}
+          onAnimationComplete={onComplete}
+       >
+          {/* Car Body */}
+          <svg width="240" height="100" viewBox="0 0 240 100" className="text-primary fill-current absolute top-0 left-0 drop-shadow-2xl z-10">
+            <path d="M 15 80 L 15 50 Q 15 40 25 40 L 55 40 L 85 20 L 165 20 Q 175 20 185 30 L 215 50 Q 225 50 225 60 L 225 80 L 200 80 A 25 25 0 0 1 150 80 L 100 80 A 25 25 0 0 1 50 80 Z" />
+            <path d="M 65 40 L 90 25 L 125 25 L 125 40 Z" fill="#fff" opacity="0.3"/>
+            <path d="M 130 25 L 160 25 L 180 45 L 130 45 Z" fill="#fff" opacity="0.3"/>
+            <path d="M 15 50 L 225 50" stroke="#000" strokeWidth="2" opacity="0.2" />
+            <path d="M 215 55 L 225 55 L 225 65 L 210 65 Z" fill="#fbbf24" opacity="0.9" />
+            <path d="M 15 55 L 25 55 L 25 65 L 15 65 Z" fill="#ef4444" opacity="0.9" />
+          </svg>
+          
+          {/* Back Wheel */}
+          <motion.div 
+             className="absolute top-[60px] left-[55px] w-[40px] h-[40px] z-20"
+             animate={{ rotate: [0, 360, 360, 1080] }}
+             transition={{ times: [0, 0.2, 0.7, 1], duration: 3.5, ease: "easeInOut" }}
+          >
+             <Wheel />
+          </motion.div>
+
+          {/* Front Wheel Container - Flies in */}
+          <motion.div
+            className="absolute top-[60px] left-[155px] w-[40px] h-[40px] z-20"
+            animate={{ 
+                x: [800, 800, 0, 0], 
+                y: [-400, -400, 0, 0],
+                opacity: [0, 1, 1, 1],
+                scale: [2, 2, 1, 1]
+            }}
+            transition={{ times: [0, 0.2, 0.45, 1], duration: 3.5, ease: "easeInOut" }}
+          >
+             <motion.div 
+               className="w-full h-full"
+               animate={{ rotate: [0, 0, -1080, -1080, 360] }} 
+               transition={{ times: [0, 0.2, 0.45, 0.7, 1], duration: 3.5, ease: "easeInOut" }}
+             >
+                <Wheel />
+             </motion.div>
+          </motion.div>
+       </motion.div>
+       
+       <motion.div 
+         className="mt-12 flex flex-col items-center"
+         animate={{ opacity: [0, 1, 1, 0] }}
+         transition={{ times: [0, 0.1, 0.8, 1], duration: 3.5 }}
+       >
+         <BrandLogo className="scale-150 transform mb-4" />
+         <motion.div 
+            className="h-1 bg-secondary rounded-full mt-4"
+            animate={{ width: [0, 200, 200, 0] }}
+            transition={{ times: [0, 0.2, 0.8, 1], duration: 3.5 }}
+         />
+       </motion.div>
+    </motion.div>
+  )
+}
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
@@ -720,6 +807,8 @@ const StickyMobileCall = () => {
 }
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true)
+
   useEffect(() => {
     document.title = "Primetech Auto & Tires | Licensed Auto Repair & Tire Services Stoney Creek"
     const metaDesc = document.querySelector('meta[name="description"]')
@@ -730,6 +819,9 @@ function App() {
 
   return (
     <BrowserRouter>
+      <AnimatePresence>
+        {showSplash && <SplashAnimation onComplete={() => setShowSplash(false)} />}
+      </AnimatePresence>
       <div className="min-h-screen bg-background text-foreground font-body">
         <Navbar />
         <main className="pb-16 md:pb-0">
