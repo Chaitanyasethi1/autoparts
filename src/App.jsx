@@ -24,16 +24,8 @@ const GBP_URL = "https://maps.google.com/?q=336+Hilton+Drive,+Stoney+Creek,+ON+L
 // Logo Component
 const BrandLogo = ({ className = "" }) => {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <img src="/assets/logo-ZdHDG6fE.jpg" alt="Primetech Auto & Tires Logo" className="h-12 w-auto object-contain" />
-      <div className="flex flex-col">
-        <span className="font-display text-xl font-black uppercase tracking-wider text-foreground leading-none">
-          PRIMETECH
-        </span>
-        <span className="font-display text-xs font-bold uppercase tracking-[0.22em] text-secondary leading-none mt-1">
-          AUTO & TIRES
-        </span>
-      </div>
+    <div className={`flex items-center justify-center ${className}`}>
+      <img src="/PRIMETECH_LOGO.png" alt="Primetech Auto & Tires Logo" className="h-16 md:h-20 w-auto object-contain" />
     </div>
   )
 }
