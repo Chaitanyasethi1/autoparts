@@ -9,8 +9,8 @@ import { FloatingAIAssistant } from './components/FloatingAIAssistant'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute } from './context/ProtectedRoute'
 import { AdminLogin } from './pages/admin/AdminLogin'
-import { AdminLayout } from './pages/admin/AdminLayout'
-import { AdminDashboard } from './pages/admin/AdminDashboard'
+import AdminLayout from './pages/admin/AdminLayout'
+import AdminDashboard from './pages/admin/AdminDashboard'
 
 // Primetech Details
 const PHONE_NUMBER = "+1 (289) 834-2838"
