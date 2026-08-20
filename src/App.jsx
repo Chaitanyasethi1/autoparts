@@ -49,14 +49,38 @@ const SplashAnimation = ({ onComplete }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
+       {/* Smoke Particles */}
+       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
+          <div className="relative w-[240px] h-[100px]">
+             {[...Array(8)].map((_, i) => (
+               <motion.div
+                 key={i}
+                 className="absolute w-10 h-10 bg-zinc-300 rounded-full blur-md opacity-0"
+                 style={{ top: '60px', left: '10px' }}
+                 animate={{
+                   opacity: [0, 0, 0.8, 0],
+                   scale: [0, 0, 1, 3 + (i % 3)],
+                   x: [0, 0, -40 - (i * 15), -100 - (i * 30)],
+                   y: [0, 0, -10 - (i * 5), -40 - (i * 10)]
+                 }}
+                 transition={{
+                   times: [0, 0.7, 0.8, 1], // triggers when car accelerates at 0.7
+                   duration: 3.5,
+                   ease: "easeOut"
+                 }}
+               />
+             ))}
+          </div>
+       </div>
+
        <motion.div
-          className="relative w-[240px] h-[100px]"
+          className="relative w-[240px] h-[100px] z-10"
           animate={{ 
              x: ["-100vw", "0vw", "0vw", "100vw"],
              y: [0, 0, 15, -8, 0, 0] 
           }}
           transition={{ 
-             x: { times: [0, 0.2, 0.7, 1], duration: 3.5, ease: "easeInOut" },
+             x: { times: [0, 0.2, 0.7, 1], duration: 3.5, ease: ["easeOut", "linear", "easeIn"] },
              y: { times: [0, 0.44, 0.45, 0.48, 0.52, 1], duration: 3.5 }
           }}
           onAnimationComplete={onComplete}
@@ -74,27 +98,31 @@ const SplashAnimation = ({ onComplete }) => {
           {/* Back Wheel */}
           <motion.div 
              className="absolute top-[60px] left-[55px] w-[40px] h-[40px] z-20"
-             animate={{ rotate: [0, 360, 360, 1080] }}
-             transition={{ times: [0, 0.2, 0.7, 1], duration: 3.5, ease: "easeInOut" }}
+             animate={{ rotate: [0, 720, 720, 2160] }}
+             transition={{ times: [0, 0.2, 0.7, 1], duration: 3.5, ease: ["easeOut", "linear", "easeIn"] }}
           >
              <Wheel />
           </motion.div>
 
-          {/* Front Wheel Container - Flies in */}
+          {/* Front Wheel Container - Flies in from behind/left */}
           <motion.div
             className="absolute top-[60px] left-[155px] w-[40px] h-[40px] z-20"
             animate={{ 
-                x: [800, 800, 0, 0], 
+                x: [-800, -800, 0, 0], 
                 y: [-400, -400, 0, 0],
                 opacity: [0, 1, 1, 1],
                 scale: [2, 2, 1, 1]
             }}
-            transition={{ times: [0, 0.2, 0.45, 1], duration: 3.5, ease: "easeInOut" }}
+            transition={{ 
+                times: [0, 0.2, 0.45, 1], 
+                duration: 3.5, 
+                ease: ["linear", "easeOut", "linear"] // smooth landing
+            }}
           >
              <motion.div 
                className="w-full h-full"
-               animate={{ rotate: [0, 0, -1080, -1080, 360] }} 
-               transition={{ times: [0, 0.2, 0.45, 0.7, 1], duration: 3.5, ease: "easeInOut" }}
+               animate={{ rotate: [0, 0, 1080, 1080, 2520] }} // Fast clockwise spin
+               transition={{ times: [0, 0.2, 0.45, 0.7, 1], duration: 3.5, ease: ["linear", "easeOut", "linear", "easeIn"] }}
              >
                 <Wheel />
              </motion.div>
@@ -102,7 +130,7 @@ const SplashAnimation = ({ onComplete }) => {
        </motion.div>
        
        <motion.div 
-         className="mt-12 flex flex-col items-center"
+         className="mt-12 flex flex-col items-center relative z-20"
          animate={{ opacity: [0, 1, 1, 0] }}
          transition={{ times: [0, 0.1, 0.8, 1], duration: 3.5 }}
        >
