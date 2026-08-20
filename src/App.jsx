@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Navigate, Outlet, Link } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram, ArrowUp, ChevronRight } from 'lucide-react'
@@ -153,29 +153,28 @@ const Navbar = () => {
   const location = useLocation()
   
   const menuItems = [
-    { label: "Services", hash: "#services" },
-    { label: "Why Primetech", hash: "#why-us" },
-    { label: "Reviews", hash: "#reviews" },
-    { label: "Contact", hash: "#contact" }
+    { label: "Services", to: "/services" },
+    { label: "Reviews", to: "/reviews" },
+    { label: "Contact", to: "/contact" }
   ]
 
   return (
     <nav className="sticky top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-b border-border shadow-sm">
       <div className="stripe-accent w-full" />
       <div className="container mx-auto flex items-center justify-between py-2 px-4">
-        <a href="#" className="flex items-center" aria-label="Primetech Auto & Tires home">
+        <Link to="/" className="flex items-center" aria-label="Primetech Auto & Tires home">
           <BrandLogo />
-        </a>
+        </Link>
         
         <div className="hidden md:flex items-center gap-8">
           {menuItems.map((c) => (
-            <a
-              key={c.hash}
-              href={c.hash}
+            <Link
+              key={c.to}
+              to={c.to}
               className="font-display text-base font-black uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
             >
               {c.label}
-            </a>
+            </Link>
           ))}
         </div>
         
@@ -218,14 +217,14 @@ const Navbar = () => {
           >
             <div className="flex flex-col gap-4 p-6">
               {menuItems.map((c) => (
-                <a
-                  key={c.hash}
-                  href={c.hash}
+                <Link
+                  key={c.to}
+                  to={c.to}
                   onClick={() => setMenuOpen(false)}
                   className="font-display text-lg uppercase tracking-wider text-muted-foreground hover:text-foreground"
                 >
                   {c.label}
-                </a>
+                </Link>
               ))}
               <a
                 href={DIRECTIONS_URL}
@@ -847,12 +846,19 @@ const Footer = () => {
           <div>
             <h4 className="font-display text-base font-bold uppercase tracking-wider text-foreground mb-6">Quick Links</h4>
             <ul className="space-y-3 font-body text-sm text-muted-foreground">
-              {['About Us', 'Our Services', 'Customer Reviews', 'Contact Us', 'Privacy Policy', 'Terms of Service'].map((link) => (
-                <li key={link}>
-                  <a href="#" className="flex items-center gap-2 hover:text-primary transition-colors group">
+              {[
+                { name: 'About Us', path: '/about' },
+                { name: 'Our Services', path: '/services' },
+                { name: 'Customer Reviews', path: '/reviews' },
+                { name: 'Contact Us', path: '/contact' },
+                { name: 'Privacy Policy', path: '/privacy' },
+                { name: 'Terms of Service', path: '/terms' },
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link to={link.path} className="flex items-center gap-2 hover:text-primary transition-colors group">
                     <ChevronRight className="w-3.5 h-3.5 text-primary opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                    {link}
-                  </a>
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -862,12 +868,19 @@ const Footer = () => {
           <div>
             <h4 className="font-display text-base font-bold uppercase tracking-wider text-foreground mb-6">Top Services</h4>
             <ul className="space-y-3 font-body text-sm text-muted-foreground">
-              {['Vehicle Inspections & Safety', 'Engine Diagnostics & Repair', 'AC Servicing & Repairs', 'Tire Repairs & Installations', 'Brake Service & Replacement', 'Battery & Alternator Repairs'].map((service) => (
-                <li key={service}>
-                  <a href="#services" className="flex items-center gap-2 hover:text-primary transition-colors group">
+              {[
+                { name: 'Vehicle Inspections & Safety', path: '/services/vehicle-inspections' },
+                { name: 'Engine Diagnostics & Repair', path: '/services/engine-diagnostics' },
+                { name: 'AC Servicing & Repairs', path: '/services/ac-repair' },
+                { name: 'Tire Repairs & Installations', path: '/services/tire-services' },
+                { name: 'Brake Service & Replacement', path: '/services/brake-service' },
+                { name: 'Battery & Alternator Repairs', path: '/services/battery-repair' },
+              ].map((service) => (
+                <li key={service.name}>
+                  <Link to={service.path} className="flex items-center gap-2 hover:text-primary transition-colors group">
                     <ChevronRight className="w-3.5 h-3.5 text-primary opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                    {service}
-                  </a>
+                    {service.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -909,8 +922,8 @@ const Footer = () => {
             © {new Date().getFullYear()} Primetech Auto & Tires. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
@@ -933,8 +946,14 @@ const StickyMobileCall = () => {
   )
 }
 
-const MainWebsite = () => {
-  const [showSplash, setShowSplash] = useState(true)
+import { AboutPage, ServicesPage, ReviewsPage, ContactPage, PrivacyPolicyPage, TermsOfServicePage, ServiceDetailPage } from './pages/PublicPages'
+
+const MainLayout = () => {
+  const location = useLocation();
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <>
@@ -947,20 +966,11 @@ const MainWebsite = () => {
         <meta property="og:image" content="/assets/hero-mechanic-4RsVa3Uu.jpg" />
         <link rel="canonical" href="https://primetechauto.ca" />
       </Helmet>
-      <AnimatePresence>
-        {showSplash && <SplashAnimation onComplete={() => setShowSplash(false)} />}
-      </AnimatePresence>
       <TopBar />
       <Navbar className="sticky top-0 z-50" />
-      <div className="min-h-screen bg-background text-foreground font-body">
-        <main className="pb-16 md:pb-0">
-          <Hero />
-          <ServicesSection />
-          <BookingSection />
-          <PricingSection />
-          <ReviewsSection />
-          <WhyChooseSection />
-          <ContactSection />
+      <div className="min-h-screen flex flex-col bg-background text-foreground font-body">
+        <main className="flex-grow pb-16 md:pb-0 flex flex-col">
+          <Outlet />
         </main>
         <AppDownloadSection />
         <Footer />
@@ -973,13 +983,41 @@ const MainWebsite = () => {
   )
 }
 
+const HomePage = () => {
+  const [showSplash, setShowSplash] = useState(true)
+
+  return (
+    <>
+      <AnimatePresence>
+        {showSplash && <SplashAnimation onComplete={() => setShowSplash(false)} />}
+      </AnimatePresence>
+      <Hero />
+      <ServicesSection />
+      <BookingSection />
+      <PricingSection />
+      <ReviewsSection />
+      <WhyChooseSection />
+      <ContactSection />
+    </>
+  )
+}
+
 function App() {
   return (
     <HelmetProvider>
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<MainWebsite />} />
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="about" element={<AboutPage />} />
+              <Route path="services" element={<ServicesPage />} />
+              <Route path="services/:serviceId" element={<ServiceDetailPage />} />
+              <Route path="reviews" element={<ReviewsPage />} />
+              <Route path="contact" element={<ContactPage />} />
+              <Route path="privacy" element={<PrivacyPolicyPage />} />
+              <Route path="terms" element={<TermsOfServicePage />} />
+            </Route>
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
               <Route index element={<Navigate to="dashboard" replace />} />
