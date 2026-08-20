@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageSquare, X, Send, Bot, User, Sparkles } from 'lucide-react'
+import { MessageSquare, X, Send, Bot, User, Sparkles, Car } from 'lucide-react'
 
 export const FloatingAIAssistant = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -180,7 +180,7 @@ export const FloatingAIAssistant = () => {
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <MessageSquare className="w-6 h-6 fill-current" />
+              <Car className="w-6 h-6 fill-current" />
             </motion.div>
           )}
         </AnimatePresence>
