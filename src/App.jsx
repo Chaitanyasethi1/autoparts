@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc } from 'lucide-react'
+import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
+import { BookingSection } from './components/BookingSection'
 
 // Primetech Details
 const PHONE_NUMBER = "+1 (289) 834-2838"
@@ -716,16 +717,22 @@ const ContactSection = () => {
                   <p>Sunday: Closed</p>
                 </div>
               </li>
+              <li className="flex items-start gap-3">
+                <Mail className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                <a href={`mailto:${EMAIL}`} className="hover:text-foreground transition-colors font-semibold">
+                  {EMAIL}
+                </a>
+              </li>
               {INSTAGRAM_URL && (
                 <li className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                  <Instagram className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                   <a
                     href={INSTAGRAM_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-foreground transition-colors text-primary"
                   >
-                    Instagram: @PRIMETECH_AUTO_TIRES
+                    @PRIMETECH_AUTO_TIRES
                   </a>
                 </li>
               )}
@@ -855,6 +862,7 @@ function App() {
         <main className="pb-16 md:pb-0">
           <Hero />
           <ServicesSection />
+          <BookingSection />
           <PricingSection />
           <ReviewsSection />
           <WhyChooseSection />
