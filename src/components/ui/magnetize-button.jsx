@@ -41,16 +41,31 @@ function MagnetizeButton({
 
     const handleInteractionEnd = useCallback(async () => {
         setIsAttracting(false);
-        await particlesControl.start((i) => ({
-            x: particles[i].x,
-            y: particles[i].y,
-            transition: {
-                type: "spring",
-                stiffness: 100,
-                damping: 15,
-            },
-        }));
-    }, [particlesControl, particles]);
+        // We let the useEffect take over the continuous random animation
+    }, []);
+
+    // Continuous floating animation when not attracting
+    useEffect(() => {
+        if (!isAttracting && particles.length > 0) {
+            particlesControl.start((i) => {
+                // Generate a continuous random path for each particle
+                const randomX1 = particles[i].x + (Math.random() * 100 - 50);
+                const randomY1 = particles[i].y + (Math.random() * 100 - 50);
+                const randomX2 = particles[i].x + (Math.random() * 100 - 50);
+                const randomY2 = particles[i].y + (Math.random() * 100 - 50);
+
+                return {
+                    x: [particles[i].x, randomX1, randomX2, particles[i].x],
+                    y: [particles[i].y, randomY1, randomY2, particles[i].y],
+                    transition: {
+                        duration: 8 + Math.random() * 5,
+                        repeat: Infinity,
+                        ease: "linear"
+                    }
+                };
+            });
+        }
+    }, [isAttracting, particles, particlesControl]);
 
     const Comp = href ? 'a' : 'button';
 
@@ -79,7 +94,7 @@ function MagnetizeButton({
                         "absolute w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full",
                         "bg-current",
                         "transition-opacity duration-300 pointer-events-none",
-                        isAttracting ? "opacity-90" : "opacity-0"
+                        isAttracting ? "opacity-90 scale-125" : "opacity-40"
                     )}
                 />
             ))}

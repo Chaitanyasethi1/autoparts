@@ -172,7 +172,7 @@ const Navbar = () => {
             <a
               key={c.hash}
               href={c.hash}
-              className="font-display text-sm uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+              className="font-display text-base font-black uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
             >
               {c.label}
             </a>
@@ -253,37 +253,39 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-28 sm:pt-32 pb-12">
-      <img
-        src="/assets/hero-mechanic-4RsVa3Uu.jpg"
-        alt="Certified mechanics performing auto repair and tire services at Primetech"
-        width={1920}
-        height={1080}
-        className="absolute inset-0 w-full h-full object-cover"
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pb-12">
+      <video
+        src="/hero-video.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover scale-[1.4] -translate-x-12 brightness-125 contrast-125 saturate-150"
       />
-      <div className="absolute inset-0 bg-black/70" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0.6) 0%, hsl(0 0% 0% / 0.95) 100%)" }} />
-      <div className="relative z-10 container mx-auto px-4 text-center">
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0) 0%, hsl(0 0% 0% / 0.5) 100%)" }} />
+      <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left h-full flex flex-col justify-start pt-12 sm:pt-20">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
+          className="max-w-2xl"
         >
-          <span className="inline-flex items-center gap-2 bg-primary/20 border border-primary/50 text-primary px-4 py-1.5 rounded-full font-display text-xs uppercase tracking-wider font-bold mb-6">
-            <Star className="w-3.5 h-3.5 fill-primary" /> Stoney Creek's Trusted Auto Care
+          <span className="inline-flex items-center gap-2 bg-primary/90 text-primary-foreground px-4 py-1.5 rounded-full font-display text-xs uppercase tracking-wider font-bold mb-6 shadow-lg shadow-primary/20">
+            <Star className="w-3.5 h-3.5 fill-current" /> Stoney Creek's Trusted Auto Care
           </span>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6">
-            Expert <span className="text-gradient">Auto & Tire</span> Service
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black leading-tight mb-6 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
+            Expert <span className="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 text-transparent bg-clip-text" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
             <br />
             You Can Count On
           </h1>
-          <p className="font-body text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-4">
+          <p className="font-body text-zinc-200 text-lg md:text-xl mb-6 font-bold" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
             From vehicle inspections and engine diagnostics to new tires and brake repair. Our certified mechanics deliver fast, reliable repairs in Stoney Creek.
           </p>
-          <p className="font-display text-secondary text-sm sm:text-base uppercase tracking-wider font-bold mb-10 flex items-center justify-center gap-2">
-            <Clock className="w-4 h-4 text-secondary" /> Open Monday to Saturday — Walk-ins Welcome
+          <p className="font-display text-secondary text-sm sm:text-base uppercase tracking-wider font-black mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
+            <Clock className="w-5 h-5 text-secondary" /> Open Monday to Saturday — Walk-ins Welcome
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-start">
             <a
               href={PHONE_URL}
               className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-md font-display text-lg uppercase tracking-wider hover:opacity-90 transition-opacity glow-red"
@@ -295,7 +297,7 @@ const Hero = () => {
               href={DIRECTIONS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 border border-secondary text-secondary px-8 py-4 rounded-md font-display text-lg uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
+              className="inline-flex items-center justify-center gap-3 bg-zinc-900/80 border border-secondary text-secondary px-8 py-4 rounded-md font-display text-lg uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
             >
               <MapPin className="w-5 h-5" />
               Get Directions
