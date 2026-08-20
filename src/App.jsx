@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
@@ -7,8 +7,8 @@ import { BookingSection } from './components/BookingSection'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute } from './context/ProtectedRoute'
 import { AdminLogin } from './pages/admin/AdminLogin'
-// import { AdminLayout } from './pages/admin/AdminLayout'
-// import { AdminDashboard } from './pages/admin/AdminDashboard'
+import { AdminLayout } from './pages/admin/AdminLayout'
+import { AdminDashboard } from './pages/admin/AdminDashboard'
 
 // Primetech Details
 const PHONE_NUMBER = "+1 (289) 834-2838"
@@ -888,12 +888,10 @@ function App() {
         <Routes>
           <Route path="/" element={<MainWebsite />} />
           <Route path="/admin/login" element={<AdminLogin />} />
-          {/* Admin routes will be uncommented once subagent finishes building them
           <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<AdminDashboard />} />
           </Route>
-          */}
         </Routes>
       </BrowserRouter>
     </AuthProvider>
