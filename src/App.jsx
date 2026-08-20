@@ -74,7 +74,7 @@ const SplashAnimation = ({ onComplete }) => {
        </div>
 
        <motion.div
-          className="relative w-[240px] h-[100px] z-10"
+          className="relative w-[240px] h-[100px] z-10 transform scale-90 md:scale-100"
           animate={{ 
              x: ["-100vw", "0vw", "0vw", "100vw"],
              y: [0, 0, 15, -8, 0, 0] 
@@ -130,14 +130,14 @@ const SplashAnimation = ({ onComplete }) => {
        </motion.div>
        
        <motion.div 
-         className="mt-12 flex flex-col items-center relative z-20"
+         className="mt-8 md:mt-12 flex flex-col items-center relative z-20 px-4"
          animate={{ opacity: [0, 1, 1, 0] }}
          transition={{ times: [0, 0.1, 0.8, 1], duration: 3.5 }}
        >
-         <BrandLogo className="scale-150 transform mb-4" />
+         <BrandLogo className="scale-[1.15] sm:scale-125 md:scale-150 transform mb-4" />
          <motion.div 
-            className="h-1 bg-secondary rounded-full mt-4"
-            animate={{ width: [0, 200, 200, 0] }}
+            className="h-1 bg-secondary rounded-full mt-2 md:mt-4"
+            animate={{ width: [0, 150, 150, 0] }}
             transition={{ times: [0, 0.2, 0.8, 1], duration: 3.5 }}
          />
        </motion.div>
