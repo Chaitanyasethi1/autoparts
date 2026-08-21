@@ -620,6 +620,34 @@ const reviews = [
     rating: 5,
     text: "The only shop I trust with my car. Diagnosed my check engine light accurately and didn't charge me for unnecessary fixes.",
     source: "Google"
+  },
+  {
+    name: "Michael R.",
+    location: "Grimsby",
+    rating: 5,
+    text: "Stopped by for an oil change without an appointment. They got me in right away. Very professional and friendly staff.",
+    source: "Google"
+  },
+  {
+    name: "Sarah L.",
+    location: "Hamilton",
+    rating: 5,
+    text: "My AC stopped working in the middle of a heatwave. Primetech diagnosed and fixed the leak the same day. Highly recommended!",
+    source: "Google"
+  },
+  {
+    name: "David W.",
+    location: "Stoney Creek",
+    rating: 5,
+    text: "Best tire shop in the area. They gave me a great deal on a set of Michelins and the alignment was spot on.",
+    source: "Google"
+  },
+  {
+    name: "Robert K.",
+    location: "Burlington",
+    rating: 5,
+    text: "Honest and transparent pricing. They showed me exactly what was wrong with my suspension before doing any work.",
+    source: "Google"
   }
 ]
 
@@ -638,43 +666,57 @@ const RatingStars = ({ rating }) => {
 
 const ReviewsSection = () => {
   return (
-    <section id="reviews" className="py-20 bg-card">
+    <section id="reviews" className="py-20 bg-card overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <p className="font-display text-secondary uppercase tracking-[0.3em] text-sm mb-3">Testimonials</p>
           <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
             <span className="text-gradient">5.0★</span> Rated in Stoney Creek
           </h2>
-          <p className="font-body text-muted-foreground max-w-xl mx-auto">
+          <p className="font-body text-muted-foreground max-w-xl mx-auto mb-10">
             See what vehicle owners in Stoney Creek and Hamilton have to say about our auto care services.
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {reviews.map((e, t) => (
-            <motion.div
-              key={e.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: t * 0.08 }}
-              className="bg-background rounded-lg p-6 border border-border"
-              style={{ boxShadow: "var(--shadow-card)" }}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <RatingStars rating={e.rating} />
-                <span className="text-xs text-muted-foreground font-body flex items-center gap-1">
-                  <Star className="w-3.5 h-3.5 fill-secondary text-secondary" />
-                  {e.source}
-                </span>
+        <style>{`
+          @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-scroll {
+            animation: scroll 40s linear infinite;
+          }
+          .animate-scroll:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+        
+        <div className="w-full relative flex items-center">
+          <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-card to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-l from-card to-transparent z-10 pointer-events-none"></div>
+          
+          <div className="flex gap-6 w-max animate-scroll">
+            {[...reviews, ...reviews].map((e, t) => (
+              <div
+                key={t}
+                className="w-[320px] md:w-[380px] shrink-0 bg-background rounded-lg p-6 border border-border"
+                style={{ boxShadow: "var(--shadow-card)" }}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <RatingStars rating={e.rating} />
+                  <span className="text-xs text-muted-foreground font-body flex items-center gap-1">
+                    <Star className="w-3.5 h-3.5 fill-secondary text-secondary" />
+                    {e.source}
+                  </span>
+                </div>
+                <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4">"{e.text}"</p>
+                <div>
+                  <p className="font-display text-sm font-bold text-foreground">{e.name}</p>
+                  <p className="font-body text-xs text-muted-foreground">{e.location}, ON</p>
+                </div>
               </div>
-              <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4">"{e.text}"</p>
-              <div>
-                <p className="font-display text-sm font-bold text-foreground">{e.name}</p>
-                <p className="font-body text-xs text-muted-foreground">{e.location}, ON</p>
-              </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1018,9 +1060,9 @@ const HomePage = () => {
       <Hero />
       <ServicesSection />
       <PricingSection />
-      <BookingSection />
       <ReviewsSection />
       <WhyChooseSection />
+      <BookingSection />
       <ContactSection />
     </>
   )
