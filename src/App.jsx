@@ -363,7 +363,7 @@ const servicesList = [
   {
     title: "New Tires Sales",
     desc: "We sell brand new tires from all major industry brands. Passenger tires, performance tires, SUV, light truck, and winter tires at competitive prices.",
-    img: "/assets/safety-inspection-driveon-DZvfbrbb.jpg",
+    img: "/assets/new-tires.jpg",
     alt: "New tires sales from top brands"
   },
   {
@@ -404,7 +404,7 @@ const ServicesSection = () => {
             Professional <span className="text-gradient">Auto & Tire Services</span>
           </h2>
           <p className="font-body text-muted-foreground max-w-xl mx-auto">
-            We provide a complete range of auto repair services in Stoney Creek. Walk in anytime during business hours — no appointment needed.
+            We provide a complete range of auto repair services in Stoney Creek and nearby areas. Walk in anytime during business hours - no appointment needed.
           </p>
         </div>
         
