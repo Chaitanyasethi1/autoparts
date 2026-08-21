@@ -157,9 +157,8 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className="sticky top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-b border-border shadow-sm">
-      <div className="stripe-accent w-full" />
-      <div className="container mx-auto flex items-center justify-between py-2 px-4">
+    <nav className="bg-transparent">
+      <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center" aria-label="Primetech Auto & Tires home">
           <BrandLogo />
         </Link>
@@ -169,7 +168,7 @@ const Navbar = () => {
             <Link
               key={c.to}
               to={c.to}
-              className="font-display text-base font-black uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+              className="font-display text-lg font-black uppercase tracking-wider text-white hover:text-primary transition-colors drop-shadow-md"
             >
               {c.label}
             </Link>
@@ -977,9 +976,11 @@ const MainLayout = () => {
         <meta property="og:image" content="/assets/hero-mechanic-4RsVa3Uu.jpg" />
         <link rel="canonical" href="https://primetechauto.ca" />
       </Helmet>
-      <TopBar />
-      <Navbar className="sticky top-0 z-50" />
-      <div className="min-h-screen flex flex-col bg-background text-foreground font-body">
+      <div className="absolute top-0 left-0 right-0 w-full z-50">
+        <TopBar />
+        <Navbar />
+      </div>
+      <div className="min-h-screen flex flex-col bg-background text-foreground font-body relative">
         <main className="flex-grow pb-16 md:pb-0 flex flex-col">
           <Outlet />
         </main>

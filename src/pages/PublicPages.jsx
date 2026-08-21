@@ -5,7 +5,7 @@ import { Wrench, Settings, ArrowLeft } from 'lucide-react'
 
 // Generic Page Header Component
 const PageHeader = ({ title, subtitle }) => (
-  <div className="bg-zinc-950 py-20 border-b border-white/5">
+  <div className="bg-zinc-950 pt-32 pb-20 border-b border-white/5">
     <div className="container mx-auto px-4 text-center">
       <motion.h1 
         initial={{ opacity: 0, y: 20 }}
