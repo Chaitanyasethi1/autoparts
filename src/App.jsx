@@ -474,7 +474,7 @@ const specialsList = [
   },
   {
     title: "Tire Dismount & Balancing",
-    price: "$99.99",
+    price: "$79.99",
     note: "Starting at",
     features: [
       "Mount tires off rims",
