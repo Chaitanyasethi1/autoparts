@@ -447,6 +447,114 @@ const ServicesSection = () => {
   )
 }
 
+const specialsList = [
+  {
+    title: "Full Synthetic Oil Change",
+    price: "$79.99",
+    note: "Starting at",
+    features: [
+      "Premium synthetic motor oil",
+      "Factory-spec oil filter",
+      "Free 21-point vehicle check",
+      "Fluids top-up included"
+    ],
+    badge: "Quick Care",
+    highlight: true
+  },
+  {
+    title: "Seasonal Tire Changeover (On Rim)",
+    price: "$39.99",
+    note: "Per set of 4",
+    features: [
+      "Swap wheels already on rims",
+      "Torque specs verified",
+      "Visual brake inspection",
+      "Optional wheel balancing"
+    ],
+    badge: "Popular"
+  },
+  {
+    title: "Tire Dismount & Balancing",
+    price: "$79.99",
+    note: "Starting at",
+    features: [
+      "Mount tires off rims",
+      "Computer balancing included",
+      "Full safety check",
+      "Fits passenger & SUVs"
+    ],
+    badge: "Best Value"
+  }
+]
+
+const PricingSection = () => {
+  return (
+    <section id="pricing" className="py-20 bg-card">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <p className="font-display text-secondary uppercase tracking-[0.3em] text-sm mb-3">Service Specials</p>
+          <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
+            Featured <span className="text-gradient">Specials & Pricing</span>
+          </h2>
+          <p className="font-body text-muted-foreground max-w-xl mx-auto">
+            Transparent pricing on regular maintenance items. Call us or walk in to get your car serviced today.
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {specialsList.map((r, i) => (
+            <motion.div
+              key={r.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`relative rounded-lg p-6 border transition-colors ${
+                r.highlight ? "bg-primary/5 border-primary/50" : "bg-background border-border hover:border-primary/30"
+              }`}
+              style={{ boxShadow: "var(--shadow-card)" }}
+            >
+              {r.badge && (
+                <span className="absolute -top-3 left-6 bg-primary text-primary-foreground text-xs font-display uppercase tracking-wider px-3 py-1 rounded-sm">
+                  {r.badge}
+                </span>
+              )}
+              <p className="font-body text-xs text-muted-foreground uppercase tracking-wider mt-1">{r.note}</p>
+              <div className="font-display text-4xl font-bold text-foreground mb-1">{r.price}</div>
+              <h3 className="font-display text-lg font-bold text-foreground mb-5">{r.title}</h3>
+              <ul className="space-y-3 mb-6">
+                {r.features.map((o) => (
+                  <li key={o} className="flex items-start gap-2 font-body text-sm text-muted-foreground">
+                    <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                    {o}
+                  </li>
+                ))}
+              </ul>
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href={PHONE_URL}
+                  className="flex items-center justify-center gap-2 bg-primary text-primary-foreground px-3 py-3 rounded-md font-display text-sm uppercase tracking-wider hover:opacity-90 transition-opacity"
+                >
+                  <Phone className="w-4 h-4" />
+                  Call
+                </a>
+                <a
+                  href={DIRECTIONS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 border border-secondary text-secondary px-3 py-3 rounded-md font-display text-sm uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
+                >
+                  <MapPin className="w-4 h-4" />
+                  Navigate
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
 const WhyChooseSection = () => {
   return (
@@ -895,6 +1003,7 @@ const HomePage = () => {
       <Hero />
       <ServicesSection />
       <BookingSection />
+      <PricingSection />
       <ReviewsSection />
       <WhyChooseSection />
       <ContactSection />
