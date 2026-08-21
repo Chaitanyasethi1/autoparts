@@ -26,7 +26,7 @@ const GBP_URL = "https://maps.google.com/?q=336+Hilton+Drive,+Stoney+Creek,+ON+L
 const BrandLogo = ({ className = "" }) => {
   return (
     <div className={`flex items-center justify-center ${className}`}>
-      <img src="/PRIMETECH_LOGO_TRANSPARENT.png" alt="Primetech Auto & Tires Logo" className="w-[120px] md:w-[160px] lg:w-[180px] h-auto object-contain drop-shadow-lg" />
+      <img src="/primetechauto.png" alt="Primetech Auto & Tires Logo" className="w-[120px] md:w-[160px] lg:w-[180px] h-auto object-contain drop-shadow-lg" />
     </div>
   )
 }
@@ -256,7 +256,7 @@ const Hero = () => {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover brightness-125 contrast-125 saturate-150"
+        className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0) 0%, hsl(0 0% 0% / 0.5) 100%)" }} />
       <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left h-full flex flex-col justify-start pt-32 sm:pt-40 md:pt-48">
