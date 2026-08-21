@@ -19,7 +19,7 @@ export const TopBar = () => {
           </span>
           <span className="hidden sm:inline text-zinc-600">|</span>
           <span className="flex items-center gap-1.5">
-            <span>🇨🇦</span> Proudly Canadian
+            Proudly Canadian
           </span>
           <span className="hidden lg:inline text-zinc-600">|</span>
           <span className="hidden lg:flex items-center gap-1.5">
