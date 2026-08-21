@@ -960,6 +960,16 @@ import {
 
 const MainLayout = () => {
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Scroll to top on route change
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -976,7 +986,7 @@ const MainLayout = () => {
         <meta property="og:image" content="/assets/hero-mechanic-4RsVa3Uu.jpg" />
         <link rel="canonical" href="https://primetechauto.ca" />
       </Helmet>
-      <div className="absolute top-0 left-0 right-0 w-full z-50">
+      <div className={`fixed top-0 left-0 right-0 w-full z-50 transition-colors duration-300 ${isScrolled ? 'bg-zinc-950/95 backdrop-blur-md shadow-md border-b border-white/10' : 'bg-transparent'}`}>
         <TopBar />
         <Navbar />
       </div>
