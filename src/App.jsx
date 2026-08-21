@@ -26,7 +26,7 @@ const GBP_URL = "https://maps.google.com/?q=336+Hilton+Drive,+Stoney+Creek,+ON+L
 const BrandLogo = ({ className = "" }) => {
   return (
     <div className={`flex items-center justify-center ${className}`}>
-      <img src="/PRIMETECH_LOGO.png" alt="Primetech Auto & Tires Logo" className="h-16 md:h-20 w-auto object-contain" />
+      <img src="/PRIMETECH_LOGO.png" alt="Primetech Auto & Tires Logo" className="h-16 md:h-20 w-auto object-contain mix-blend-screen" />
     </div>
   )
 }
