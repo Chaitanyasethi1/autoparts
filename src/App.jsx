@@ -329,7 +329,7 @@ const servicesList = [
   {
     title: "Vehicle Inspection & Safety",
     desc: "Complete pre-purchase inspections, visual checks, and safety standards certifications to ensure your vehicle is safe and legally compliant on Ontario roads.",
-    img: "/assets/safety-inspection-driveon-DZvfbrbb.jpg",
+    img: "/assets/vehicle-inspection.jpg",
     alt: "Vehicle inspection and safety standards certification at Primetech",
     badge: "Safety Standards"
   },
