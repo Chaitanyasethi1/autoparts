@@ -562,7 +562,7 @@ const WhyChooseSection = () => {
         <div className="text-center mb-16">
           <p className="font-display text-secondary uppercase tracking-[0.3em] text-sm mb-3">Our Core Values</p>
           <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
-            Why Choose <span className="text-gradient">Primetech Auto & Tires</span>
+            Why Choose <span className="text-gradient">Primetech</span>
           </h2>
         </div>
         
