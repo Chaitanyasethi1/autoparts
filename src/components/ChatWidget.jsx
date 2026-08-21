@@ -4,6 +4,10 @@ import { Car, X, Send } from 'lucide-react';
 
 const QA_DATABASE = [
   {
+    keywords: ['hi', 'hello', 'hey', 'greetings', 'help', 'morning', 'afternoon'],
+    answer: "Hello! How can we help you with your vehicle today? You can ask about our hours, location, pricing, or specific services."
+  },
+  {
     keywords: ['hour', 'time', 'open', 'close', 'when'],
     answer: "We are open Monday to Friday from 8:00 AM to 6:00 PM, and Saturday from 8:00 AM to 2:00 PM. Walk-ins are always welcome!"
   },
@@ -58,7 +62,7 @@ export const ChatWidget = () => {
       let foundAnswer = "I'm not quite sure about that. Please call us at +1 (289) 834-2838 or visit our shop for more details!";
       
       for (const qa of QA_DATABASE) {
-        if (qa.keywords.some(kw => lowerText.includes(kw))) {
+        if (qa.keywords.some(kw => new RegExp(`\\b${kw}\\b`, 'i').test(lowerText))) {
           foundAnswer = qa.answer;
           break;
         }
