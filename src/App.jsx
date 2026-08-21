@@ -1013,8 +1013,8 @@ const HomePage = () => {
       </AnimatePresence>
       <Hero />
       <ServicesSection />
-      <BookingSection />
       <PricingSection />
+      <BookingSection />
       <ReviewsSection />
       <WhyChooseSection />
       <ContactSection />
