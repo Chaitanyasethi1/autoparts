@@ -256,7 +256,7 @@ const Hero = () => {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover scale-[1.4] -translate-x-12 brightness-125 contrast-125 saturate-150"
+        className="absolute inset-0 w-full h-full object-cover brightness-125 contrast-125 saturate-150"
       />
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0) 0%, hsl(0 0% 0% / 0.5) 100%)" }} />
       <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left h-full flex flex-col justify-start pt-32 sm:pt-40 md:pt-48">
