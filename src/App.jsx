@@ -7,6 +7,7 @@ import { Toaster, toast } from 'sonner'
 import { BookingSection } from './components/BookingSection'
 import { MagnetizeButton } from './components/ui/magnetize-button'
 import { TopBar } from './components/TopBar'
+import { ChatWidget } from './components/ChatWidget'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute } from './context/ProtectedRoute'
 import { AdminLogin } from './pages/admin/AdminLogin'
@@ -1043,6 +1044,7 @@ const MainLayout = () => {
         <Footer />
         <StickyMobileCall />
         <ScrollToTopButton />
+        <ChatWidget />
         <Toaster position="bottom-right" richColors theme="dark" />
       </div>
     </>
