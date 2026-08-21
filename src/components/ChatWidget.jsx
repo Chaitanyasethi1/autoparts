@@ -12,8 +12,12 @@ const QA_DATABASE = [
     answer: "We are open Monday to Friday from 8:00 AM to 6:00 PM, and Saturday from 8:00 AM to 2:00 PM. Walk-ins are always welcome!"
   },
   {
-    keywords: ['location', 'address', 'where', 'map'],
+    keywords: ['location', 'address', 'where', 'map', 'directions'],
     answer: "We are located at 336 Hilton Drive, Stoney Creek, ON L8E 2N3."
+  },
+  {
+    keywords: ['contact', 'phone', 'number', 'call', 'email', 'reach'],
+    answer: "You can reach us by phone at +1 (289) 834-2838. We're always happy to help!"
   },
   {
     keywords: ['appointment', 'book', 'schedule'],
