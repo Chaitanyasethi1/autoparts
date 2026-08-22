@@ -961,13 +961,13 @@ const StickyMobileCall = () => {
         <Phone className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
         Call Now
       </a>
-      <Link
-        to="/contact"
+      <a
+        href="/#book"
         className="flex items-center justify-center gap-2 w-full py-4 px-2 bg-zinc-900 font-display text-white text-sm sm:text-base uppercase tracking-wider active:opacity-80 transition-colors hover:bg-zinc-800"
       >
         <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
         Book Appt
-      </Link>
+      </a>
     </div>
   )
 }
