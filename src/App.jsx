@@ -274,7 +274,7 @@ const Hero = () => {
             <Star className="w-3 h-3 md:w-3.5 md:h-3.5 fill-current" /> Stoney Creek's Trusted Auto Care
           </span>
           <h1 className="font-display text-3xl sm:text-4xl md:text-7xl font-black leading-tight mb-4 md:mb-6 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
-            Expert <span className="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 text-transparent bg-clip-text" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
+            Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
             <br />
             You Can Count On
           </h1>
@@ -309,7 +309,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
+          className="mt-8 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto"
         >
           {[
             { num: "336", label: "Hilton Drive" },
@@ -318,8 +318,8 @@ const Hero = () => {
             { num: "Best", label: "Prices in Town" }
           ].map((e) => (
             <div key={e.label} className="text-center">
-              <div className="font-display text-3xl font-bold text-gradient">{e.num}</div>
-              <div className="font-body text-xs text-muted-foreground uppercase tracking-wider">{e.label}</div>
+              <div className="font-display text-2xl md:text-3xl font-bold text-primary">{e.num}</div>
+              <div className="font-body text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider">{e.label}</div>
             </div>
           ))}
         </motion.div>
@@ -354,7 +354,7 @@ const servicesList = [
   {
     title: "Exhaust Repairs",
     desc: "Muffler replacements, catalytic converter repair, exhaust pipe welding, oxygen sensor service, and exhaust leak diagnostics for clean, quiet operation.",
-    img: "/assets/transmission-repair-CNGJsM-I.jpg",
+    img: "/assets/exhaust_repair.jpg",
     alt: "Exhaust repairs and muffler replacements"
   },
   {
@@ -1062,9 +1062,9 @@ const HomePage = () => {
       <Hero />
       <ServicesSection />
       <PricingSection />
-      <ReviewsSection />
       <WhyChooseSection />
       <BookingSection />
+      <ReviewsSection />
       <ContactSection />
     </>
   )
