@@ -27,7 +27,7 @@ const GBP_URL = "https://maps.google.com/?q=336+Hilton+Drive,+Stoney+Creek,+ON+L
 const BrandLogo = ({ className = "" }) => {
   return (
     <div className={`flex items-center justify-center ${className}`}>
-      <img src="/primetechauto_fixed.png" alt="Primetech Auto & Tires Logo" className="w-[120px] md:w-[160px] lg:w-[180px] h-auto object-contain drop-shadow-lg" />
+      <img src="/primetechauto.png" alt="Primetech Auto & Tires Logo" className="w-[120px] md:w-[160px] lg:w-[180px] h-auto object-contain drop-shadow-lg" />
     </div>
   )
 }
@@ -330,7 +330,7 @@ const servicesList = [
   {
     title: "Exhaust Repairs",
     desc: "Muffler replacements, catalytic converter repair, exhaust pipe welding, oxygen sensor service, and exhaust leak diagnostics for clean, quiet operation.",
-    img: "https://images.unsplash.com/photo-1625219904229-873d6bb6c483?q=80&w=800&auto=format&fit=crop",
+    img: "/assets/suspension-repair-DNFvjUw4.jpg",
     alt: "Exhaust repairs and muffler replacements"
   },
   {
@@ -343,7 +343,7 @@ const servicesList = [
   {
     title: "New Tires Sales",
     desc: "We sell brand new tires from all major industry brands. Passenger tires, performance tires, SUV, light truck, and winter tires at competitive prices.",
-    img: "https://images.unsplash.com/photo-1578330768652-3a3d24fc2506?q=80&w=800&auto=format&fit=crop",
+    img: "/assets/wheel-alignment-yeT8hptM.jpg",
     alt: "New tires sales from top brands"
   },
   {
