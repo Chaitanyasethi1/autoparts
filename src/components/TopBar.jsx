@@ -5,7 +5,7 @@ const announcements = [
   { Icon: Tag, text: "BIG SALE: UP TO 20% OFF ON TIRES!" },
   { Icon: Zap, text: "FAST WALK-IN SERVICE - NO APPOINTMENT NEEDED" },
   { Icon: ShieldCheck, text: "FREE VEHICLE INSPECTION WITH ANY MAJOR REPAIR" },
-  { Icon: Star, text: "STONEY CREEK'S 5-STAR RATED AUTO REPAIR SHOP" },
+  { Icon: Star, text: "PREMIUM QUALITY AUTO & TIRE SERVICE" },
   { Icon: Wrench, text: "EXPERT ENGINE DIAGNOSTICS & AC REPAIR" }
 ]
 
