@@ -1,26 +1,24 @@
 import { MapPin, Zap, ShieldCheck, Smartphone, Apple, Tag } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 export const TopBar = () => {
   return (
     <div className="bg-transparent text-zinc-200 text-sm py-3 border-b border-white/10">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-3">
         
-        {/* Left Side: Announcements */}
-        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-5 font-body tracking-wide font-bold text-center md:text-left">
-          
-          {/* Sale Announcement */}
-          <span className="flex items-center gap-1.5 text-primary drop-shadow-md">
-            <Tag className="w-4 h-4" /> BIG SALE: UP TO 20% OFF ON TIRES!
-          </span>
-          <span className="hidden sm:inline text-zinc-600">|</span>
-
-          <span className="flex items-center gap-1.5">
-            Proudly Canadian
-          </span>
-          <span className="hidden lg:inline text-zinc-600">|</span>
-          <span className="hidden lg:flex items-center gap-1.5">
-            <Zap className="w-4 h-4 text-yellow-500" /> Fast Walk-In Service
-          </span>
+        {/* Left Side: Scrolling Sale Announcement */}
+        <div className="flex-1 overflow-hidden whitespace-nowrap flex items-center pr-4 md:pr-8">
+          <motion.div
+            className="flex items-center gap-8"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          >
+            {[...Array(8)].map((_, i) => (
+              <span key={i} className="flex items-center gap-2 text-primary font-body tracking-wide font-bold drop-shadow-md">
+                <Tag className="w-4 h-4" /> BIG SALE: UP TO 20% OFF ON TIRES!
+              </span>
+            ))}
+          </motion.div>
         </div>
 
         {/* Right Side: App Download Coming Soon */}
