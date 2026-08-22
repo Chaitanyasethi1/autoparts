@@ -27,7 +27,7 @@ const GBP_URL = "https://maps.google.com/?q=336+Hilton+Drive,+Stoney+Creek,+ON+L
 const BrandLogo = ({ className = "" }) => {
   return (
     <div className={`flex items-center justify-center ${className}`}>
-      <img src="/primetechauto.png" alt="Primetech Auto & Tires Logo" className="w-[120px] md:w-[160px] lg:w-[180px] h-auto object-contain drop-shadow-lg" />
+      <img src="/primetechauto_fixed.png" alt="Primetech Auto & Tires Logo" className="w-[120px] md:w-[160px] lg:w-[180px] h-auto object-contain drop-shadow-lg" />
     </div>
   )
 }
@@ -160,26 +160,24 @@ const Navbar = () => {
 
   return (
     <nav className="bg-transparent">
-      <div className="container mx-auto flex items-center justify-between py-4 px-4">
-        <div className="flex items-center gap-12">
-          <Link to="/" className="flex items-center" aria-label="Primetech Auto & Tires home">
-            <BrandLogo />
-          </Link>
-          
-          <div className="hidden md:flex items-center gap-8">
-            {menuItems.map((c) => (
-              <Link
-                key={c.to}
-                to={c.to}
-                className="font-display text-lg font-black uppercase tracking-wider text-white hover:text-primary transition-colors drop-shadow-md"
-              >
-                {c.label}
-              </Link>
-            ))}
-          </div>
+      <div className="container mx-auto relative flex items-center justify-between py-4 px-4">
+        <Link to="/" className="flex items-center z-10" aria-label="Primetech Auto & Tires home">
+          <BrandLogo />
+        </Link>
+        
+        <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2 z-10">
+          {menuItems.map((c) => (
+            <Link
+              key={c.to}
+              to={c.to}
+              className="font-display text-lg font-black uppercase tracking-wider text-white hover:text-primary transition-colors drop-shadow-md"
+            >
+              {c.label}
+            </Link>
+          ))}
         </div>
         
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3 z-10">
           <MagnetizeButton
             href={DIRECTIONS_URL}
             target="_blank"
