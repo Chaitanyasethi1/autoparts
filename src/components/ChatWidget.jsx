@@ -152,6 +152,19 @@ export const ChatWidget = () => {
         )}
       </AnimatePresence>
 
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="bg-zinc-900 text-white text-xs font-display tracking-wider font-bold px-3 py-1.5 rounded-full border border-zinc-700 shadow-lg mb-2 mr-1 shadow-primary/20"
+          >
+            Ask AI
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="bg-primary hover:bg-primary/90 text-primary-foreground w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform"
