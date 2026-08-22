@@ -1,5 +1,13 @@
-import { MapPin, Zap, ShieldCheck, Smartphone, Apple, Tag } from 'lucide-react'
+import { MapPin, Zap, ShieldCheck, Smartphone, Apple, Tag, Wrench, Star } from 'lucide-react'
 import { motion } from 'framer-motion'
+
+const announcements = [
+  { Icon: Tag, text: "BIG SALE: UP TO 20% OFF ON TIRES!" },
+  { Icon: Zap, text: "FAST WALK-IN SERVICE - NO APPOINTMENT NEEDED" },
+  { Icon: ShieldCheck, text: "FREE VEHICLE INSPECTION WITH ANY MAJOR REPAIR" },
+  { Icon: Star, text: "STONEY CREEK'S 5-STAR RATED AUTO REPAIR SHOP" },
+  { Icon: Wrench, text: "EXPERT ENGINE DIAGNOSTICS & AC REPAIR" }
+]
 
 export const TopBar = () => {
   return (
@@ -9,13 +17,13 @@ export const TopBar = () => {
         {/* Left Side: Scrolling Sale Announcement */}
         <div className="flex-1 overflow-hidden whitespace-nowrap flex items-center pr-4 md:pr-8">
           <motion.div
-            className="flex items-center gap-8"
+            className="flex items-center gap-12"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
           >
-            {[...Array(8)].map((_, i) => (
-              <span key={i} className="flex items-center gap-2 text-primary font-body tracking-wide font-bold drop-shadow-md">
-                <Tag className="w-4 h-4" /> BIG SALE: UP TO 20% OFF ON TIRES!
+            {[...announcements, ...announcements, ...announcements, ...announcements].map((item, i) => (
+              <span key={i} className="flex items-center gap-2 text-primary font-body tracking-wide font-bold drop-shadow-md whitespace-nowrap">
+                <item.Icon className="w-4 h-4" /> {item.text}
               </span>
             ))}
           </motion.div>
