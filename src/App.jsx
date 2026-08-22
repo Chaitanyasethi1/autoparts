@@ -309,67 +309,67 @@ const servicesList = [
   {
     title: "Vehicle Inspection & Safety",
     desc: "Complete pre-purchase inspections, visual checks, and safety standards certifications to ensure your vehicle is safe and legally compliant on Ontario roads.",
-    img: "/assets/safety-inspection-driveon-DZvfbrbb.jpg",
+    img: "/assets/service-inspection-real.jpg",
     alt: "Vehicle inspection and safety standards certification at Primetech",
     badge: "Safety Standards"
   },
   {
     title: "Engine Diagnostics & Repair",
     desc: "Complete engine diagnostics, check engine light scanning, ECU/BCM programming, timing belt replacement, tuning, overhaul, and major engine repairs.",
-    img: "/assets/engine-diagnostics-aYzMGD8l.jpg",
+    img: "/assets/service-engine-real.jpg",
     alt: "Engine diagnostics and check engine repair service at Primetech",
     badge: "Most Advanced"
   },
   {
     title: "AC Servicing & Repairs",
     desc: "AC compressor replacement, AC gas recharge, leak detection, heating system diagnostics, and heater core repair to keep you comfortable through all seasons.",
-    img: "/assets/ac-repair-s9aoEJV_.jpg",
+    img: "/assets/service-ac-real.jpg",
     alt: "AC recharge and heating system repairs",
     badge: "Seasonal Special"
   },
   {
     title: "Exhaust Repairs",
     desc: "Muffler replacements, catalytic converter repair, exhaust pipe welding, oxygen sensor service, and exhaust leak diagnostics for clean, quiet operation.",
-    img: "/assets/suspension-repair-DNFvjUw4.jpg",
+    img: "/assets/service-exhaust-real.jpg",
     alt: "Exhaust repairs and muffler replacements"
   },
   {
     title: "Tire Repairs, Installations & Rotations",
     desc: "Flat tire repairs, professional mounting and computer wheel balancing, regular tire rotations, and seasonal tire changeovers (on or off rims).",
-    img: "/assets/wheel-alignment-yeT8hptM.jpg",
+    img: "/assets/service-alignment-real.jpg",
     alt: "Tire mounting and wheel balancing service",
     badge: "Wheel & Tire Care"
   },
   {
     title: "New Tires Sales",
     desc: "We sell brand new tires from all major industry brands. Passenger tires, performance tires, SUV, light truck, and winter tires at competitive prices.",
-    img: "/assets/wheel-alignment-yeT8hptM.jpg",
+    img: "/assets/service-tires-real.jpg",
     alt: "New tires sales from top brands"
   },
   {
     title: "Lube & Oil Changes",
     desc: "Fast lube and synthetic oil changes, premium oil filters, top-up of all crucial fluids, and a complimentary 21-point vehicle safety checklist.",
-    img: "/assets/hero-mechanic-4RsVa3Uu.jpg",
+    img: "/assets/service-oil-real.jpg",
     alt: "Fast oil change and lube service",
     badge: "Quick Service"
   },
   {
     title: "Steering & Suspension",
     desc: "Replacing worn shocks and struts, ball joints, control arms, tie rod ends, sway bar links, wheel bearings, and power steering repairs.",
-    img: "/assets/suspension-repair-DNFvjUw4.jpg",
+    img: "/assets/service-suspension-real.jpg",
     alt: "Steering and suspension repair service"
   },
   {
     title: "Brake Service & Replacement",
     desc: "Replacing brake pads and rotors, brake caliper replacement, master cylinder repair, ABS module diagnostics, and complete brake system flushes.",
-    img: "/assets/brake-service-DsDAzs6N.jpg",
+    img: "/assets/service-brakes-real.jpg",
     alt: "Brake service and pad replacement",
     badge: "Stopping Power"
   },
   {
     title: "Battery & Alternator Repairs",
     desc: "Battery testing and replacement, alternator testing and rebuilds, starter motor replacement, and diagnostic of starting & charging electrical systems.",
-    img: "/assets/auto-electrical-R8BtY7J1.jpg",
+    img: "/assets/service-battery-real.jpg",
     alt: "Battery alternator auto electrical repair"
   }
 ]
