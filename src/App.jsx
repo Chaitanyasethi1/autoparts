@@ -263,43 +263,43 @@ const Hero = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0) 0%, hsl(0 0% 0% / 0.5) 100%)" }} />
-      <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left h-full flex flex-col justify-start pt-32 sm:pt-40 md:pt-48">
+      <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left h-full flex flex-col justify-start pt-24 sm:pt-32 md:pt-48">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           className="max-w-2xl"
         >
-          <span className="inline-flex items-center gap-2 bg-primary/90 text-primary-foreground px-4 py-1.5 rounded-full font-display text-xs uppercase tracking-wider font-bold mb-6 shadow-lg shadow-primary/20">
-            <Star className="w-3.5 h-3.5 fill-current" /> Stoney Creek's Trusted Auto Care
+          <span className="inline-flex items-center gap-2 bg-primary/90 text-primary-foreground px-3 py-1.5 md:px-4 md:py-1.5 rounded-full font-display text-[10px] sm:text-xs uppercase tracking-wider font-bold mb-4 md:mb-6 shadow-lg shadow-primary/20">
+            <Star className="w-3 h-3 md:w-3.5 md:h-3.5 fill-current" /> Stoney Creek's Trusted Auto Care
           </span>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black leading-tight mb-6 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
+          <h1 className="font-display text-3xl sm:text-4xl md:text-7xl font-black leading-tight mb-4 md:mb-6 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
             Expert <span className="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 text-transparent bg-clip-text" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
             <br />
             You Can Count On
           </h1>
-          <p className="font-body text-zinc-200 text-lg md:text-xl mb-6 font-bold" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
+          <p className="font-body text-zinc-200 text-sm sm:text-base md:text-xl mb-4 md:mb-6 font-bold leading-relaxed" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
             From vehicle inspections and engine diagnostics to new tires and brake repair. Our certified mechanics deliver fast, reliable repairs in Stoney Creek.
           </p>
-          <p className="font-display text-secondary text-sm sm:text-base uppercase tracking-wider font-black mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
-            <Clock className="w-5 h-5 text-secondary" /> Open Monday to Saturday — Walk-ins Welcome
+          <p className="font-display text-secondary text-[11px] sm:text-xs md:text-base uppercase tracking-wider font-black mb-6 md:mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
+            <Clock className="w-4 h-4 md:w-5 md:h-5 text-secondary" /> Open Monday to Saturday - Walk-ins Welcome
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-start">
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-start">
             <a
               href={PHONE_URL}
-              className="inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-md font-display text-lg uppercase tracking-wider hover:opacity-90 transition-opacity glow-red"
+              className="inline-flex items-center justify-center gap-2 md:gap-3 bg-primary text-primary-foreground px-5 py-3 md:px-8 md:py-4 rounded-md font-display text-base md:text-lg uppercase tracking-wider hover:opacity-90 transition-opacity glow-red"
             >
-              <Phone className="w-5 h-5" />
+              <Phone className="w-4 h-4 md:w-5 md:h-5" />
               Call Now: {PHONE_NUMBER}
             </a>
             <a
               href={DIRECTIONS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 bg-zinc-900/80 border border-secondary text-secondary px-8 py-4 rounded-md font-display text-lg uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
+              className="inline-flex items-center justify-center gap-2 md:gap-3 bg-zinc-900/80 border border-secondary text-secondary px-5 py-3 md:px-8 md:py-4 rounded-md font-display text-base md:text-lg uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
             >
-              <MapPin className="w-5 h-5" />
+              <MapPin className="w-4 h-4 md:w-5 md:h-5" />
               Get Directions
             </a>
           </div>
