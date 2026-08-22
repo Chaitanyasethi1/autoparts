@@ -15,10 +15,6 @@ export const TopBar = () => {
           <span className="hidden sm:inline text-zinc-600">|</span>
 
           <span className="flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-primary" /> Stoney Creek's Top Rated Shop
-          </span>
-          <span className="hidden sm:inline text-zinc-600">|</span>
-          <span className="flex items-center gap-1.5">
             Proudly Canadian
           </span>
           <span className="hidden lg:inline text-zinc-600">|</span>
