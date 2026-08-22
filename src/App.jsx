@@ -261,7 +261,7 @@ const Hero = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0) 0%, hsl(0 0% 0% / 0.5) 100%)" }} />
-      <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left h-full flex flex-col justify-start pt-24 sm:pt-32 md:pt-48">
+      <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left h-full flex flex-col justify-start pt-16 sm:pt-20 md:pt-24">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
