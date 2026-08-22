@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate, Outlet, Link } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram, ArrowUp, ChevronRight } from 'lucide-react'
+import { Phone, Clock, MapPin, Wrench, Check, Tag, Mail, ArrowRight, ArrowLeft, Menu, X, Star, Shield, Car, Battery, Disc, Instagram, ArrowUp, ChevronRight, Calendar } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
 import { BookingSection } from './components/BookingSection'
 import { MagnetizeButton } from './components/ui/magnetize-button'
@@ -952,15 +952,22 @@ const Footer = () => {
 
 const StickyMobileCall = () => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-primary border-t border-primary/80 safe-bottom">
+    <div className="fixed bottom-0 left-0 right-0 z-[60] md:hidden bg-zinc-950 border-t border-white/10 safe-bottom grid grid-cols-2 shadow-2xl">
       <a
         href={PHONE_URL}
-        className="flex items-center justify-center gap-3 w-full py-4 px-6 font-display text-primary-foreground text-base uppercase tracking-wider active:opacity-80 transition-opacity"
+        className="flex items-center justify-center gap-2 w-full py-4 px-2 bg-primary font-display text-primary-foreground text-sm sm:text-base uppercase tracking-wider active:opacity-80 transition-opacity"
         id="sticky-call-btn"
       >
-        <Phone className="w-5 h-5 animate-pulse" />
-        Call Now: {PHONE_NUMBER}
+        <Phone className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
+        Call Now
       </a>
+      <Link
+        to="/contact"
+        className="flex items-center justify-center gap-2 w-full py-4 px-2 bg-zinc-900 font-display text-white text-sm sm:text-base uppercase tracking-wider active:opacity-80 transition-colors hover:bg-zinc-800"
+      >
+        <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+        Book Appt
+      </Link>
     </div>
   )
 }
