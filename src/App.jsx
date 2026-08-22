@@ -301,25 +301,6 @@ const Hero = () => {
             </a>
           </div>
         </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="mt-8 md:mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto"
-        >
-          {[
-            { num: "336", label: "Hilton Drive" },
-            { num: "5★", label: "Rated Shop" },
-            { num: "100%", label: "Licensed" },
-            { num: "Best", label: "Prices in Town" }
-          ].map((e) => (
-            <div key={e.label} className="text-center">
-              <div className="font-display text-2xl md:text-3xl font-bold text-primary">{e.num}</div>
-              <div className="font-body text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider">{e.label}</div>
-            </div>
-          ))}
-        </motion.div>
       </div>
     </section>
   )
