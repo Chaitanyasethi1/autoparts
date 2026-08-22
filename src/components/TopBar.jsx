@@ -29,26 +29,6 @@ export const TopBar = () => {
           </motion.div>
         </div>
 
-        {/* Right Side: App Download Coming Soon */}
-        <div className="flex items-center gap-3 shrink-0 mt-2 md:mt-0">
-          <span className="font-display uppercase tracking-wider text-xs font-bold text-zinc-300">
-            Download App:
-          </span>
-          <div className="flex items-center gap-2 relative group cursor-not-allowed">
-            <div className="bg-zinc-800 p-2 rounded-md text-zinc-400 group-hover:text-zinc-500 transition-colors">
-              <Apple className="w-4 h-4" />
-            </div>
-            <div className="bg-zinc-800 p-2 rounded-md text-zinc-400 group-hover:text-zinc-500 transition-colors">
-              <Smartphone className="w-4 h-4" />
-            </div>
-            
-            {/* Coming Soon Tooltip */}
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] font-bold uppercase px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
-              Coming Soon
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   )
