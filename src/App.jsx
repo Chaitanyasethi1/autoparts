@@ -270,9 +270,6 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="max-w-2xl"
         >
-          <span className="inline-flex items-center gap-2 bg-primary/90 text-primary-foreground px-3 py-1.5 md:px-4 md:py-1.5 rounded-full font-display text-[10px] sm:text-xs uppercase tracking-wider font-bold mb-4 md:mb-6 shadow-lg shadow-primary/20">
-            <Star className="w-3 h-3 md:w-3.5 md:h-3.5 fill-current" /> Stoney Creek's Trusted Auto Care
-          </span>
           <h1 className="font-display text-3xl sm:text-4xl md:text-7xl font-black leading-tight mb-4 md:mb-6 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
             Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
             <br />
@@ -333,7 +330,7 @@ const servicesList = [
   {
     title: "Vehicle Inspection & Safety",
     desc: "Complete pre-purchase inspections, visual checks, and safety standards certifications to ensure your vehicle is safe and legally compliant on Ontario roads.",
-    img: "/assets/vehicle-inspection.jpg",
+    img: "/assets/safety-inspection-driveon-DZvfbrbb.jpg",
     alt: "Vehicle inspection and safety standards certification at Primetech",
     badge: "Safety Standards"
   },
@@ -354,7 +351,7 @@ const servicesList = [
   {
     title: "Exhaust Repairs",
     desc: "Muffler replacements, catalytic converter repair, exhaust pipe welding, oxygen sensor service, and exhaust leak diagnostics for clean, quiet operation.",
-    img: "/assets/exhaust_repair.jpg",
+    img: "https://images.unsplash.com/photo-1625219904229-873d6bb6c483?q=80&w=800&auto=format&fit=crop",
     alt: "Exhaust repairs and muffler replacements"
   },
   {
@@ -367,7 +364,7 @@ const servicesList = [
   {
     title: "New Tires Sales",
     desc: "We sell brand new tires from all major industry brands. Passenger tires, performance tires, SUV, light truck, and winter tires at competitive prices.",
-    img: "/assets/new-tires.jpg",
+    img: "https://images.unsplash.com/photo-1578330768652-3a3d24fc2506?q=80&w=800&auto=format&fit=crop",
     alt: "New tires sales from top brands"
   },
   {
