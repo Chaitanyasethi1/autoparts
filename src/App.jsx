@@ -251,7 +251,7 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[75vh] md:min-h-screen flex items-end md:items-center justify-center overflow-hidden pb-12 pt-32 md:pt-0">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-0 pb-16 md:pb-0">
       <video
         src="/hero-video.mp4"
         autoPlay
@@ -261,7 +261,7 @@ const Hero = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0) 0%, hsl(0 0% 0% / 0.5) 100%)" }} />
-      <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left w-full md:mt-24">
+      <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left w-full md:mt-16">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
