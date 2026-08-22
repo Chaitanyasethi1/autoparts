@@ -251,7 +251,7 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pb-12">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-12">
       <video
         src="/hero-video.mp4"
         autoPlay
