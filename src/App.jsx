@@ -89,7 +89,7 @@ const SplashAnimation = ({ onComplete }) => {
        >
           {/* Car Body */}
           <svg width="240" height="100" viewBox="0 0 240 100" className="text-primary fill-current absolute top-0 left-0 drop-shadow-2xl z-10">
-            <path d="M 15 80 L 15 50 Q 15 40 25 40 L 55 40 L 85 20 L 165 20 Q 175 20 185 30 L 215 50 Q 225 50 225 60 L 225 80 L 200 80 A 25 25 0 0 1 150 80 L 100 80 A 25 25 0 0 1 50 80 Z" />
+            <path d="M 15 80 L 15 50 Q 15 40 25 40 L 55 40 L 85 20 L 165 20 Q 175 20 185 30 L 215 50 Q 225 50 225 60 L 225 80 L 200 80 A 25 25 0 0 0 150 80 L 100 80 A 25 25 0 0 0 50 80 Z" />
             <path d="M 65 40 L 90 25 L 125 25 L 125 40 Z" fill="#fff" opacity="0.3"/>
             <path d="M 130 25 L 160 25 L 180 45 L 130 45 Z" fill="#fff" opacity="0.3"/>
             <path d="M 15 50 L 225 50" stroke="#000" strokeWidth="2" opacity="0.2" />
