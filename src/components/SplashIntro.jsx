@@ -62,7 +62,7 @@ export const SplashIntro = ({ onComplete }) => {
         <motion.img 
           src="/assets/intro/logo-text.png" 
           alt="Primetech Auto" 
-          className="logo-text h-24 md:h-40 lg:h-[200px] -ml-8 md:-ml-16 lg:-ml-28 z-10 relative object-contain"
+          className="logo-text h-24 md:h-40 lg:h-[200px] -ml-[120px] md:-ml-[220px] lg:-ml-[380px] z-10 relative object-contain"
           style={{ mixBlendMode: 'screen' }} // Removes the black background
           initial={{ opacity: 0, x: 50 }}
         />
