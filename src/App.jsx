@@ -922,15 +922,12 @@ const MainLayout = () => {
 }
 
 const HomePage = () => {
-  const [showSplash, setShowSplash] = useState(() => {
-    return !sessionStorage.getItem('introPlayed');
-  })
+  const [showSplash, setShowSplash] = useState(true)
 
   return (
     <>
       <AnimatePresence>
         {showSplash && <SplashIntro onComplete={() => {
-          sessionStorage.setItem('introPlayed', 'true');
           setShowSplash(false);
         }} />}
       </AnimatePresence>
