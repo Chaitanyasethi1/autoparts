@@ -32,53 +32,117 @@ const BrandLogo = ({ className = "" }) => {
   )
 }
 
-
+const Wheel = () => (
+  <div className="w-full h-full rounded-full bg-zinc-800 border-[5px] border-zinc-950 flex items-center justify-center shadow-lg relative overflow-hidden">
+    <div className="absolute inset-0.5 rounded-full border border-zinc-700" />
+    <div className="absolute w-full h-[4px] bg-zinc-500 rounded-sm" />
+    <div className="absolute w-full h-[4px] bg-zinc-500 rounded-sm rotate-45" />
+    <div className="absolute w-full h-[4px] bg-zinc-500 rounded-sm rotate-90" />
+    <div className="absolute w-full h-[4px] bg-zinc-500 rounded-sm -rotate-45" />
+    <div className="w-3 h-3 bg-secondary rounded-full z-10 border border-zinc-900" />
+  </div>
+)
 
 const SplashAnimation = ({ onComplete }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onComplete();
-    }, 2200);
-    return () => clearTimeout(timer);
-  }, [onComplete]);
-
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-zinc-950 overflow-hidden"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background overflow-hidden"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="relative w-[280px] md:w-[400px] h-[120px] md:h-[150px]">
-        {/* Left part of logo (Car & Gear) */}
-        <motion.div
-          className="absolute inset-0 flex justify-center items-center"
-          style={{ clipPath: 'polygon(0 0, 40% 0, 40% 100%, 0 100%)' }} 
-          initial={{ x: "-100vw" }}
-          animate={{ x: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut", type: "spring", damping: 15 }}
-        >
-          <img src="/primetechauto.png" alt="" className="w-full h-full object-contain drop-shadow-2xl" />
-        </motion.div>
+       {/* Smoke Particles */}
+       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
+          <div className="relative w-[240px] h-[100px]">
+             {[...Array(8)].map((_, i) => (
+               <motion.div
+                 key={i}
+                 className="absolute w-10 h-10 bg-zinc-300 rounded-full blur-md opacity-0"
+                 style={{ top: '60px', left: '10px' }}
+                 animate={{
+                   opacity: [0, 0, 0.8, 0],
+                   scale: [0, 0, 1, 3 + (i % 3)],
+                   x: [0, 0, -40 - (i * 15), -100 - (i * 30)],
+                   y: [0, 0, -10 - (i * 5), -40 - (i * 10)]
+                 }}
+                 transition={{
+                   times: [0, 0.7, 0.8, 1], // triggers when car accelerates at 0.7
+                   duration: 3.5,
+                   ease: "easeOut"
+                 }}
+               />
+             ))}
+          </div>
+       </div>
 
-        {/* Right part of logo (Text) */}
-        <motion.div
-          className="absolute inset-0 flex justify-center items-center"
-          style={{ clipPath: 'polygon(40% 0, 100% 0, 100% 100%, 40% 100%)' }}
-          initial={{ x: "100vw" }}
-          animate={{ x: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut", type: "spring", damping: 15 }}
-        >
-          <img src="/primetechauto.png" alt="" className="w-full h-full object-contain drop-shadow-2xl" />
-        </motion.div>
-      </div>
+       <motion.div
+          className="relative w-[240px] h-[100px] z-10 transform scale-90 md:scale-100"
+          animate={{ 
+             x: ["-100vw", "0vw", "0vw", "100vw"],
+             y: [0, 0, 15, -8, 0, 0] 
+          }}
+          transition={{ 
+             x: { times: [0, 0.2, 0.7, 1], duration: 3.5, ease: ["easeOut", "linear", "easeIn"] },
+             y: { times: [0, 0.44, 0.45, 0.48, 0.52, 1], duration: 3.5 }
+          }}
+          onAnimationComplete={onComplete}
+       >
+          {/* Car Body */}
+          <svg width="240" height="100" viewBox="0 0 240 100" className="text-primary fill-current absolute top-0 left-0 drop-shadow-2xl z-10">
+            <path d="M 15 80 L 15 50 Q 15 40 25 40 L 55 40 L 85 20 L 165 20 Q 175 20 185 30 L 215 50 Q 225 50 225 60 L 225 80 L 200 80 A 25 25 0 0 0 150 80 L 100 80 A 25 25 0 0 0 50 80 Z" />
+            <path d="M 65 40 L 90 25 L 125 25 L 125 40 Z" fill="#fff" opacity="0.3"/>
+            <path d="M 130 25 L 160 25 L 180 45 L 130 45 Z" fill="#fff" opacity="0.3"/>
+            <path d="M 15 50 L 225 50" stroke="#000" strokeWidth="2" opacity="0.2" />
+            <path d="M 215 55 L 225 55 L 225 65 L 210 65 Z" fill="#fbbf24" opacity="0.9" />
+            <path d="M 15 55 L 25 55 L 25 65 L 15 65 Z" fill="#ef4444" opacity="0.9" />
+          </svg>
+          
+          {/* Back Wheel */}
+          <motion.div 
+             className="absolute top-[60px] left-[55px] w-[40px] h-[40px] z-20"
+             animate={{ rotate: [0, 720, 720, 2160] }}
+             transition={{ times: [0, 0.2, 0.7, 1], duration: 3.5, ease: ["easeOut", "linear", "easeIn"] }}
+          >
+             <Wheel />
+          </motion.div>
 
-      <motion.div
-        className="h-[2px] bg-primary rounded-full mt-6"
-        initial={{ width: 0, opacity: 0 }}
-        animate={{ width: 200, opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.4 }}
-      />
+          {/* Front Wheel Container - Flies in from behind/left */}
+          <motion.div
+            className="absolute top-[60px] left-[155px] w-[40px] h-[40px] z-20"
+            animate={{ 
+                x: [-800, -800, 0, 0], 
+                y: [-400, -400, 0, 0],
+                opacity: [0, 1, 1, 1],
+                scale: [2, 2, 1, 1]
+            }}
+            transition={{ 
+                times: [0, 0.2, 0.45, 1], 
+                duration: 3.5, 
+                ease: ["linear", "easeOut", "linear"] // smooth landing
+            }}
+          >
+             <motion.div 
+               className="w-full h-full"
+               animate={{ rotate: [0, 0, 1080, 1080, 2520] }} // Fast clockwise spin
+               transition={{ times: [0, 0.2, 0.45, 0.7, 1], duration: 3.5, ease: ["linear", "easeOut", "linear", "easeIn"] }}
+             >
+                <Wheel />
+             </motion.div>
+          </motion.div>
+       </motion.div>
+       
+       <motion.div 
+         className="mt-8 md:mt-12 flex flex-col items-center relative z-20 px-4"
+         animate={{ opacity: [0, 1, 1, 0] }}
+         transition={{ times: [0, 0.1, 0.8, 1], duration: 3.5 }}
+       >
+         <BrandLogo className="scale-[1.15] sm:scale-125 md:scale-150 transform mb-4" />
+         <motion.div 
+            className="h-1 bg-secondary rounded-full mt-2 md:mt-4"
+            animate={{ width: [0, 150, 150, 0] }}
+            transition={{ times: [0, 0.2, 0.8, 1], duration: 3.5 }}
+         />
+       </motion.div>
     </motion.div>
   )
 }
@@ -204,12 +268,12 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="max-w-2xl"
         >
-          <h1 className="font-display text-3xl sm:text-4xl md:text-7xl font-black leading-tight mb-4 md:mb-6 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black leading-tight mb-6 md:mb-8 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
             Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
             <br />
             You Can Count On
           </h1>
-          <p className="font-body text-zinc-200 text-sm sm:text-base md:text-xl mb-4 md:mb-6 font-bold leading-relaxed" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
+          <p className="font-body text-zinc-200 text-base md:text-xl mb-8 md:mb-10 font-bold leading-relaxed" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
             From vehicle inspections and engine diagnostics to new tires and brake repair. Our certified mechanics deliver fast, reliable repairs in Stoney Creek.
           </p>
           <p className="font-display text-secondary text-[11px] sm:text-xs md:text-base uppercase tracking-wider font-black mb-6 md:mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
@@ -577,7 +641,7 @@ const RatingStars = ({ rating }) => {
   )
 }
 
-const ReviewsSection = () => {
+export const ReviewsSection = () => {
   return (
     <section id="reviews" className="py-20 bg-card overflow-hidden">
       <div className="container mx-auto px-4">

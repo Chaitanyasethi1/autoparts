@@ -22,7 +22,7 @@ export const TopBar = () => {
             transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
           >
             {[...announcements, ...announcements, ...announcements, ...announcements].map((item, i) => (
-              <span key={i} className="flex items-center gap-2 text-primary font-body tracking-wide font-bold drop-shadow-md whitespace-nowrap">
+              <span key={i} className="flex items-center gap-2 text-white font-body tracking-wide font-bold drop-shadow-md whitespace-nowrap">
                 <item.Icon className="w-4 h-4" /> {item.text}
               </span>
             ))}

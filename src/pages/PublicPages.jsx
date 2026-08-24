@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { useParams, Link } from 'react-router-dom'
 import { Wrench, Settings, ArrowLeft, Shield, Clock, Tag, Car, Star } from 'lucide-react'
+import { ReviewsSection } from '../App'
 
 // Generic Page Header Component
 const PageHeader = ({ title, subtitle }) => (
@@ -81,14 +82,9 @@ export const ServicesPage = () => (
 export const ReviewsPage = () => (
   <>
     <Helmet><title>Customer Reviews | Primetech Auto & Tires</title></Helmet>
-    <PageHeader title="Customer Reviews" subtitle="See what our customers have to say about our service." />
-    <ContentWrapper>
-      <p>Our customers love us! We maintain a 5-star rating across all platforms because we treat every vehicle like our own.</p>
-      {/* Real reviews can be fetched or hardcoded here later */}
-      <div className="p-8 bg-zinc-900 rounded-xl border border-white/5 mt-8 text-center italic">
-        "Best mechanic in Stoney Creek. Honest, fast, and didn't overcharge me."
-      </div>
-    </ContentWrapper>
+    <div className="pt-24 min-h-screen">
+      <ReviewsSection />
+    </div>
   </>
 )
 
