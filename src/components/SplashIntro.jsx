@@ -54,7 +54,7 @@ export const SplashIntro = ({ onComplete }) => {
         <motion.img 
           src="/assets/intro/car-icon.png" 
           alt="Car Logo" 
-          className="car-icon w-32 md:w-48 z-10 relative object-contain"
+          className="car-icon w-64 md:w-96 lg:w-[500px] z-10 relative object-contain"
           initial={{ opacity: 0, x: -1000 }}
         />
         
@@ -62,7 +62,7 @@ export const SplashIntro = ({ onComplete }) => {
         <motion.img 
           src="/assets/intro/logo-text.png" 
           alt="Primetech Auto" 
-          className="logo-text h-16 md:h-24 ml-2 z-10 relative object-contain"
+          className="logo-text h-24 md:h-40 lg:h-[200px] -ml-8 md:-ml-16 lg:-ml-28 z-10 relative object-contain"
           style={{ mixBlendMode: 'screen' }} // Removes the black background
           initial={{ opacity: 0, x: 50 }}
         />
