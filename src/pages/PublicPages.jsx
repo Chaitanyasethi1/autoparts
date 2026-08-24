@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
 import { useParams, Link } from 'react-router-dom'
 import { Wrench, Settings, ArrowLeft, Shield, Clock, Tag, Car, Star } from 'lucide-react'
-import { ReviewsSection } from '../App'
+import { ReviewsSection, WhyChooseSection } from '../App'
 
 // Generic Page Header Component
 const PageHeader = ({ title, subtitle }) => (
@@ -294,35 +294,6 @@ export const WhyUsPage = () => (
   <>
     <Helmet><title>Why Choose Us | Primetech Auto & Tires</title></Helmet>
     <PageHeader title="Why Choose Primetech" subtitle="The leading choice for auto repair and maintenance in Stoney Creek." />
-    
-    <div className="bg-background py-20">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            { icon: Shield, title: "Fully Licensed", desc: "Our repair facility and technicians are fully licensed, insured, and certified by the Province of Ontario." },
-            { icon: Clock, title: "No Appointment Needed", desc: "First come, first served. Stop by our shop anytime during regular hours. Walk-ins are always welcome!" },
-            { icon: Wrench, title: "Expert Mechanics", desc: "Factory-trained and certified automotive mechanics who do it right the first time, every time." },
-            { icon: Tag, title: "Best Prices in Town", desc: "Competitive, transparent pricing on all inspections, diagnostics, parts, and tire installations." },
-            { icon: Car, title: "All Makes & Models", desc: "We service Domestic, Asian, and European imports, including SUVs, passenger cars, and light trucks." },
-            { icon: Star, title: "Top Rated Service", desc: "We are focused on quality parts, honest assessments, and 100% customer satisfaction." }
-          ].map((feature, i) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-card p-8 rounded-xl border border-white/5 hover:border-primary/50 transition-colors"
-            >
-              <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                <feature.icon className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-display font-bold mb-3">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{feature.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <WhyChooseSection />
   </>
 )

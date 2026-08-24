@@ -422,7 +422,7 @@ const PricingSection = () => {
   )
 }
 
-const WhyChooseSection = () => {
+export const WhyChooseSection = () => {
   return (
     <section id="why-us" className="py-20 bg-background">
       <div className="container mx-auto px-4">
