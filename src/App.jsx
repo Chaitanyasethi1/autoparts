@@ -277,7 +277,7 @@ const Hero = () => {
             From vehicle inspections and engine diagnostics to new tires and brake repair. Our certified mechanics deliver fast, reliable repairs in Stoney Creek.
           </p>
           <p className="font-display text-secondary text-[11px] sm:text-xs md:text-base uppercase tracking-wider font-black mb-6 md:mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
-            <Clock className="w-4 h-4 md:w-5 md:h-5 text-secondary" /> Open Monday to Saturday - Walk-ins Welcome
+            <Clock className="w-4 h-4 md:w-5 md:h-5 text-secondary" /> Open 7 Days a Week - Walk-ins Welcome
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-start">
@@ -734,9 +734,9 @@ const ContactSection = () => {
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
                 <div className="text-secondary font-semibold">
-                  <p>Monday — Friday: 9 AM — 6 PM</p>
-                  <p>Saturday: 9 AM — 4 PM</p>
-                  <p>Sunday: Closed</p>
+                  <p>Monday - Friday: 9 AM - 8 PM</p>
+                  <p>Saturday: 10 AM - 8 PM</p>
+                  <p>Sunday: 11 AM - 5 PM</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
