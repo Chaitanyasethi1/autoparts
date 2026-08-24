@@ -448,31 +448,37 @@ const WhyChooseSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: t * 0.08 }}
-              className="group w-full h-[220px] cursor-pointer"
+              className="group w-full h-[230px] cursor-pointer"
               style={{ perspective: '1000px' }}
             >
               <div 
-                className="relative w-full h-full duration-500 transition-transform group-hover:[transform:rotateY(180deg)]" 
+                className="relative w-full h-full duration-700 transition-transform group-hover:[transform:rotateY(180deg)]" 
                 style={{ transformStyle: 'preserve-3d' }}
               >
-                {/* Front */}
+                {/* Front Side */}
                 <div 
-                  className="absolute inset-0 w-full h-full flex flex-col items-center justify-center p-6 bg-zinc-900/50 hover:bg-zinc-800/80 transition-colors rounded-2xl border border-white/5 shadow-lg"
+                  className="absolute inset-0 w-full h-full flex flex-col items-center justify-center p-6 bg-zinc-900/90 hover:bg-zinc-900 transition-all rounded-2xl border border-white/10 group-hover:border-primary/40 shadow-xl"
                   style={{ backfaceVisibility: 'hidden' }}
                 >
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(225,6,0,0.15)]">
                     <e.icon className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="font-display text-lg font-bold mb-2 text-foreground text-center">{e.title}</h3>
+                  <h3 className="font-display text-xl font-bold mb-2 text-white text-center tracking-wide">{e.title}</h3>
+                  <span className="text-[11px] font-mono uppercase tracking-widest text-primary/80 bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+                    Hover for info →
+                  </span>
                 </div>
                 
-                {/* Back */}
+                {/* Back Side */}
                 <div 
-                  className="absolute inset-0 w-full h-full bg-primary rounded-2xl flex flex-col items-center justify-center p-6 text-center shadow-xl"
+                  className="absolute inset-0 w-full h-full bg-gradient-to-br from-red-950 via-zinc-900 to-zinc-950 rounded-2xl border border-primary/50 flex flex-col items-center justify-center p-6 text-center shadow-2xl shadow-primary/20"
                   style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                 >
-                  <e.icon className="w-8 h-8 text-primary-foreground/30 mb-3" />
-                  <p className="font-body text-primary-foreground text-sm leading-relaxed">{e.desc}</p>
+                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mb-3">
+                    <e.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <h4 className="font-display text-base font-bold text-white mb-2">{e.title}</h4>
+                  <p className="font-body text-zinc-300 text-xs leading-relaxed">{e.desc}</p>
                 </div>
               </div>
             </motion.div>
