@@ -174,7 +174,7 @@ export const ChatWidget = () => {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-primary hover:bg-primary/90 text-primary-foreground w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform"
+        className="bg-primary hover:bg-primary/90 text-primary-foreground w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform ring-2 ring-white ring-offset-2 ring-offset-background"
         aria-label="Open AI Assistant"
       >
         {isOpen ? <X className="w-6 h-6" /> : <Car className="w-7 h-7" />}

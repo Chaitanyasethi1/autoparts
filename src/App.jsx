@@ -138,14 +138,14 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-0 pb-16 md:pb-0">
+    <section className="relative min-h-[90svh] md:min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-0 pb-16 md:pb-0">
       <video
         src="/hero-video.mp4"
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-center"
       />
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0) 0%, hsl(0 0% 0% / 0.5) 100%)" }} />
       <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left w-full md:mt-16">
@@ -153,14 +153,14 @@ const Hero = () => {
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-2xl"
+          className="max-w-2xl flex flex-col gap-3 sm:gap-4"
         >
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black leading-tight mb-6 md:mb-8 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
-            Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
-            <br />
-            You Can Count On
+          <h1 className="font-display text-[2.2rem] leading-[1.1] sm:text-5xl md:text-7xl font-black mb-3 md:mb-4 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
+            Expert <span className="text-primary block sm:inline mt-1 sm:mt-0" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
+            <br className="hidden sm:block" />
+            <span className="block mt-1 sm:mt-0">You Can Count On</span>
           </h1>
-          <p className="font-body text-zinc-200 text-base md:text-xl mb-8 md:mb-10 font-bold leading-relaxed" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
+          <p className="font-body text-zinc-200 text-[15px] sm:text-base md:text-xl mb-4 md:mb-6 font-bold leading-relaxed" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
             From vehicle inspections and engine diagnostics to new tires and brake repair. Our certified mechanics deliver fast, reliable repairs in Stoney Creek.
           </p>
           <p className="font-display text-secondary text-[11px] sm:text-xs md:text-base uppercase tracking-wider font-black mb-6 md:mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
@@ -448,13 +448,33 @@ const WhyChooseSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: t * 0.08 }}
-              className="text-center"
+              className="group w-full h-[220px] cursor-pointer"
+              style={{ perspective: '1000px' }}
             >
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <e.icon className="w-6 h-6 text-primary" />
+              <div 
+                className="relative w-full h-full duration-500 transition-transform group-hover:[transform:rotateY(180deg)]" 
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                {/* Front */}
+                <div 
+                  className="absolute inset-0 w-full h-full flex flex-col items-center justify-center p-6 bg-zinc-900/50 hover:bg-zinc-800/80 transition-colors rounded-2xl border border-white/5 shadow-lg"
+                  style={{ backfaceVisibility: 'hidden' }}
+                >
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                    <e.icon className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="font-display text-lg font-bold mb-2 text-foreground text-center">{e.title}</h3>
+                </div>
+                
+                {/* Back */}
+                <div 
+                  className="absolute inset-0 w-full h-full bg-primary rounded-2xl flex flex-col items-center justify-center p-6 text-center shadow-xl"
+                  style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                >
+                  <e.icon className="w-8 h-8 text-primary-foreground/30 mb-3" />
+                  <p className="font-body text-primary-foreground text-sm leading-relaxed">{e.desc}</p>
+                </div>
               </div>
-              <h3 className="font-display text-lg font-bold mb-2 text-foreground">{e.title}</h3>
-              <p className="font-body text-sm text-muted-foreground">{e.desc}</p>
             </motion.div>
           ))}
         </div>
