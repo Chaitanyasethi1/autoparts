@@ -549,7 +549,7 @@ const WhyChooseSection = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {[
             { icon: Shield, title: "Fully Licensed", desc: "Our repair facility and technicians are fully licensed, insured, and certified." },
-            { icon: Clock, title: "No Appointment Needed", desc: "First come, first served. Stop by our shop anytime during regular hours." },
+            { icon: Clock, title: "No Appointment Needed", desc: "First come, first served for lube and tire services only. Stop by our shop anytime during regular hours." },
             { icon: Wrench, title: "Expert Mechanics", desc: "Factory-trained and certified automotive mechanics who do it right the first time." },
             { icon: Tag, title: "Best Prices in Town", desc: "Competitive pricing on all inspections, diagnostics, parts, and tire installations." },
             { icon: Car, title: "All Makes & Models", desc: "Domestic, Asian, and European imports, SUVs, passenger cars, and light trucks." },
@@ -648,7 +648,7 @@ const ReviewsSection = () => {
         <div className="text-center mb-12">
           <p className="font-display text-secondary uppercase tracking-[0.3em] text-sm mb-3">Testimonials</p>
           <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
-            <span className="text-gradient">5.0★</span> Rated in Stoney Creek
+            <span className="text-gradient">Top</span> Rated in Stoney Creek
           </h2>
           <p className="font-body text-muted-foreground max-w-xl mx-auto mb-10">
             See what vehicle owners in Stoney Creek and Hamilton have to say about our auto care services.
