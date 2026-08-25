@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion, useAnimate } from 'framer-motion';
 
 export const SplashIntro = ({ onComplete }) => {
   const [scope, animate] = useAnimate();
-  const [isSkipping, setIsSkipping] = useState(false);
 
   useEffect(() => {
-    if (isSkipping) return;
-
     const sequence = async () => {
       // Step 1: Car drives in from left to center
       await animate(".car-icon", { x: [-1000, 0], opacity: [0, 1] }, { duration: 1.1, ease: "easeOut" });
@@ -32,12 +29,7 @@ export const SplashIntro = ({ onComplete }) => {
     };
 
     sequence();
-  }, [animate, scope, isSkipping, onComplete]);
-
-  const handleSkip = () => {
-    setIsSkipping(true);
-    onComplete();
-  };
+  }, [animate, scope, onComplete]);
 
   return (
     <div 
@@ -68,7 +60,7 @@ export const SplashIntro = ({ onComplete }) => {
           <motion.img 
             src="/assets/intro/logo-text.png" 
             alt="Primetech Auto" 
-            className="logo-text h-28 sm:h-40 md:h-48 lg:h-[230px] -ml-[80px] sm:-ml-[130px] md:-ml-[170px] lg:-ml-[290px] mt-1 md:mt-2 z-10 relative object-contain"
+            className="logo-text h-28 sm:h-40 md:h-48 lg:h-[230px] -ml-[145px] sm:-ml-[210px] md:-ml-[270px] lg:-ml-[380px] mt-1 md:mt-2 z-10 relative object-contain"
             style={{ mixBlendMode: 'screen' }}
             initial={{ opacity: 0, x: 60 }}
           />
@@ -76,14 +68,6 @@ export const SplashIntro = ({ onComplete }) => {
         </div>
 
       </div>
-
-      {/* Skip Button */}
-      <button 
-        onClick={handleSkip}
-        className="absolute bottom-8 right-8 text-white/50 hover:text-white transition-colors font-body text-sm tracking-wider uppercase z-20 bg-zinc-900/80 px-4 py-2 rounded-full border border-white/10"
-      >
-        Skip Intro
-      </button>
     </div>
   );
 };
