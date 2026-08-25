@@ -138,7 +138,7 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[90svh] md:min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-0 pb-16 md:pb-0">
+    <section className="relative min-h-[95svh] md:min-h-screen flex items-center justify-center overflow-hidden pt-28 sm:pt-24 md:pt-0 pb-20 md:pb-0">
       <video
         src="/hero-video.mp4"
         autoPlay
@@ -147,23 +147,23 @@ const Hero = () => {
         playsInline
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
-      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0) 0%, hsl(0 0% 0% / 0.5) 100%)" }} />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0.2) 0%, hsl(0 0% 0% / 0.6) 100%)" }} />
       <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left w-full md:mt-16">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-2xl flex flex-col gap-3 sm:gap-4"
+          className="max-w-2xl flex flex-col gap-4 sm:gap-6"
         >
-          <h1 className="font-display text-[2.2rem] leading-[1.1] sm:text-5xl md:text-7xl font-black mb-3 md:mb-4 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
-            Expert <span className="text-primary block sm:inline mt-1 sm:mt-0" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
-            <br className="hidden sm:block" />
-            <span className="block mt-1 sm:mt-0">You Can Count On</span>
+          <h1 className="font-display text-[1.45rem] sm:text-4xl md:text-6xl lg:text-7xl font-black leading-snug sm:leading-tight mb-2 md:mb-4 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
+            Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
+            <br />
+            <span>You Can Count On</span>
           </h1>
-          <p className="font-body text-zinc-200 text-[15px] sm:text-base md:text-xl mb-4 md:mb-6 font-bold leading-relaxed" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
+          <p className="font-body text-zinc-200 text-sm sm:text-base md:text-xl mb-2 sm:mb-4 font-bold leading-relaxed max-w-xl" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
             From vehicle inspections and engine diagnostics to new tires and brake repair. Our certified mechanics deliver fast, reliable repairs in Stoney Creek.
           </p>
-          <p className="font-display text-secondary text-[11px] sm:text-xs md:text-base uppercase tracking-wider font-black mb-6 md:mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
+          <p className="font-display text-secondary text-[11px] sm:text-xs md:text-base uppercase tracking-wider font-black mb-4 sm:mb-6 md:mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
             <Clock className="w-4 h-4 md:w-5 md:h-5 text-secondary" /> Open 7 Days a Week - Walk-ins Welcome
           </p>
           
