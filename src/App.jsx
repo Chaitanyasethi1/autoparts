@@ -138,7 +138,7 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[95svh] md:min-h-screen flex items-center justify-center overflow-hidden pt-28 sm:pt-24 md:pt-0 pb-20 md:pb-0">
+    <section className="relative min-h-[95svh] md:min-h-screen flex items-center justify-center overflow-hidden pt-28 sm:pt-24 md:pt-0 pb-6 sm:pb-20 md:pb-0">
       <video
         src="/hero-video.mp4"
         autoPlay
@@ -161,8 +161,8 @@ const Hero = () => {
             <span>You Can Count On</span>
           </h1>
 
-          {/* Lower Block: Pushed down on mobile to keep middle video area clear */}
-          <div className="mt-24 sm:mt-0 flex flex-col gap-3 sm:gap-4">
+          {/* Lower Block: Pushed all the way down on mobile to touch bottom of screen and clear middle video */}
+          <div className="mt-[32vh] sm:mt-0 flex flex-col gap-3 sm:gap-4">
             <p className="font-body text-zinc-200 text-sm sm:text-base md:text-xl mb-1 sm:mb-4 font-bold leading-relaxed max-w-xl" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
               From vehicle inspections and engine diagnostics to new tires and brake repair. Our certified mechanics deliver fast, reliable repairs in Stoney Creek.
             </p>
