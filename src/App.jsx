@@ -754,7 +754,7 @@ const ScrollToTopButton = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-card border-t border-border pt-16 pb-8">
+    <footer className="bg-card border-t border-border pt-16 pb-28 md:pb-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           
@@ -765,10 +765,10 @@ const Footer = () => {
               Stoney Creek's most trusted automotive repair and tire shop. Providing expert, fully licensed services to Hamilton and surrounding areas since day one.
             </p>
             <div className="flex items-center gap-4 mt-6">
-              <a href="#" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
+              <a href={`mailto:${EMAIL}`} className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
@@ -798,15 +798,15 @@ const Footer = () => {
 
           {/* Column 3: Top Services */}
           <div>
-            <h4 className="font-display text-base font-bold uppercase tracking-wider text-foreground mb-6">Top Services</h4>
+            <h4 className="font-display text-base font-bold uppercase tracking-wider text-foreground mb-6">Our Services</h4>
             <ul className="space-y-3 font-body text-sm text-muted-foreground">
               {[
-                { name: 'Vehicle Inspections & Safety', path: '/services/vehicle-inspections' },
-                { name: 'Engine Diagnostics & Repair', path: '/services/engine-diagnostics' },
-                { name: 'AC Servicing & Repairs', path: '/services/ac-repair' },
-                { name: 'Tire Repairs & Installations', path: '/services/tire-services' },
-                { name: 'Brake Service & Replacement', path: '/services/brake-service' },
-                { name: 'Battery & Alternator Repairs', path: '/services/battery-repair' },
+                { name: 'Vehicle Inspections', path: '/services/vehicle-inspections' },
+                { name: 'Engine Diagnostics', path: '/services/engine-diagnostics' },
+                { name: 'A/C Repair & Service', path: '/services/ac-repair' },
+                { name: 'New Tires & Sales', path: '/services/tire-services' },
+                { name: 'Brake Service & Repair', path: '/services/brake-service' },
+                { name: 'Battery & Alternator', path: '/services/battery-repair' },
               ].map((service) => (
                 <li key={service.name}>
                   <Link to={service.path} className="flex items-center gap-2 hover:text-primary transition-colors group">
@@ -818,28 +818,28 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4: Contact Us */}
+          {/* Column 4: Contact & Hours */}
           <div>
-            <h4 className="font-display text-base font-bold uppercase tracking-wider text-foreground mb-6">Contact Us</h4>
+            <h4 className="font-display text-base font-bold uppercase tracking-wider text-foreground mb-6">Visit Shop</h4>
             <ul className="space-y-4 font-body text-sm text-muted-foreground">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span>{ADDRESS}</span>
+                <a href={DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                  {ADDRESS}
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
-                <a href={PHONE_URL} className="hover:text-primary transition-colors">{PHONE_NUMBER}</a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-primary shrink-0" />
-                <a href={`mailto:${EMAIL}`} className="hover:text-primary transition-colors">{EMAIL}</a>
+                <a href={PHONE_URL} className="hover:text-foreground transition-colors font-bold text-foreground">
+                  {PHONE_NUMBER}
+                </a>
               </li>
               <li className="flex items-start gap-3 pt-2">
                 <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-bold text-foreground">MON to FRI: 9:00 AM - 6:00 PM</p>
-                  <p className="font-bold text-foreground">SAT: 9:00 AM - 3:00 PM</p>
-                  <p>SUN: Closed</p>
+                  <p className="font-bold text-foreground">MON to FRI: 9:00 AM - 8:00 PM</p>
+                  <p className="font-bold text-foreground">SAT: 10:00 AM - 8:00 PM</p>
+                  <p className="font-bold text-foreground">SUN: 11:00 AM - 5:00 PM</p>
                 </div>
               </li>
             </ul>
@@ -848,11 +848,9 @@ const Footer = () => {
         </div>
         
         <div className="stripe-accent w-full mt-12 mb-6" />
-        
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-body text-muted-foreground">
-          <p>
-            © {new Date().getFullYear()} Primetech Auto & Tires. All rights reserved.
-          </p>
+
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-body text-xs text-muted-foreground">
+          <p>© {new Date().getFullYear()} Primetech Auto & Tires. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
