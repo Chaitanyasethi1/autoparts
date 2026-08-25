@@ -138,7 +138,7 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[95svh] md:min-h-screen flex items-center justify-center overflow-hidden pt-28 sm:pt-24 md:pt-0 pb-6 sm:pb-20 md:pb-0">
+    <section className="relative min-h-[95svh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-24 md:pt-0 pb-6 sm:pb-20 md:pb-0">
       <video
         src="/hero-video.mp4"
         autoPlay
@@ -155,7 +155,7 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="max-w-2xl flex flex-col gap-4 sm:gap-6"
         >
-          <h1 className="font-display text-[1.45rem] sm:text-4xl md:text-6xl lg:text-7xl font-black leading-snug sm:leading-tight mb-2 md:mb-4 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
+          <h1 className="font-display text-[1.65rem] sm:text-4xl md:text-6xl lg:text-7xl font-black leading-snug sm:leading-tight mb-2 md:mb-4 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
             Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
             <br />
             <span>You Can Count On</span>
