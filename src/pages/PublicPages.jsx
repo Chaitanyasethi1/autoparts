@@ -99,9 +99,9 @@ export const ContactPage = () => (
       <p><strong>Email:</strong> info@primetechauto.ca</p>
       <h2>Hours of Operation</h2>
       <ul>
-        <li>Monday to Friday: 9:00 AM - 6:00 PM</li>
-        <li>Saturday: 9:00 AM - 3:00 PM</li>
-        <li>Sunday: Closed</li>
+        <li>Monday to Friday: 9:00 AM - 8:00 PM</li>
+        <li>Saturday: 10:00 AM - 8:00 PM</li>
+        <li>Sunday: 11:00 AM - 5:00 PM</li>
       </ul>
     </ContentWrapper>
   </>

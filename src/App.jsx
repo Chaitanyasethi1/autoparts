@@ -639,18 +639,18 @@ const ContactSection = () => {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                <a href={PHONE_URL} className="hover:text-foreground transition-colors">
-                  {PHONE_NUMBER}
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
                 <div className="text-secondary font-semibold">
                   <p>Monday - Friday: 9 AM - 8 PM</p>
                   <p>Saturday: 10 AM - 8 PM</p>
                   <p>Sunday: 11 AM - 5 PM</p>
                 </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                <a href={PHONE_URL} className="hover:text-foreground transition-colors font-bold text-foreground">
+                  {PHONE_NUMBER}
+                </a>
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-primary mt-0.5 shrink-0" />

@@ -9,7 +9,7 @@ const QA_DATABASE = [
   },
   {
     keywords: ['hour', 'time', 'open', 'close', 'when'],
-    answer: "We are open Monday to Friday from 8:00 AM to 6:00 PM, and Saturday from 8:00 AM to 2:00 PM. Walk-ins are always welcome!"
+    answer: "We are open Monday to Friday from 9:00 AM to 8:00 PM, Saturday from 10:00 AM to 8:00 PM, and Sunday from 11:00 AM to 5:00 PM. Walk-ins are always welcome!"
   },
   {
     keywords: ['location', 'address', 'where', 'map', 'directions'],
