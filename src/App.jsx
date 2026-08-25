@@ -160,30 +160,34 @@ const Hero = () => {
             <br />
             <span>You Can Count On</span>
           </h1>
-          <p className="font-body text-zinc-200 text-sm sm:text-base md:text-xl mb-2 sm:mb-4 font-bold leading-relaxed max-w-xl" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
-            From vehicle inspections and engine diagnostics to new tires and brake repair. Our certified mechanics deliver fast, reliable repairs in Stoney Creek.
-          </p>
-          <p className="font-display text-secondary text-[11px] sm:text-xs md:text-base uppercase tracking-wider font-black mb-4 sm:mb-6 md:mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
-            <Clock className="w-4 h-4 md:w-5 md:h-5 text-secondary" /> Open 7 Days a Week - Walk-ins Welcome
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-start">
-            <a
-              href={PHONE_URL}
-              className="inline-flex items-center justify-center gap-2 md:gap-3 bg-primary text-primary-foreground px-5 py-3 md:px-8 md:py-4 rounded-md font-display text-base md:text-lg uppercase tracking-wider hover:opacity-90 transition-opacity glow-red"
-            >
-              <Phone className="w-4 h-4 md:w-5 md:h-5" />
-              Call Now: {PHONE_NUMBER}
-            </a>
-            <a
-              href={DIRECTIONS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 md:gap-3 bg-zinc-900/80 border border-secondary text-secondary px-5 py-3 md:px-8 md:py-4 rounded-md font-display text-base md:text-lg uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
-            >
-              <MapPin className="w-4 h-4 md:w-5 md:h-5" />
-              Get Directions
-            </a>
+
+          {/* Lower Block: Pushed down on mobile to keep middle video area clear */}
+          <div className="mt-12 sm:mt-0 flex flex-col gap-3 sm:gap-4">
+            <p className="font-body text-zinc-200 text-sm sm:text-base md:text-xl mb-1 sm:mb-4 font-bold leading-relaxed max-w-xl" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
+              From vehicle inspections and engine diagnostics to new tires and brake repair. Our certified mechanics deliver fast, reliable repairs in Stoney Creek.
+            </p>
+            <p className="font-display text-secondary text-[11px] sm:text-xs md:text-base uppercase tracking-wider font-black mb-3 sm:mb-6 md:mb-10 flex items-center justify-start gap-2" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
+              <Clock className="w-4 h-4 md:w-5 md:h-5 text-secondary" /> Open 7 Days a Week - Walk-ins Welcome
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-start">
+              <a
+                href={PHONE_URL}
+                className="inline-flex items-center justify-center gap-2 md:gap-3 bg-primary text-primary-foreground px-5 py-3 md:px-8 md:py-4 rounded-md font-display text-base md:text-lg uppercase tracking-wider hover:opacity-90 transition-opacity glow-red"
+              >
+                <Phone className="w-4 h-4 md:w-5 md:h-5" />
+                Call Now: {PHONE_NUMBER}
+              </a>
+              <a
+                href={DIRECTIONS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 md:gap-3 bg-zinc-900/80 border border-secondary text-secondary px-5 py-3 md:px-8 md:py-4 rounded-md font-display text-base md:text-lg uppercase tracking-wider hover:bg-secondary hover:text-secondary-foreground transition-colors"
+              >
+                <MapPin className="w-4 h-4 md:w-5 md:h-5" />
+                Get Directions
+              </a>
+            </div>
           </div>
         </motion.div>
       </div>
