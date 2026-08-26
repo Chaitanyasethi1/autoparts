@@ -126,20 +126,18 @@ export const ChatWidget = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Quick Actions */}
-            {messages.length === 1 && (
-              <div className="p-3 bg-zinc-900 border-t border-white/5 flex flex-wrap gap-2">
-                {predefinedQuestions.map((q, i) => (
-                  <button
-                    key={i}
-                    onClick={() => handleSend(q)}
-                    className="text-left text-xs bg-zinc-800 hover:bg-primary hover:text-primary-foreground transition-colors px-3 py-2 rounded-full text-zinc-300 border border-white/5"
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Quick Actions - Always visible for continuous quick asking */}
+            <div className="p-2.5 bg-zinc-900 border-t border-white/5 flex flex-wrap gap-1.5 shrink-0">
+              {predefinedQuestions.map((q, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleSend(q)}
+                  className="text-left text-[11px] bg-zinc-800 hover:bg-primary hover:text-primary-foreground transition-colors px-2.5 py-1.5 rounded-full text-zinc-300 border border-white/5 font-medium"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
 
             {/* Input Area */}
             <div className="p-3 bg-card border-t border-white/10 flex gap-2">
