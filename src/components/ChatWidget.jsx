@@ -4,36 +4,40 @@ import { Car, X, Send } from 'lucide-react';
 
 const QA_DATABASE = [
   {
-    keywords: ['hi', 'hello', 'hey', 'greetings', 'help', 'morning', 'afternoon'],
-    answer: "Hello! How can we help you with your vehicle today? You can ask about our hours, location, pricing, or specific services."
+    keywords: ['hi', 'hello', 'hey', 'greetings', 'help', 'morning', 'afternoon', 'evening'],
+    answer: "Hello! Welcome to Primetech Auto & Tires. How can we assist you with your vehicle today? You can ask us about our operating hours, shop location, pricing, or available services."
   },
   {
-    keywords: ['hour', 'time', 'open', 'close', 'when'],
-    answer: "We are open Monday to Friday from 9:00 AM to 8:00 PM, Saturday from 10:00 AM to 8:00 PM, and Sunday from 11:00 AM to 5:00 PM. Walk-ins are always welcome!"
+    keywords: ['hour', 'hours', 'time', 'timing', 'timings', 'open', 'close', 'opening', 'closing', 'schedule', 'when', 'day', 'days', 'sunday', 'saturday'],
+    answer: "Our operating hours are:\n• Monday to Friday: 9:00 AM – 8:00 PM\n• Saturday: 10:00 AM – 8:00 PM\n• Sunday: 11:00 AM – 5:00 PM\n\nWalk-ins are always welcome!"
   },
   {
-    keywords: ['location', 'address', 'where', 'map', 'directions'],
-    answer: "We are located at 336 Hilton Drive, Stoney Creek, ON L8E 2N3."
+    keywords: ['location', 'address', 'where', 'map', 'direction', 'directions', 'located', 'find', 'place', 'city', 'stoney creek', 'hilton', 'street'],
+    answer: "We are located at 336 Hilton Drive, Stoney Creek, ON L8E 2N3. Feel free to use the 'Get Directions' button on our site to navigate directly to our shop!"
   },
   {
-    keywords: ['contact', 'phone', 'number', 'call', 'email', 'reach'],
-    answer: "You can reach us by phone at +1 (289) 834-2838. We're always happy to help!"
+    keywords: ['contact', 'phone', 'number', 'call', 'email', 'reach', 'telephone', 'mobile', 'talk', 'speak'],
+    answer: "You can call us directly at +1 (289) 834-2838 or email us at info@primetechauto.ca. We're happy to answer any questions!"
   },
   {
-    keywords: ['appointment', 'book', 'schedule'],
-    answer: "No appointment is needed! We operate on a first-come, first-served basis. You can just walk in during our regular business hours."
+    keywords: ['appointment', 'book', 'booking', 'schedule', 'reserve', 'reservation', 'walk-in', 'walkin', 'walk in', 'wait'],
+    answer: "No appointment is needed! We operate on a convenient first-come, first-served basis. Simply drop by our shop during business hours."
   },
   {
-    keywords: ['price', 'cost', 'much', 'oil'],
-    answer: "Our full synthetic oil changes start at $79.99, which includes a premium filter and a free 21-point vehicle check."
+    keywords: ['price', 'prices', 'cost', 'costs', 'much', 'rate', 'rates', 'oil', 'lube', 'synthetic', 'filter'],
+    answer: "Our Full Synthetic Oil Changes start at $79.99 (includes premium oil filter + free 21-point vehicle inspection). Tire changeovers start at $39.99."
   },
   {
-    keywords: ['tire', 'tyre', 'flat', 'winter', 'summer'],
-    answer: "We offer complete tire services including repairs, rotations, seasonal changeovers (starting at $39.99), and brand new tire sales."
+    keywords: ['tire', 'tires', 'tyre', 'tyres', 'wheel', 'wheels', 'flat', 'winter', 'summer', 'all season', 'rotation', 'changeover', 'rim', 'rims'],
+    answer: "We offer complete tire services including new tire sales, seasonal tire changeovers (starting at $39.99), tire balancing, flat repairs, and rotations."
   },
   {
-    keywords: ['brake', 'pad', 'rotor', 'squeak'],
-    answer: "We provide comprehensive brake services, including pad and rotor replacements. We'll do a full inspection and give you an honest quote before any work."
+    keywords: ['brake', 'brakes', 'pad', 'pads', 'rotor', 'rotors', 'stop', 'squeak', 'noise'],
+    answer: "We provide expert brake inspections, brake pad replacements, rotor resurfacing/replacements, and fluid flushes. Visit us for a free brake assessment!"
+  },
+  {
+    keywords: ['service', 'services', 'repair', 'inspection', 'safety', 'exhaust', 'muffler', 'battery', 'alignment', 'ac', 'air conditioning', 'engine', 'diagnostics'],
+    answer: "Our certified mechanics handle Full Diagnostics, Oil Changes, Brake Repairs, New Tires & Service, Suspension & Steering, Battery Testing, Exhaust Repairs, AC Service, and Safety Inspections."
   }
 ];
 
@@ -54,26 +58,32 @@ export const ChatWidget = () => {
   }, [messages, isOpen]);
 
   const handleSend = (text) => {
-    if (!text.trim()) return;
+    if (!text || !text.trim()) return;
+    
+    const userText = text.trim();
     
     // Add user message
-    setMessages(prev => [...prev, { text, isBot: false }]);
+    setMessages(prev => [...prev, { text: userText, isBot: false }]);
     setInput("");
 
     // Simulate bot thinking
     setTimeout(() => {
-      const lowerText = text.toLowerCase();
-      let foundAnswer = "I'm not quite sure about that. Please call us at +1 (289) 834-2838 or visit our shop for more details!";
+      const lowerText = userText.toLowerCase();
+      let foundAnswer = null;
       
       for (const qa of QA_DATABASE) {
-        if (qa.keywords.some(kw => new RegExp(`\\b${kw}\\b`, 'i').test(lowerText))) {
+        if (qa.keywords.some(kw => lowerText.includes(kw))) {
           foundAnswer = qa.answer;
           break;
         }
       }
       
+      if (!foundAnswer) {
+        foundAnswer = "We offer complete Auto & Tire services in Stoney Creek! We are open Mon-Fri (9am-8pm), Sat (10am-8pm), Sun (11am-5pm). Call us anytime at +1 (289) 834-2838 or walk in today!";
+      }
+      
       setMessages(prev => [...prev, { text: foundAnswer, isBot: true }]);
-    }, 600);
+    }, 400);
   };
 
   const predefinedQuestions = [
@@ -109,7 +119,7 @@ export const ChatWidget = () => {
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
                   <div className={`max-w-[90%] p-3 rounded-2xl ${msg.isBot ? 'bg-zinc-800 text-zinc-100 rounded-tl-sm' : 'bg-primary text-primary-foreground rounded-tr-sm'}`}>
-                    <p className="text-sm font-body leading-relaxed">{msg.text}</p>
+                    <p className="text-sm font-body leading-relaxed whitespace-pre-line">{msg.text}</p>
                   </div>
                 </div>
               ))}
