@@ -153,12 +153,10 @@ const Hero = () => {
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-2xl flex flex-col gap-3 sm:gap-6 mt-[35vh] sm:mt-0"
+          className="max-w-2xl flex flex-col gap-3 sm:gap-6 mt-[42vh] sm:mt-0"
         >
-          <h1 className="font-display text-[1.85rem] sm:text-4xl md:text-6xl lg:text-7xl font-black leading-snug sm:leading-tight mb-2 md:mb-4 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
-            Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service
-            <br />
-            <span>You Can Count On</span>
+          <h1 className="font-display text-[1.2rem] sm:text-4xl md:text-6xl lg:text-7xl font-black leading-snug sm:leading-tight mb-2 md:mb-4 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
+            Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service You Can Count On
           </h1>
 
           {/* Lower Block: Positioned directly below heading on mobile */}

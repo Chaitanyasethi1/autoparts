@@ -12,12 +12,11 @@ export const SplashIntro = ({ onComplete }) => {
       // Step 2: Text fades and slides in from right to sit under car
       await animate(".logo-text", { x: [60, 0], opacity: [0, 1] }, { duration: 0.7, ease: "easeOut" });
       
-      // Step 3: Hold with a subtle red brand glow behind the logo
-      animate(".logo-wrapper", { filter: ["drop-shadow(0px 0px 0px rgba(225, 6, 0, 0))", "drop-shadow(0px 0px 25px rgba(225, 6, 0, 0.7))"] }, { duration: 0.8 });
-      await new Promise(r => setTimeout(r, 800)); // Hold for 0.8s
+      // Step 3: Hold clean logo static
+      await new Promise(r => setTimeout(r, 900));
       
       // Step 4: Fast acceleration exit to the right
-      await animate(".logo-wrapper", { x: 1600, skewX: -8 }, { duration: 0.55, ease: "easeIn", delay: 0.1 });
+      await animate(".logo-wrapper", { x: 1600, skewX: -8 }, { duration: 0.55, ease: "easeIn" });
       
       // Step 5: Fade out dark intro screen
       await animate(scope.current, { opacity: 0 }, { duration: 0.35 });
@@ -36,7 +35,7 @@ export const SplashIntro = ({ onComplete }) => {
       {/* Wrapper centered dead-middle of viewport */}
       <div className="relative flex items-center justify-center w-full px-4">
         
-        {/* Main animated logo group */}
+        {/* Main animated logo group - 100% clean without any smoke/glow */}
         <div className="logo-wrapper relative flex items-center justify-center">
           
           {/* Car Icon */}
