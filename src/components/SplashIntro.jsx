@@ -16,13 +16,10 @@ export const SplashIntro = ({ onComplete }) => {
       animate(".logo-wrapper", { filter: ["drop-shadow(0px 0px 0px rgba(225, 6, 0, 0))", "drop-shadow(0px 0px 25px rgba(225, 6, 0, 0.7))"] }, { duration: 0.8 });
       await new Promise(r => setTimeout(r, 800)); // Hold for 0.8s
       
-      // Step 4: Smoke particle burst behind rear wheel/gear
-      animate(".smoke-puffs", { scale: [0.2, 2.5], opacity: [0, 0.8, 0], x: [0, -180], y: [0, -30] }, { duration: 0.7, ease: "easeOut" });
-      
-      // Step 5: Fast acceleration exit to the right
+      // Step 4: Fast acceleration exit to the right
       await animate(".logo-wrapper", { x: 1600, skewX: -8 }, { duration: 0.55, ease: "easeIn", delay: 0.1 });
       
-      // Step 6: Fade out dark intro screen
+      // Step 5: Fade out dark intro screen
       await animate(scope.current, { opacity: 0 }, { duration: 0.35 });
       
       onComplete();
@@ -41,12 +38,6 @@ export const SplashIntro = ({ onComplete }) => {
         
         {/* Main animated logo group */}
         <div className="logo-wrapper relative flex items-center justify-center">
-          
-          {/* Smoke particle puffs attached to car rear */}
-          <div className="smoke-puffs absolute left-0 bottom-4 pointer-events-none z-0 opacity-0">
-            <div className="w-24 h-24 bg-zinc-300/30 blur-2xl rounded-full transform -translate-x-12" />
-            <div className="w-16 h-16 bg-red-600/20 blur-xl rounded-full transform -translate-x-8 -translate-y-4" />
-          </div>
           
           {/* Car Icon */}
           <motion.img 
