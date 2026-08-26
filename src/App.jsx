@@ -138,7 +138,7 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[95svh] md:min-h-screen flex items-end sm:items-center justify-center overflow-hidden pt-24 sm:pt-20 md:pt-0 pb-8 sm:pb-20 md:pb-0">
+    <section className="relative min-h-[95svh] md:min-h-screen flex items-end sm:items-center justify-center overflow-hidden pt-16 sm:pt-20 md:pt-0 pb-20 sm:pb-20 md:pb-0">
       <video
         src="/hero-video.mp4"
         autoPlay
@@ -153,9 +153,9 @@ const Hero = () => {
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-2xl flex flex-col gap-3 sm:gap-6 mt-[42vh] sm:mt-0"
+          className="max-w-2xl flex flex-col gap-2.5 sm:gap-6 mt-[22vh] sm:mt-0"
         >
-          <h1 className="font-display text-[1.2rem] sm:text-4xl md:text-6xl lg:text-7xl font-black leading-snug sm:leading-tight mb-2 md:mb-4 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
+          <h1 className="font-display text-[1.02rem] tracking-tight whitespace-nowrap sm:whitespace-normal sm:text-4xl md:text-6xl lg:text-7xl font-black leading-snug sm:leading-tight mb-1 md:mb-4 text-white" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
             Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire</span> Service You Can Count On
           </h1>
 
