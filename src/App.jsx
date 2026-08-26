@@ -145,7 +145,7 @@ const Hero = () => {
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="absolute inset-0 w-full h-full object-cover object-left scale-[1.18] origin-left"
       />
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0.2) 0%, hsl(0 0% 0% / 0.6) 100%)" }} />
       <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left w-full md:mt-16">
