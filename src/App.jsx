@@ -161,8 +161,8 @@ const Hero = () => {
             <span>You Can Count On</span>
           </h1>
 
-          {/* Lower Block: Pushed down on mobile with 3-line paragraph text */}
-          <div className="mt-[28vh] sm:mt-0 flex flex-col gap-3 sm:gap-4">
+          {/* Lower Block: Positioned directly below heading on mobile */}
+          <div className="mt-1 sm:mt-0 flex flex-col gap-3 sm:gap-4">
             <p className="font-body text-zinc-200 text-xs sm:text-base md:text-xl mb-1 sm:mb-4 font-bold leading-relaxed max-w-xl" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
               From vehicle inspections & engine diagnostics to tires & brake repair. Our certified mechanics deliver fast, reliable service in Stoney Creek & nearby areas.
             </p>
