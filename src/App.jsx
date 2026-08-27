@@ -170,7 +170,7 @@ const Hero = () => {
         <source src="/mobile-hero-video.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0.2) 0%, hsl(0 0% 0% / 0.6) 100%)" }} />
-      <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left w-full md:mt-16">
+      <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left w-full md:mt-32 md:pt-6">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
