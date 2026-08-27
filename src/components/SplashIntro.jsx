@@ -5,7 +5,7 @@ export const SplashIntro = ({ onComplete }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onComplete();
-    }, 1600);
+    }, 1400);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -15,7 +15,7 @@ export const SplashIntro = ({ onComplete }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-[100] bg-[#0a0a0a]/95 backdrop-blur-sm flex items-center justify-center overflow-hidden pointer-events-none"
+      className="fixed inset-0 z-[100] bg-zinc-950/80 backdrop-blur-sm flex items-center justify-center overflow-hidden pointer-events-none"
     >
       {/* Wrapper centered dead-middle of viewport */}
       <div className="relative flex items-center justify-center w-full px-4">
@@ -23,8 +23,8 @@ export const SplashIntro = ({ onComplete }) => {
         {/* Main animated logo group */}
         <motion.div 
           className="relative flex items-center justify-center"
-          animate={{ x: [0, 0, 1200] }}
-          transition={{ times: [0, 0.65, 1], duration: 1.5, ease: ["easeOut", "easeOut", "easeIn"] }}
+          animate={{ x: [0, 0, 1400] }}
+          transition={{ times: [0, 0.65, 1], duration: 1.3, ease: ["easeOut", "easeOut", "easeIn"] }}
         >
           {/* Car Icon */}
           <motion.img 
@@ -33,7 +33,7 @@ export const SplashIntro = ({ onComplete }) => {
             className="w-48 sm:w-72 md:w-80 lg:w-[420px] z-10 relative object-contain"
             initial={{ opacity: 0, x: -600 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
           />
           
           {/* Text Logo */}
@@ -44,7 +44,7 @@ export const SplashIntro = ({ onComplete }) => {
             style={{ mixBlendMode: 'screen' }}
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
+            transition={{ duration: 0.35, delay: 0.35, ease: "easeOut" }}
           />
         </motion.div>
 

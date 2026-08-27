@@ -970,14 +970,19 @@ const MainLayout = () => {
 }
 
 const HomePage = () => {
-  const [showSplash, setShowSplash] = useState(true)
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      setShowSplash(false);
+    }, 1500);
+    return () => clearTimeout(fallbackTimer);
+  }, []);
 
   return (
     <>
       <AnimatePresence>
-        {showSplash && <SplashIntro onComplete={() => {
-          setShowSplash(false);
-        }} />}
+        {showSplash && <SplashIntro onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
       <Hero />
       <ServicesSection />
