@@ -5,26 +5,43 @@ export const SplashIntro = ({ onComplete }) => {
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
+    let completed = false;
+    const safeComplete = () => {
+      if (!completed) {
+        completed = true;
+        onComplete();
+      }
+    };
+
+    // Hard fallback after 3.2s max
+    const fallbackTimer = setTimeout(safeComplete, 3200);
+
     const sequence = async () => {
-      // Step 1: Car drives in from left to center
-      await animate(".car-icon", { x: [-1000, 0], opacity: [0, 1] }, { duration: 1.1, ease: "easeOut" });
-      
-      // Step 2: Text fades and slides in from right to sit under car
-      await animate(".logo-text", { x: [60, 0], opacity: [0, 1] }, { duration: 0.7, ease: "easeOut" });
-      
-      // Step 3: Hold clean logo static
-      await new Promise(r => setTimeout(r, 900));
-      
-      // Step 4: Fast acceleration exit to the right
-      await animate(".logo-wrapper", { x: 1600, skewX: -8 }, { duration: 0.55, ease: "easeIn" });
-      
-      // Step 5: Fade out dark intro screen
-      await animate(scope.current, { opacity: 0 }, { duration: 0.35 });
-      
-      onComplete();
+      try {
+        // Step 1: Car drives in from left to center
+        await animate(".car-icon", { x: [-1000, 0], opacity: [0, 1] }, { duration: 1.0, ease: "easeOut" });
+        
+        // Step 2: Text fades and slides in from right to sit under car
+        await animate(".logo-text", { x: [60, 0], opacity: [0, 1] }, { duration: 0.6, ease: "easeOut" });
+        
+        // Step 3: Hold clean logo static
+        await new Promise(r => setTimeout(r, 700));
+        
+        // Step 4: Fast acceleration exit to the right
+        await animate(".logo-wrapper", { x: 1600, skewX: -8 }, { duration: 0.5, ease: "easeIn" });
+        
+        // Step 5: Fade out dark intro screen
+        await animate(scope.current, { opacity: 0 }, { duration: 0.3 });
+        
+        safeComplete();
+      } catch {
+        safeComplete();
+      }
     };
 
     sequence();
+
+    return () => clearTimeout(fallbackTimer);
   }, [animate, scope, onComplete]);
 
   return (
@@ -32,21 +49,14 @@ export const SplashIntro = ({ onComplete }) => {
       ref={scope}
       className="fixed inset-0 z-[100] bg-[#0a0a0a] flex items-center justify-center overflow-hidden"
     >
-      {/* Wrapper centered dead-middle of viewport */}
       <div className="relative flex items-center justify-center w-full px-4">
-        
-        {/* Main animated logo group - 100% clean without any smoke/glow */}
         <div className="logo-wrapper relative flex items-center justify-center">
-          
-          {/* Car Icon */}
           <motion.img 
             src="/assets/intro/car-icon.png" 
             alt="Car Logo" 
             className="car-icon w-56 sm:w-80 md:w-96 lg:w-[480px] z-10 relative object-contain"
             initial={{ opacity: 0, x: -1000 }}
           />
-          
-          {/* Text Logo */}
           <motion.img 
             src="/assets/intro/logo-text.png" 
             alt="Primetech Auto" 
@@ -54,9 +64,7 @@ export const SplashIntro = ({ onComplete }) => {
             style={{ mixBlendMode: 'screen' }}
             initial={{ opacity: 0, x: 60 }}
           />
-          
         </div>
-
       </div>
     </div>
   );

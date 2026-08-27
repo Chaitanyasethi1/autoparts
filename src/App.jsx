@@ -146,7 +146,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[95svh] md:min-h-screen flex items-end sm:items-center justify-center overflow-hidden pt-16 sm:pt-20 md:pt-0 pb-20 sm:pb-20 md:pb-0">
+    <section className="relative min-h-[95svh] md:min-h-screen flex items-end sm:items-center justify-center overflow-hidden pt-16 sm:pt-20 md:pt-0 pb-20 sm:pb-20 md:pb-0 bg-zinc-950">
       {/* Desktop / Laptop Background Video */}
       <video
         autoPlay
