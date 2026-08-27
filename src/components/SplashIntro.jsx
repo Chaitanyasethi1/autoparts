@@ -3,9 +3,14 @@ import { motion } from 'framer-motion';
 
 export const SplashIntro = ({ onComplete }) => {
   useEffect(() => {
+    // Attempt to play audio
+    const audio = new Audio('/assets/intro/intro-sound.mp3');
+    audio.volume = 0.7; // Adjust volume here
+    audio.play().catch(err => console.log("Audio autoplay prevented by browser", err));
+
     const timer = setTimeout(() => {
       onComplete();
-    }, 1400);
+    }, 2400); // Increased from 1400ms
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -24,7 +29,7 @@ export const SplashIntro = ({ onComplete }) => {
         <motion.div 
           className="relative flex items-center justify-center"
           animate={{ x: [0, 0, 1400] }}
-          transition={{ times: [0, 0.65, 1], duration: 1.3, ease: ["easeOut", "easeOut", "easeIn"] }}
+          transition={{ times: [0, 0.65, 1], duration: 2.3, ease: ["easeOut", "easeOut", "easeIn"] }}
         >
           {/* Car Icon */}
           <motion.img 
@@ -33,7 +38,7 @@ export const SplashIntro = ({ onComplete }) => {
             className="w-48 sm:w-72 md:w-80 lg:w-[420px] z-10 relative object-contain"
             initial={{ opacity: 0, x: -600 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
+            transition={{ duration: 0.75, ease: "easeOut" }}
           />
           
           {/* Text Logo */}
@@ -44,7 +49,7 @@ export const SplashIntro = ({ onComplete }) => {
             style={{ mixBlendMode: 'screen' }}
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.35, delay: 0.35, ease: "easeOut" }}
+            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
           />
         </motion.div>
 

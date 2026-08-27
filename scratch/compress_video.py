@@ -17,7 +17,7 @@ new_h = int(height * scale)
 new_w = new_w if new_w % 2 == 0 else new_w - 1
 new_h = new_h if new_h % 2 == 0 else new_h - 1
 
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+fourcc = cv2.VideoWriter_fourcc(*'avc1')
 out = cv2.VideoWriter(output_path, fourcc, fps, (new_w, new_h))
 
 count = 0
