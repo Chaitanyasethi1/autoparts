@@ -14,7 +14,7 @@ export const SplashIntro = ({ onComplete }) => {
 
     const timer = setTimeout(() => {
       onComplete();
-    }, 2800); // 2.8 seconds total
+    }, 2200); // 2.2 seconds total, fades out while car moves
     return () => clearTimeout(timer);
   }, [started, onComplete]);
 
@@ -23,7 +23,7 @@ export const SplashIntro = ({ onComplete }) => {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.6 }}
       className={`fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden ${started ? 'pointer-events-none' : 'pointer-events-auto'}`}
     >
       <AnimatePresence>
@@ -36,7 +36,7 @@ export const SplashIntro = ({ onComplete }) => {
           >
             {/* Logo above the button for a premium look */}
             <img 
-              src="/PRIMETECH_LOGO_TRANSPARENT.png" 
+              src="/primetechauto.png" 
               alt="Primetech Auto" 
               className="w-64 sm:w-80 object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]"
             />
