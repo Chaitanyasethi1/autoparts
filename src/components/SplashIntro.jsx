@@ -14,7 +14,7 @@ export const SplashIntro = ({ onComplete }) => {
 
     const timer = setTimeout(() => {
       onComplete();
-    }, 4000); // Increased to 4 seconds
+    }, 2800); // 2.8 seconds total
     return () => clearTimeout(timer);
   }, [started, onComplete]);
 
@@ -23,7 +23,7 @@ export const SplashIntro = ({ onComplete }) => {
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.5 }}
       className={`fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden ${started ? 'pointer-events-none' : 'pointer-events-auto'}`}
     >
       <AnimatePresence>
@@ -60,7 +60,7 @@ export const SplashIntro = ({ onComplete }) => {
           <motion.div 
             className="relative flex items-center justify-center"
             animate={{ x: [0, 0, 1400] }}
-            transition={{ times: [0, 0.65, 1], duration: 3.8, ease: ["easeOut", "easeOut", "easeIn"] }}
+            transition={{ times: [0, 0.7, 1], duration: 2.8, ease: ["easeOut", "easeOut", "easeIn"] }}
           >
             {/* Car Icon */}
             <motion.img 
