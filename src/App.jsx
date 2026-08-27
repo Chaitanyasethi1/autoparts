@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate, Outlet, Link } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
