@@ -139,13 +139,23 @@ const Navbar = () => {
 const Hero = () => {
   return (
     <section className="relative min-h-[95svh] md:min-h-screen flex items-end sm:items-center justify-center overflow-hidden pt-16 sm:pt-20 md:pt-0 pb-20 sm:pb-20 md:pb-0">
+      {/* Desktop / Laptop Background Video */}
       <video
         src="/hero-video.mp4"
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover object-left scale-[1.18] origin-left"
+        className="hidden md:block absolute inset-0 w-full h-full object-cover object-left scale-[1.18] origin-left"
+      />
+      {/* Mobile Dedicated Background Video (Prime Tech_Intro.mp4) */}
+      <video
+        src="/mobile-hero-video.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="block md:hidden absolute inset-0 w-full h-full object-cover object-center"
       />
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, hsl(0 0% 0% / 0.2) 0%, hsl(0 0% 0% / 0.6) 100%)" }} />
       <div className="relative z-10 container mx-auto px-4 sm:px-8 text-left w-full md:mt-16">
