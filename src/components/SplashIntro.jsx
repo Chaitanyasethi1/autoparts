@@ -32,15 +32,22 @@ export const SplashIntro = ({ onComplete }) => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.1 }}
-            className="absolute z-[200] flex flex-col items-center gap-6"
+            className="absolute z-[200] flex flex-col items-center gap-16 w-full max-w-lg px-4"
           >
+            {/* Logo above the button for a premium look */}
+            <img 
+              src="/PRIMETECH_LOGO_TRANSPARENT.png" 
+              alt="Primetech Auto" 
+              className="w-64 sm:w-80 object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+            />
+
             <button 
               onClick={() => setStarted(true)}
-              className="px-8 py-4 bg-primary text-white font-display font-black text-2xl uppercase tracking-widest rounded shadow-[0_0_20px_rgba(220,38,38,0.5)] hover:bg-primary/90 hover:scale-105 transition-all"
+              className="relative group px-12 py-5 bg-gradient-to-b from-primary to-primary/90 text-white font-display font-black text-2xl sm:text-3xl uppercase tracking-[0.2em] rounded-xl shadow-[0_0_40px_rgba(220,38,38,0.5)] hover:shadow-[0_0_80px_rgba(220,38,38,0.8)] hover:scale-[1.02] active:scale-95 transition-all duration-300 overflow-hidden border border-red-500/50"
             >
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
               Start Engine
             </button>
-            <p className="text-zinc-400 font-body text-sm">Click to enter site and play audio</p>
           </motion.div>
         )}
       </AnimatePresence>
