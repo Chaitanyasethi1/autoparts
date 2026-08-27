@@ -972,13 +972,6 @@ const MainLayout = () => {
 const HomePage = () => {
   const [showSplash, setShowSplash] = useState(true);
 
-  useEffect(() => {
-    const fallbackTimer = setTimeout(() => {
-      setShowSplash(false);
-    }, 1500);
-    return () => clearTimeout(fallbackTimer);
-  }, []);
-
   return (
     <>
       <AnimatePresence>
