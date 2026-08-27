@@ -3,13 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export const SplashIntro = ({ onComplete }) => {
   const [started, setStarted] = useState(false);
+  const [audio] = useState(() => new Audio('/assets/intro/intro-sound.mp3'));
+
+  useEffect(() => {
+    // Preload and set volume as soon as component mounts
+    audio.load();
+    audio.volume = 0.7;
+  }, [audio]);
 
   useEffect(() => {
     if (!started) return;
 
-    // Attempt to play audio
-    const audio = new Audio('/assets/intro/intro-sound.mp3');
-    audio.volume = 0.7; // Adjust volume here
+    // Play instantly now that it is preloaded
     audio.play().catch(err => console.log("Audio autoplay prevented by browser", err));
 
     const timer = setTimeout(() => {
