@@ -175,14 +175,14 @@ const Hero = () => {
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-2xl flex flex-col gap-2.5 sm:gap-6 mt-[36vh] sm:mt-0"
+          className="max-w-2xl flex flex-col gap-0 sm:gap-6 mt-[36vh] sm:mt-0"
         >
-          <h1 className="font-display text-[1.25rem] xs:text-[1.5rem] tracking-tighter whitespace-nowrap sm:whitespace-normal sm:text-5xl md:text-7xl lg:text-8xl font-black leading-snug sm:leading-tight mb-1 md:mb-4 text-white pl-1 sm:pl-0 pt-8 sm:pt-0" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
+          <h1 className="font-display text-[1.25rem] xs:text-[1.5rem] tracking-tighter whitespace-nowrap sm:whitespace-normal sm:text-5xl md:text-7xl lg:text-8xl font-black leading-snug sm:leading-tight mb-0 md:mb-4 text-white pl-1 sm:pl-0 pt-16 sm:pt-0" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6)' }}>
             Expert <span className="text-primary" style={{ textShadow: 'none', filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.8))' }}>Auto & Tire Service</span> You Can Count On
           </h1>
 
           {/* Lower Block: Positioned directly below heading on mobile */}
-          <div className="mt-1 sm:mt-0 flex flex-col gap-3 sm:gap-4">
+          <div className="mt-0 flex flex-col gap-3 sm:gap-4">
             <p className="font-body text-zinc-200 text-xs sm:text-base md:text-xl mb-1 sm:mb-4 font-bold leading-relaxed max-w-xl" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)' }}>
               From vehicle inspections & engine diagnostics to tires & brake repair. Our certified mechanics deliver fast, reliable service in Stoney Creek & nearby areas.
             </p>
