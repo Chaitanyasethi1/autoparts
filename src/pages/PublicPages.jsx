@@ -88,15 +88,17 @@ export const ReviewsPage = () => (
   </>
 )
 
+import { BookingSection } from '../components/BookingSection'
+
 export const ContactPage = () => (
   <>
     <Helmet><title>Contact Us | Primetech Auto & Tires</title></Helmet>
-    <PageHeader title="Contact Us" subtitle="Get in touch for an appointment or quote." />
+    <PageHeader title="Contact Us" subtitle="Get in touch for an appointment, diagnostics, or quote." />
     <ContentWrapper>
       <h2>Visit Our Shop</h2>
       <p><strong>Address:</strong> 336 Hilton Drive, Stoney Creek, ON L8E 2N3</p>
-      <p><strong>Phone:</strong> +1 (289) 834-2838</p>
-      <p><strong>Email:</strong> info@primetechauto.ca</p>
+      <p><strong>Phone:</strong> <a href="tel:+12898342838" className="text-primary font-bold">+1 (289) 834-2838</a></p>
+      <p><strong>Email:</strong> <a href="mailto:info@primetechauto.ca" className="text-primary">info@primetechauto.ca</a></p>
       <h2>Hours of Operation</h2>
       <ul>
         <li>Monday to Friday: 9:00 AM - 8:00 PM</li>
@@ -104,6 +106,9 @@ export const ContactPage = () => (
         <li>Sunday: 11:00 AM - 5:00 PM</li>
       </ul>
     </ContentWrapper>
+    <div className="border-t border-white/10">
+      <BookingSection />
+    </div>
   </>
 )
 

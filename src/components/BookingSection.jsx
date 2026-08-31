@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Calendar, Clock, Car, Phone, Mail, User, CheckCircle2, AlertCircle } from 'lucide-react'
+import { Calendar, Clock, Car, Phone, Mail, User, CheckCircle2, AlertCircle, MessageSquare, PhoneCall } from 'lucide-react'
 import { toast } from 'sonner'
-import { supabase } from '../lib/supabase'
+import { submitLead } from '../lib/leadService'
 
 const SERVICE_TYPES = [
   "Oil Change",
@@ -24,6 +24,7 @@ const TIME_SLOTS = [
 export const BookingSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [whatsAppUrl, setWhatsAppUrl] = useState('')
   
   const [formData, setFormData] = useState({
     name: '',
@@ -61,45 +62,25 @@ export const BookingSection = () => {
         return
       }
 
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (formData.email && !emailRegex.test(formData.email)) {
-        toast.error("Please enter a valid email address.")
-        setIsSubmitting(false)
-        return
+      if (formData.email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(formData.email)) {
+          toast.error("Please enter a valid email address.")
+          setIsSubmitting(false)
+          return
+        }
       }
 
-      // Insert into Supabase
-      const { data, error } = await supabase
-        .from('bookings')
-        .insert([
-          {
-            name: formData.name,
-            phone: formData.phone,
-            email: formData.email,
-            vehicle_details: formData.vehicle_details,
-            service_type: formData.service_type,
-            preferred_date: formData.preferred_date,
-            preferred_time: formData.preferred_time,
-            message: formData.message,
-            status: 'Pending'
-          }
-        ])
-
-      if (error) throw error
-
+      // Process lead submission (local backup + email + supabase)
+      const result = await submitLead(formData)
+      
+      setWhatsAppUrl(result.whatsAppUrl)
       setSubmitted(true)
-      toast.success("Appointment request sent successfully!")
+      toast.success("Appointment request received! We will contact you shortly.")
       
     } catch (error) {
       console.error('Error submitting booking:', error)
-      // Since they might not have set up Supabase yet, we'll still show a success UI
-      // but warn them in the console.
-      if (error.message.includes('fetch') || error.message.includes('URL')) {
-        toast.success("Demo: Booking submitted! (Set up Supabase to save to DB)")
-        setSubmitted(true)
-      } else {
-        toast.error("Failed to submit booking. Please try again.")
-      }
+      toast.error("An error occurred. Please call us directly at +1 (289) 834-2838.")
     } finally {
       setIsSubmitting(false)
     }
@@ -122,16 +103,38 @@ export const BookingSection = () => {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-background rounded-lg border border-border p-8 md:p-12 text-center"
+            className="bg-background rounded-xl border border-border p-8 md:p-12 text-center"
             style={{ boxShadow: "var(--shadow-card)" }}
           >
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-secondary/10 mb-6">
-              <CheckCircle2 className="w-10 h-10 text-secondary" />
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-500/10 text-emerald-500 mb-6 border border-emerald-500/20">
+              <CheckCircle2 className="w-10 h-10" />
             </div>
-            <h3 className="font-display text-3xl font-bold mb-4 text-foreground">Request Received!</h3>
-            <p className="text-muted-foreground font-body text-lg max-w-md mx-auto mb-8">
-              Thank you for choosing Primetech. We have received your request and will contact you shortly to confirm your appointment.
+            <h3 className="font-display text-3xl font-bold mb-3 text-foreground">Appointment Request Received!</h3>
+            <p className="text-muted-foreground font-body text-base md:text-lg max-w-lg mx-auto mb-8">
+              Thank you, <strong className="text-foreground">{formData.name}</strong>. Our team at Primetech Auto has received your request for <strong className="text-foreground">{formData.service_type}</strong> and will contact you at <strong className="text-foreground">{formData.phone}</strong> to confirm your slot.
             </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+              {whatsAppUrl && (
+                <a 
+                  href={whatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-display font-bold rounded-lg transition-all shadow-lg shadow-emerald-950/40"
+                >
+                  <MessageSquare className="w-5 h-5" />
+                  Instant WhatsApp Confirmation
+                </a>
+              )}
+              <a 
+                href="tel:+12898342838"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 bg-zinc-800 hover:bg-zinc-700 text-white font-display font-bold rounded-lg border border-white/10 transition-colors"
+              >
+                <PhoneCall className="w-5 h-5 text-primary" />
+                Call Shop Now
+              </a>
+            </div>
+
             <button 
               onClick={() => {
                 setSubmitted(false)
@@ -140,9 +143,9 @@ export const BookingSection = () => {
                   service_type: '', preferred_date: '', preferred_time: '', message: ''
                 })
               }}
-              className="px-6 py-3 bg-primary text-primary-foreground font-display font-bold rounded hover:bg-primary/90 transition-colors"
+              className="text-sm font-semibold text-muted-foreground hover:text-foreground underline underline-offset-4 transition-colors"
             >
-              Book Another Appointment
+              Submit Another Appointment Request
             </button>
           </motion.div>
         ) : (
@@ -150,7 +153,7 @@ export const BookingSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-background rounded-lg border border-border overflow-hidden"
+            className="bg-background rounded-xl border border-border overflow-hidden"
             style={{ boxShadow: "var(--shadow-card)" }}
           >
             <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
@@ -164,8 +167,8 @@ export const BookingSection = () => {
                   <input 
                     type="text" name="name" required
                     value={formData.name} onChange={handleChange}
-                    className="w-full bg-card border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body"
-                    placeholder="John Doe"
+                    className="w-full bg-card border border-border rounded-lg p-3.5 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body"
+                    placeholder="e.g. John Doe"
                   />
                 </div>
                 <div className="space-y-2">
@@ -175,8 +178,8 @@ export const BookingSection = () => {
                   <input 
                     type="tel" name="phone" required
                     value={formData.phone} onChange={handleChange}
-                    className="w-full bg-card border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body"
-                    placeholder="(123) 456-7890"
+                    className="w-full bg-card border border-border rounded-lg p-3.5 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body"
+                    placeholder="(289) 834-2838"
                   />
                 </div>
               </div>
@@ -185,12 +188,12 @@ export const BookingSection = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-foreground font-display flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-primary" /> Email Address
+                    <Mail className="w-4 h-4 text-primary" /> Email Address (Optional)
                   </label>
                   <input 
                     type="email" name="email"
                     value={formData.email} onChange={handleChange}
-                    className="w-full bg-card border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body"
+                    className="w-full bg-card border border-border rounded-lg p-3.5 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -201,8 +204,8 @@ export const BookingSection = () => {
                   <input 
                     type="text" name="vehicle_details" required
                     value={formData.vehicle_details} onChange={handleChange}
-                    className="w-full bg-card border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body"
-                    placeholder="e.g. 2018 Honda Civic"
+                    className="w-full bg-card border border-border rounded-lg p-3.5 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body"
+                    placeholder="e.g. 2019 Honda Civic / Ford F-150"
                   />
                 </div>
               </div>
@@ -213,7 +216,7 @@ export const BookingSection = () => {
                 <select 
                   name="service_type" required
                   value={formData.service_type} onChange={handleChange}
-                  className="w-full bg-card border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body appearance-none"
+                  className="w-full bg-card border border-border rounded-lg p-3.5 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body appearance-none cursor-pointer"
                 >
                   <option value="" disabled>Select a service...</option>
                   {SERVICE_TYPES.map(type => (
@@ -230,7 +233,7 @@ export const BookingSection = () => {
                   <input 
                     type="date" name="preferred_date" required
                     value={formData.preferred_date} onChange={handleChange}
-                    className="w-full bg-card border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body [color-scheme:dark]"
+                    className="w-full bg-card border border-border rounded-lg p-3.5 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body [color-scheme:dark]"
                   />
                 </div>
                 <div className="space-y-2">
@@ -240,7 +243,7 @@ export const BookingSection = () => {
                   <select 
                     name="preferred_time" required
                     value={formData.preferred_time} onChange={handleChange}
-                    className="w-full bg-card border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body appearance-none"
+                    className="w-full bg-card border border-border rounded-lg p-3.5 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body appearance-none cursor-pointer"
                   >
                     <option value="" disabled>Select time slot...</option>
                     {TIME_SLOTS.map(slot => (
@@ -251,12 +254,12 @@ export const BookingSection = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-foreground font-display">Additional Message (Optional)</label>
+                <label className="text-sm font-bold text-foreground font-display">Additional Details / Symptoms (Optional)</label>
                 <textarea 
                   name="message" rows="3"
                   value={formData.message} onChange={handleChange}
-                  className="w-full bg-card border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body resize-none"
-                  placeholder="Describe the issue or any special requests..."
+                  className="w-full bg-card border border-border rounded-lg p-3.5 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none font-body resize-none"
+                  placeholder="Describe any warning lights, noises, or special requests..."
                 ></textarea>
               </div>
 
@@ -264,7 +267,7 @@ export const BookingSection = () => {
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 bg-secondary text-secondary-foreground font-display font-bold px-8 py-4 rounded hover:bg-secondary/90 transition-colors disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold px-8 py-4 rounded-lg transition-all disabled:opacity-50 text-base md:text-lg uppercase tracking-wider glow-red shadow-xl"
                 >
                   {isSubmitting ? (
                     <span className="animate-pulse">Submitting Request...</span>
@@ -273,7 +276,7 @@ export const BookingSection = () => {
                   )}
                 </button>
                 <p className="text-center text-xs text-muted-foreground mt-4 font-body flex items-center justify-center gap-1">
-                  <AlertCircle className="w-3 h-3" /> Note: This is a request. We will contact you to confirm the exact time.
+                  <AlertCircle className="w-3.5 h-3.5 text-secondary" /> Need urgent assistance? Call us directly at <a href="tel:+12898342838" className="text-primary font-bold hover:underline">+1 (289) 834-2838</a>
                 </p>
               </div>
             </form>

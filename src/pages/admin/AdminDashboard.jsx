@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Trash2, CheckCircle, XCircle, Clock, Check, RefreshCw } from 'lucide-react';
+import { getLocalBookings, updateLocalBookingStatus, deleteLocalBooking } from '../../lib/leadService';
+import { Trash2, CheckCircle, XCircle, Clock, Check, RefreshCw, Car, Mail, Phone, Calendar } from 'lucide-react';
+import { toast } from 'sonner';
 
 const AdminDashboard = () => {
   const [bookings, setBookings] = useState([]);
@@ -15,14 +17,61 @@ const AdminDashboard = () => {
   const fetchBookings = async () => {
     try {
       setIsRefreshing(true);
-      // Ensure supabase is configured correctly in your lib/supabase.js
-      const { data, error } = await supabase
-        .from('bookings')
-        .select('*')
-        .order('created_at', { ascending: false });
+      setError(null);
+      
+      // 1. Get local storage bookings
+      const localData = getLocalBookings().map(b => ({
+        id: b.id,
+        name: b.name,
+        email: b.email,
+        phone: b.phone,
+        service: b.service_type || b.service,
+        date: b.preferred_date || b.date,
+        time: b.preferred_time || b.time,
+        vehicle_details: b.vehicle_details,
+        notes: b.message || b.notes,
+        status: b.status || 'Pending',
+        created_at: b.created_at || new Date().toISOString(),
+        source: 'Website Form'
+      }));
 
-      if (error) throw error;
-      setBookings(data || []);
+      // 2. Attempt fetching from Supabase if configured
+      let supabaseData = [];
+      try {
+        if (supabase && typeof supabase.from === 'function') {
+          const { data, error } = await supabase
+            .from('bookings')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+          if (!error && data) {
+            supabaseData = data.map(b => ({
+              id: b.id,
+              name: b.name,
+              email: b.email,
+              phone: b.phone,
+              service: b.service_type || b.service,
+              date: b.preferred_date || b.date,
+              time: b.preferred_time || b.time,
+              vehicle_details: b.vehicle_details,
+              notes: b.message || b.notes,
+              status: b.status || 'Pending',
+              created_at: b.created_at,
+              source: 'Supabase Cloud'
+            }));
+          }
+        }
+      } catch (sbErr) {
+        console.warn('Supabase fetch bypassed, using local store:', sbErr);
+      }
+
+      // Merge and deduplicate by id or phone+date
+      const allBookings = [...localData, ...supabaseData];
+      const uniqueBookings = Array.from(
+        new Map(allBookings.map(b => [b.id, b])).values()
+      ).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+      setBookings(uniqueBookings);
     } catch (err) {
       console.error('Error fetching bookings:', err);
       setError('Failed to load bookings.');
@@ -34,19 +83,25 @@ const AdminDashboard = () => {
 
   const updateStatus = async (id, newStatus) => {
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .update({ status: newStatus })
-        .eq('id', id);
+      // Update local storage
+      updateLocalBookingStatus(id, newStatus);
 
-      if (error) throw error;
+      // Update Supabase if not a local-only ID
+      if (!String(id).startsWith('local_')) {
+        try {
+          await supabase.from('bookings').update({ status: newStatus }).eq('id', id);
+        } catch (sbErr) {
+          console.warn('Supabase status update error:', sbErr);
+        }
+      }
       
-      setBookings(bookings.map(booking => 
+      setBookings(prev => prev.map(booking => 
         booking.id === id ? { ...booking, status: newStatus } : booking
       ));
+      toast.success(`Booking status updated to ${newStatus}`);
     } catch (err) {
       console.error('Error updating status:', err);
-      alert('Failed to update status. Please try again.');
+      toast.error('Failed to update status.');
     }
   };
 
@@ -54,17 +109,23 @@ const AdminDashboard = () => {
     if (!window.confirm('Are you sure you want to permanently delete this booking?')) return;
     
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .delete()
-        .eq('id', id);
+      // Delete from local storage
+      deleteLocalBooking(id);
 
-      if (error) throw error;
+      // Delete from Supabase if not local
+      if (!String(id).startsWith('local_')) {
+        try {
+          await supabase.from('bookings').delete().eq('id', id);
+        } catch (sbErr) {
+          console.warn('Supabase delete error:', sbErr);
+        }
+      }
       
-      setBookings(bookings.filter(booking => booking.id !== id));
+      setBookings(prev => prev.filter(booking => booking.id !== id));
+      toast.success('Booking deleted.');
     } catch (err) {
       console.error('Error deleting booking:', err);
-      alert('Failed to delete booking.');
+      toast.error('Failed to delete booking.');
     }
   };
 
@@ -85,20 +146,8 @@ const AdminDashboard = () => {
   if (loading && !isRefreshing) {
     return (
       <div className="flex flex-col justify-center items-center h-[60vh] space-y-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        <p className="text-gray-500 font-medium animate-pulse">Loading bookings...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-6 bg-red-50/50 border border-red-100 rounded-2xl text-center space-y-3">
-        <XCircle className="mx-auto text-red-500" size={32} />
-        <p className="text-red-600 font-medium">{error}</p>
-        <button onClick={fetchBookings} className="px-4 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-semibold hover:bg-red-200 transition-colors">
-          Try Again
-        </button>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <p className="text-gray-500 font-medium animate-pulse">Loading leads & bookings...</p>
       </div>
     );
   }
@@ -108,20 +157,20 @@ const AdminDashboard = () => {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Bookings Manager</h1>
-          <p className="text-gray-500 mt-1">Manage and track all customer appointments</p>
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Leads & Bookings Manager</h1>
+          <p className="text-gray-500 mt-1">Real-time incoming customer appointment requests</p>
         </div>
         <div className="flex items-center gap-3">
           <button 
             onClick={fetchBookings}
             disabled={isRefreshing}
-            className="p-2.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all disabled:opacity-50"
+            className="p-2.5 text-gray-500 hover:text-primary hover:bg-red-50 rounded-xl transition-all disabled:opacity-50"
             title="Refresh bookings"
           >
             <RefreshCw size={20} className={isRefreshing ? 'animate-spin' : ''} />
           </button>
           <div className="bg-white px-5 py-2.5 rounded-xl shadow-sm border border-gray-200/60 flex items-center gap-2">
-            <span className="text-gray-500 text-sm font-medium">Total:</span>
+            <span className="text-gray-500 text-sm font-medium">Total Leads:</span>
             <span className="font-bold text-gray-900 text-lg">{bookings.length}</span>
           </div>
         </div>
@@ -134,7 +183,7 @@ const AdminDashboard = () => {
             <thead>
               <tr className="bg-gray-50/50 border-b border-gray-100">
                 <th className="p-5 font-semibold text-gray-600 text-sm tracking-wide">Customer Details</th>
-                <th className="p-5 font-semibold text-gray-600 text-sm tracking-wide">Service Info</th>
+                <th className="p-5 font-semibold text-gray-600 text-sm tracking-wide">Vehicle & Service</th>
                 <th className="p-5 font-semibold text-gray-600 text-sm tracking-wide">Date & Time</th>
                 <th className="p-5 font-semibold text-gray-600 text-sm tracking-wide">Status</th>
                 <th className="p-5 font-semibold text-gray-600 text-sm tracking-wide text-right">Actions</th>
@@ -146,8 +195,8 @@ const AdminDashboard = () => {
                   <td colSpan="5" className="p-12 text-center">
                     <div className="flex flex-col items-center justify-center space-y-3 text-gray-400">
                       <Clock size={48} className="opacity-20" />
-                      <p className="text-lg font-medium text-gray-500">No bookings found yet.</p>
-                      <p className="text-sm">When customers book, they will appear here.</p>
+                      <p className="text-lg font-medium text-gray-500">No leads found yet.</p>
+                      <p className="text-sm">When customers book on the website, they will appear here automatically.</p>
                     </div>
                   </td>
                 </tr>
@@ -156,22 +205,38 @@ const AdminDashboard = () => {
                   <tr key={booking.id} className="hover:bg-gray-50/80 transition-colors group">
                     <td className="p-5">
                       <div className="font-semibold text-gray-900">{booking.name || 'N/A'}</div>
-                      <div className="text-sm text-gray-500 mt-0.5">{booking.email}</div>
-                      {booking.phone && <div className="text-sm text-gray-400 mt-0.5">{booking.phone}</div>}
-                    </td>
-                    <td className="p-5">
-                      <div className="font-medium text-gray-800">{booking.service || 'General Appointment'}</div>
-                      {booking.notes && (
-                        <div className="text-xs text-gray-500 mt-1.5 max-w-[200px] truncate" title={booking.notes}>
-                          {booking.notes}
+                      {booking.phone && (
+                        <div className="text-sm text-gray-600 mt-0.5 flex items-center gap-1.5">
+                          <Phone size={13} className="text-gray-400" />
+                          <a href={`tel:${booking.phone}`} className="hover:text-primary transition-colors">{booking.phone}</a>
+                        </div>
+                      )}
+                      {booking.email && (
+                        <div className="text-xs text-gray-500 mt-0.5 flex items-center gap-1.5">
+                          <Mail size={12} className="text-gray-400" />
+                          <a href={`mailto:${booking.email}`} className="hover:underline">{booking.email}</a>
                         </div>
                       )}
                     </td>
                     <td className="p-5">
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-gray-800">{booking.service || 'General Service'}</div>
+                      {booking.vehicle_details && (
+                        <div className="text-xs font-semibold text-gray-500 mt-1 flex items-center gap-1">
+                          <Car size={13} className="text-gray-400" /> {booking.vehicle_details}
+                        </div>
+                      )}
+                      {booking.notes && (
+                        <div className="text-xs text-gray-400 mt-1 max-w-[220px] truncate" title={booking.notes}>
+                          "{booking.notes}"
+                        </div>
+                      )}
+                    </td>
+                    <td className="p-5">
+                      <div className="font-medium text-gray-900 flex items-center gap-1.5">
+                        <Calendar size={14} className="text-gray-400" />
                         {booking.date ? new Date(booking.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A'}
                       </div>
-                      {booking.time && <div className="text-sm text-gray-500 mt-0.5">{booking.time}</div>}
+                      {booking.time && <div className="text-xs text-gray-500 mt-0.5">{booking.time}</div>}
                     </td>
                     <td className="p-5">
                       {getStatusBadge(booking.status)}
@@ -182,7 +247,7 @@ const AdminDashboard = () => {
                           <select
                             value={booking.status || 'Pending'}
                             onChange={(e) => updateStatus(booking.id, e.target.value)}
-                            className="appearance-none text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-shadow cursor-pointer hover:bg-gray-100"
+                            className="appearance-none text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-shadow cursor-pointer hover:bg-gray-100"
                           >
                             <option value="Pending">Pending</option>
                             <option value="Confirmed">Confirmed</option>

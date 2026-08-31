@@ -8,58 +8,84 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Check active sessions and sets the user
+    // Check active sessions
     const checkSession = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession()
-        setUser(session?.user ?? null)
+        const storedAdmin = localStorage.getItem('primetech_admin_session')
+        if (storedAdmin) {
+          setUser(JSON.parse(storedAdmin))
+          setLoading(false)
+          return
+        }
+
+        if (supabase && typeof supabase.auth?.getSession === 'function') {
+          const { data: { session } } = await supabase.auth.getSession()
+          if (session?.user) {
+            setUser(session.user)
+          }
+        }
       } catch (e) {
-        // Fallback for when Supabase is not configured yet
-        console.warn('Supabase auth not configured. Demo mode active.')
-        const demoUser = localStorage.getItem('demo_admin')
-        if (demoUser) setUser(JSON.parse(demoUser))
+        console.warn('Session check fallback active')
       } finally {
         setLoading(false)
       }
     }
 
     checkSession()
-
-    // Listen for changes on auth state (log in, log out, etc.)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
   }, [])
 
-  const login = async (email, password) => {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-      if (error) throw error
-      return { data, error: null }
-    } catch (error) {
-      if (error.message.includes('fetch') || error.message.includes('URL')) {
-        // Demo mode fallback
-        const demoUser = { id: 'demo-123', email, role: 'admin' }
-        localStorage.setItem('demo_admin', JSON.stringify(demoUser))
-        setUser(demoUser)
-        return { data: demoUser, error: null }
+  const login = async (identifier, password) => {
+    const cleanId = String(identifier || '').trim().toLowerCase()
+    const cleanPass = String(password || '').trim()
+
+    // Fixed Admin Credentials Check
+    if (
+      (cleanId === 'admin' || cleanId === 'admin@primetechauto.ca' || cleanId === 'admin@gmail.com') &&
+      cleanPass === 'admin@123'
+    ) {
+      const adminUser = {
+        id: 'admin_primary',
+        email: 'admin@primetechauto.ca',
+        username: 'admin',
+        role: 'super_admin'
       }
-      return { data: null, error }
+      localStorage.setItem('primetech_admin_session', JSON.stringify(adminUser))
+      setUser(adminUser)
+      return { data: adminUser, error: null }
+    }
+
+    // Try Supabase auth if configured
+    try {
+      if (supabase && typeof supabase.auth?.signInWithPassword === 'function') {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: cleanId,
+          password: cleanPass,
+        })
+        if (error) throw error
+        if (data?.user) {
+          setUser(data.user)
+          return { data, error: null }
+        }
+      }
+    } catch (error) {
+      console.warn('Supabase auth attempt failed:', error.message)
+    }
+
+    return {
+      data: null,
+      error: { message: 'Invalid Admin ID or Password. (Use ID: admin, Pass: admin@123)' }
     }
   }
 
   const logout = async () => {
     try {
-      await supabase.auth.signOut()
+      if (supabase && typeof supabase.auth?.signOut === 'function') {
+        await supabase.auth.signOut()
+      }
     } catch (e) {
       // Ignore
     } finally {
-      localStorage.removeItem('demo_admin')
+      localStorage.removeItem('primetech_admin_session')
       setUser(null)
     }
   }

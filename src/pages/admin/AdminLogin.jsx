@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { Lock, Mail, ShieldAlert } from 'lucide-react'
+import { Lock, User, ShieldCheck, ArrowLeft, KeyRound } from 'lucide-react'
 import { toast } from 'sonner'
 
 export const AdminLogin = () => {
-  const [email, setEmail] = useState('')
+  const [identifier, setIdentifier] = useState('admin')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
@@ -15,72 +15,85 @@ export const AdminLogin = () => {
     e.preventDefault()
     setLoading(true)
 
-    const { error } = await login(email, password)
+    const { error } = await login(identifier, password)
     
     if (error) {
       toast.error(error.message || 'Login failed')
       setLoading(false)
     } else {
-      toast.success('Logged in successfully')
+      toast.success('Logged in successfully! Welcome Admin.')
       navigate('/admin/dashboard')
     }
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-card border border-border rounded-lg p-8 shadow-2xl">
+    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4 relative">
+      {/* Background glow */}
+      <div className="absolute inset-0 bg-radial from-red-950/20 via-transparent to-transparent pointer-events-none" />
+
+      <div className="w-full max-w-md bg-zinc-900 border border-white/10 rounded-2xl p-8 shadow-2xl relative z-10">
+        
+        <Link to="/" className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-white mb-6 transition-colors">
+          <ArrowLeft className="w-4 h-4" /> Back to Website
+        </Link>
+
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-            <Lock className="w-8 h-8 text-primary" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-600/10 border border-red-600/30 mb-4 text-red-500 shadow-lg shadow-red-950/50">
+            <Lock className="w-8 h-8" />
           </div>
-          <h1 className="font-display text-2xl font-bold text-foreground">Admin Portal</h1>
-          <p className="text-muted-foreground text-sm mt-2">Sign in to manage your website</p>
+          <h1 className="font-display text-2xl font-bold text-white tracking-wide">Admin Portal</h1>
+          <p className="text-zinc-400 text-sm mt-1">Sign in to manage appointments & customer leads</p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-6">
+        <form onSubmit={handleLogin} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-sm font-bold text-foreground font-display flex items-center gap-2">
-              <Mail className="w-4 h-4 text-primary" /> Email Address
+            <label className="text-sm font-bold text-zinc-200 font-display flex items-center gap-2">
+              <User className="w-4 h-4 text-primary" /> Admin ID / Email
             </label>
             <input 
-              type="email" 
+              type="text" 
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-background border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none"
-              placeholder="admin@example.com"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              className="w-full bg-zinc-950 border border-white/10 rounded-lg p-3.5 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all outline-none font-body"
+              placeholder="admin"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-foreground font-display flex items-center gap-2">
-              <Lock className="w-4 h-4 text-primary" /> Password
+            <label className="text-sm font-bold text-zinc-200 font-display flex items-center gap-2">
+              <KeyRound className="w-4 h-4 text-primary" /> Password
             </label>
             <input 
               type="password" 
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-background border border-border rounded p-3 text-foreground focus:border-secondary focus:ring-1 focus:ring-secondary transition-all outline-none"
-              placeholder="••••••••"
+              className="w-full bg-zinc-950 border border-white/10 rounded-lg p-3.5 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all outline-none font-body"
+              placeholder="admin@123"
             />
           </div>
 
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-primary text-primary-foreground font-display font-bold px-4 py-3 rounded hover:bg-primary/90 transition-colors disabled:opacity-50"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-display font-bold px-4 py-3.5 rounded-lg transition-all disabled:opacity-50 text-base uppercase tracking-wider glow-red shadow-xl"
           >
-            {loading ? 'Authenticating...' : 'Sign In'}
+            {loading ? 'Authenticating...' : 'Sign In as Admin'}
           </button>
         </form>
 
-        <div className="mt-6 flex items-start gap-3 p-4 bg-secondary/10 text-secondary rounded border border-secondary/20 text-sm">
-          <ShieldAlert className="w-5 h-5 shrink-0 mt-0.5" />
-          <p>
-            If Supabase is not configured, any email/password will work in <strong>Demo Mode</strong>.
-          </p>
+        <div className="mt-6 p-4 bg-zinc-950/80 rounded-xl border border-white/5 text-xs text-zinc-400 space-y-1.5">
+          <div className="flex items-center gap-1.5 font-bold text-zinc-300">
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <span>Admin Credentials:</span>
+          </div>
+          <div className="font-mono text-zinc-300 flex justify-between bg-zinc-900 p-2 rounded border border-white/5">
+            <span>ID: <strong className="text-white">admin</strong></span>
+            <span>Password: <strong className="text-white">admin@123</strong></span>
+          </div>
         </div>
+
       </div>
     </div>
   )

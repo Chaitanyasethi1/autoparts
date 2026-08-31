@@ -66,10 +66,18 @@ const AdminLayout = () => {
             })}
           </nav>
 
-          <div className="p-4 border-t border-gray-100">
+          <div className="p-4 border-t border-gray-100 space-y-2">
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors font-semibold text-sm"
+            >
+              <span>View Website</span>
+            </a>
             <button
               onClick={logout}
-              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors font-semibold"
+              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors font-semibold text-sm"
             >
               <LogOut size={18} />
               <span>Logout</span>

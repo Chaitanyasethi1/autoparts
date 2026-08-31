@@ -1,95 +1,76 @@
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export const SplashIntro = ({ onComplete }) => {
-  const [started, setStarted] = useState(false);
   const [audio] = useState(() => new Audio('/assets/intro/intro-sound.mp3'));
 
   useEffect(() => {
-    // Preload and set volume as soon as component mounts
+    // Attempt to play audio gently on mount (will play if browser policies allow)
     audio.load();
-    audio.volume = 0.7;
-  }, [audio]);
+    audio.volume = 0.6;
+    audio.play().catch(err => {
+      // Browsers often require interaction for sound; catch silently
+      console.log("Audio autoplay prevented by browser policy", err);
+    });
 
-  useEffect(() => {
-    if (!started) return;
-
-    // Play instantly now that it is preloaded
-    audio.play().catch(err => console.log("Audio autoplay prevented by browser", err));
-
+    // Automatically transition to website after intro animation completes
     const timer = setTimeout(() => {
       onComplete();
-    }, 2200); // 2.2 seconds total, fades out while car moves
-    return () => clearTimeout(timer);
-  }, [started, onComplete]);
+    }, 2200);
+
+    return () => {
+      clearTimeout(timer);
+      audio.pause();
+    };
+  }, [audio, onComplete]);
 
   return (
     <motion.div 
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden ${started ? 'pointer-events-none' : 'pointer-events-auto'}`}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden cursor-pointer select-none"
+      onClick={onComplete}
+      title="Click to skip"
     >
-      <AnimatePresence>
-        {!started && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            className="absolute z-[200] flex flex-col items-center gap-16 w-full max-w-lg px-4"
-          >
-            {/* Logo above the button for a premium look */}
-            <img 
-              src="/primetechauto.png" 
-              alt="Primetech Auto" 
-              className="w-64 sm:w-80 object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]"
-            />
+      {/* Background glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-red-950/20 via-transparent to-red-950/20 pointer-events-none" />
 
-            <button 
-              onClick={() => setStarted(true)}
-              className="relative group px-12 py-5 bg-gradient-to-b from-primary to-primary/90 text-white font-display font-black text-2xl sm:text-3xl uppercase tracking-[0.2em] rounded-xl shadow-[0_0_40px_rgba(220,38,38,0.5)] hover:shadow-[0_0_80px_rgba(220,38,38,0.8)] hover:scale-[1.02] active:scale-95 transition-all duration-300 overflow-hidden border border-red-500/50"
-            >
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
-              Start Engine
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Wrapper centered dead-middle of viewport */}
-      {started && (
-        <div className="relative flex items-center justify-center w-full px-4">
+      {/* Main animated logo group */}
+      <div className="relative flex items-center justify-center w-full px-4">
+        <motion.div 
+          className="relative flex items-center justify-center"
+          animate={{ x: [0, 0, 1400] }}
+          transition={{ times: [0, 0.72, 1], duration: 2.2, ease: ["easeOut", "easeOut", "easeIn"] }}
+        >
+          {/* Car Icon */}
+          <motion.img 
+            src="/assets/intro/car-icon.png" 
+            alt="Car Logo" 
+            className="w-48 sm:w-72 md:w-80 lg:w-[420px] z-10 relative object-contain drop-shadow-[0_0_25px_rgba(220,38,38,0.4)]"
+            initial={{ opacity: 0, x: -500 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+          />
           
-          {/* Main animated logo group */}
-          <motion.div 
-            className="relative flex items-center justify-center"
-            animate={{ x: [0, 0, 1400] }}
-            transition={{ times: [0, 0.7, 1], duration: 2.8, ease: ["easeOut", "easeOut", "easeIn"] }}
-          >
-            {/* Car Icon */}
-            <motion.img 
-              src="/assets/intro/car-icon.png" 
-              alt="Car Logo" 
-              className="w-48 sm:w-72 md:w-80 lg:w-[420px] z-10 relative object-contain"
-              initial={{ opacity: 0, x: -600 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-            />
-            
-            {/* Text Logo */}
-            <motion.img 
-              src="/assets/intro/logo-text.png" 
-              alt="Primetech Auto" 
-              className="h-24 sm:h-36 md:h-44 lg:h-[200px] -ml-[130px] sm:-ml-[170px] md:-ml-[210px] lg:-ml-[280px] mt-1 md:mt-2 z-10 relative object-contain"
-              style={{ mixBlendMode: 'screen' }}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.0, delay: 0.8, ease: "easeOut" }}
-            />
-          </motion.div>
-        </div>
-      )}
+          {/* Text Logo */}
+          <motion.img 
+            src="/assets/intro/logo-text.png" 
+            alt="Primetech Auto" 
+            className="h-24 sm:h-36 md:h-44 lg:h-[200px] -ml-[130px] sm:-ml-[170px] md:-ml-[210px] lg:-ml-[280px] mt-1 md:mt-2 z-10 relative object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+            style={{ mixBlendMode: 'screen' }}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          />
+        </motion.div>
+      </div>
+
+      {/* Subtle skip indicator at the bottom */}
+      <div className="absolute bottom-6 text-zinc-500 text-xs tracking-widest uppercase font-display opacity-60">
+        Loading Primetech Auto...
+      </div>
     </motion.div>
   );
 };
