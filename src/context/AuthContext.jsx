@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
           return
         }
 
-        if (supabase && typeof supabase.auth?.getSession === 'function') {
+        if (supabase && typeof supabase.auth?.getSession === 'function' && import.meta.env.VITE_SUPABASE_URL && !import.meta.env.VITE_SUPABASE_URL.includes('YOUR_PROJECT_ID')) {
           const { data: { session } } = await supabase.auth.getSession()
           if (session?.user) {
             setUser(session.user)
@@ -38,15 +38,25 @@ export const AuthProvider = ({ children }) => {
     const cleanId = String(identifier || '').trim().toLowerCase()
     const cleanPass = String(password || '').trim()
 
+    // Allowed Admin Emails / IDs
+    const ALLOWED_ADMINS = [
+      'officialrohitaggarwal1@gmail.com',
+      'info@primetechauto.ca',
+      'admin',
+      'admin@primetechauto.ca'
+    ]
+
+    const VALID_PASSWORDS = [
+      'AuToPaRtS@PrImEtEcH',
+      'admin@123'
+    ]
+
     // Fixed Admin Credentials Check
-    if (
-      (cleanId === 'admin' || cleanId === 'admin@primetechauto.ca' || cleanId === 'admin@gmail.com') &&
-      cleanPass === 'admin@123'
-    ) {
+    if (ALLOWED_ADMINS.includes(cleanId) && VALID_PASSWORDS.includes(cleanPass)) {
       const adminUser = {
-        id: 'admin_primary',
-        email: 'admin@primetechauto.ca',
-        username: 'admin',
+        id: 'admin_' + cleanId.replace(/[^a-zA-Z0-9]/g, '_'),
+        email: cleanId.includes('@') ? cleanId : 'info@primetechauto.ca',
+        username: cleanId,
         role: 'super_admin'
       }
       localStorage.setItem('primetech_admin_session', JSON.stringify(adminUser))
@@ -56,13 +66,14 @@ export const AuthProvider = ({ children }) => {
 
     // Try Supabase auth if configured
     try {
-      if (supabase && typeof supabase.auth?.signInWithPassword === 'function') {
+      if (supabase && typeof supabase.auth?.signInWithPassword === 'function' && import.meta.env.VITE_SUPABASE_URL && !import.meta.env.VITE_SUPABASE_URL.includes('YOUR_PROJECT_ID')) {
         const { data, error } = await supabase.auth.signInWithPassword({
           email: cleanId,
           password: cleanPass,
         })
         if (error) throw error
         if (data?.user) {
+          localStorage.setItem('primetech_admin_session', JSON.stringify(data.user))
           setUser(data.user)
           return { data, error: null }
         }
@@ -73,7 +84,7 @@ export const AuthProvider = ({ children }) => {
 
     return {
       data: null,
-      error: { message: 'Invalid Admin ID or Password. (Use ID: admin, Pass: admin@123)' }
+      error: { message: 'Invalid Admin Email/ID or Password. (Use: officialrohitaggarwal1@gmail.com or info@primetechauto.ca with pass: AuToPaRtS@PrImEtEcH)' }
     }
   }
 
