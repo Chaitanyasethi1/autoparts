@@ -9,6 +9,11 @@ const AdminDashboard = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
+    // Auto-clear any stale localStorage booking data from old code
+    // So every device automatically shows only real Supabase data
+    localStorage.removeItem('primetech_bookings');
+    localStorage.removeItem('primetech_booking_overrides');
+    localStorage.removeItem('primetech_deleted_bookings');
     fetchBookings();
   }, []);
 
