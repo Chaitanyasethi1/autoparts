@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { supabase, isSupabaseConfigured } from '../../lib/supabase';
-import { getLocalBookings, updateLocalBookingStatus, deleteLocalBooking, getBookingOverrides, getDeletedBookingIds } from '../../lib/leadService';
+import { supabase } from '../../lib/supabase';
 import { Trash2, CheckCircle, XCircle, Clock, Check, RefreshCw, Car, Mail, Phone, Calendar, Download } from 'lucide-react';
 import { toast } from 'sonner';
 
 const AdminDashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
@@ -17,127 +15,61 @@ const AdminDashboard = () => {
   const fetchBookings = async () => {
     try {
       setIsRefreshing(true);
-      setError(null);
       
-      // 1. Get local storage bookings (with seed fallback & status overrides applied)
-      const localData = getLocalBookings().map(b => ({
-        id: String(b.id),
-        name: b.name,
-        email: b.email,
-        phone: b.phone,
-        service: b.service_type || b.service,
-        date: b.preferred_date || b.date,
-        time: b.preferred_time || b.time,
-        vehicle_details: b.vehicle_details,
-        notes: b.message || b.notes,
-        status: b.status || 'Pending',
-        created_at: b.created_at || new Date().toISOString(),
-        source: b.source || 'Website Form'
-      }));
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-      // 2. Attempt fetching from Supabase ONLY if legitimately configured
-      let supabaseData = [];
-      if (isSupabaseConfigured()) {
-        try {
-          if (supabase && typeof supabase.from === 'function') {
-            const { data, error: sbError } = await supabase
-              .from('bookings')
-              .select('*')
-              .order('created_at', { ascending: false });
-
-            if (!sbError && Array.isArray(data)) {
-              supabaseData = data.map(b => ({
-                id: String(b.id),
-                name: b.name,
-                email: b.email,
-                phone: b.phone,
-                service: b.service_type || b.service,
-                date: b.preferred_date || b.date,
-                time: b.preferred_time || b.time,
-                vehicle_details: b.vehicle_details,
-                notes: b.message || b.notes,
-                status: b.status || 'Pending',
-                created_at: b.created_at,
-                source: 'Supabase Cloud'
-              }));
-            }
-          }
-        } catch (sbErr) {
-          console.warn('Supabase fetch bypassed, using local store:', sbErr);
-        }
+      if (error) {
+        console.error('Supabase fetch error:', error);
+        toast.error('Could not load bookings. Check database connection.');
+        return;
       }
 
-      // Merge and deduplicate by ID:
-      // Local changes & status overrides ALWAYS have priority so refresh never wipes modifications
-      const overrides = getBookingOverrides();
-      const deleted = getDeletedBookingIds();
-      const bookingMap = new Map();
+      const mapped = (data || []).map(b => ({
+        id: String(b.id),
+        name: b.name || 'N/A',
+        email: b.email || '',
+        phone: b.phone || '',
+        service: b.service_type || b.service || 'General Service',
+        date: b.preferred_date || b.date || '',
+        time: b.preferred_time || b.time || '',
+        vehicle_details: b.vehicle_details || '',
+        notes: b.message || b.notes || '',
+        status: b.status || 'Pending',
+        created_at: b.created_at || new Date().toISOString(),
+      }));
 
-      // First add Supabase items (if not deleted)
-      supabaseData.forEach(item => {
-        const idStr = String(item.id);
-        if (!deleted.includes(idStr)) {
-          if (overrides[idStr]) {
-            item.status = overrides[idStr];
-          }
-          bookingMap.set(idStr, item);
-        }
-      });
-
-      // Then add/overwrite with local items (guarantees local edits are preserved on refresh)
-      localData.forEach(item => {
-        const idStr = String(item.id);
-        // If Supabase has live database records, dismiss mock seed items
-        if (supabaseData.length > 0 && idStr.startsWith('local_seed_')) {
-          return;
-        }
-        if (!deleted.includes(idStr)) {
-          if (overrides[idStr]) {
-            item.status = overrides[idStr];
-          }
-          bookingMap.set(idStr, item);
-        }
-      });
-
-      const uniqueBookings = Array.from(bookingMap.values()).sort(
-        (a, b) => new Date(b.created_at) - new Date(a.created_at)
-      );
-
-      setBookings(uniqueBookings);
+      setBookings(mapped);
     } catch (err) {
       console.error('Error fetching bookings:', err);
-      // Fallback directly to local bookings so dashboard never crashes
-      setBookings(getLocalBookings());
+      toast.error('Database error. Please try again.');
     } finally {
       setLoading(false);
       setIsRefreshing(false);
     }
   };
 
+
   const updateStatus = async (id, newStatus) => {
     const stringId = String(id);
-    const targetBooking = bookings.find(b => String(b.id) === stringId);
 
     try {
-      // 1. Immediately update local storage and persistent overrides
-      updateLocalBookingStatus(stringId, newStatus, targetBooking);
+      const { error } = await supabase
+        .from('bookings')
+        .update({ status: newStatus })
+        .eq('id', id);
 
-      // 2. Update Supabase if configured and not local-only ID
-      if (isSupabaseConfigured() && !stringId.startsWith('local_')) {
-        try {
-          await supabase.from('bookings').update({ status: newStatus }).eq('id', id);
-        } catch (sbErr) {
-          console.warn('Supabase status update error:', sbErr);
-        }
-      }
+      if (error) throw error;
       
       setBookings(prev => prev.map(booking => 
         String(booking.id) === stringId ? { ...booking, status: newStatus } : booking
       ));
-      toast.success(`Booking status saved: ${newStatus}`);
+      toast.success(`Status updated: ${newStatus}`);
     } catch (err) {
       console.error('Error updating status:', err);
-      toast.error('Failed to update status.');
+      toast.error('Failed to update status. Try again.');
     }
   };
 
@@ -146,25 +78,21 @@ const AdminDashboard = () => {
     
     const stringId = String(id);
     try {
-      // 1. Delete from local storage and record in persistent deleted list
-      deleteLocalBooking(stringId);
+      const { error } = await supabase
+        .from('bookings')
+        .delete()
+        .eq('id', id);
 
-      // 2. Delete from Supabase if configured and not local
-      if (isSupabaseConfigured() && !stringId.startsWith('local_')) {
-        try {
-          await supabase.from('bookings').delete().eq('id', id);
-        } catch (sbErr) {
-          console.warn('Supabase delete error:', sbErr);
-        }
-      }
+      if (error) throw error;
       
       setBookings(prev => prev.filter(booking => String(booking.id) !== stringId));
-      toast.success('Booking permanently removed.');
+      toast.success('Booking deleted successfully.');
     } catch (err) {
       console.error('Error deleting booking:', err);
-      toast.error('Failed to delete booking.');
+      toast.error('Failed to delete booking. Try again.');
     }
   };
+
 
   const getStatusBadge = (status) => {
     const baseClasses = "px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 w-fit border";
