@@ -17,9 +17,6 @@ const AdminLayout = () => {
 
   const navItems = [
     { name: 'Dashboard (Bookings)', path: '/admin', icon: LayoutDashboard, end: true },
-    { name: 'Services', path: '/admin/services', icon: Settings },
-    { name: 'Content', path: '/admin/content', icon: FileText },
-    { name: 'Gallery', path: '/admin/gallery', icon: ImageIcon },
   ];
 
   return (

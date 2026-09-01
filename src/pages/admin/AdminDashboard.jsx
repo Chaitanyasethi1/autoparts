@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { getLocalBookings, updateLocalBookingStatus, deleteLocalBooking, getBookingOverrides, getDeletedBookingIds } from '../../lib/leadService';
-import { Trash2, CheckCircle, XCircle, Clock, Check, RefreshCw, Car, Mail, Phone, Calendar } from 'lucide-react';
+import { Trash2, CheckCircle, XCircle, Clock, Check, RefreshCw, Car, Mail, Phone, Calendar, Download } from 'lucide-react';
 import { toast } from 'sonner';
 
 const AdminDashboard = () => {
@@ -206,6 +206,48 @@ const AdminDashboard = () => {
           >
             <RefreshCw size={20} className={isRefreshing ? 'animate-spin' : ''} />
           </button>
+          
+          <button 
+            onClick={() => {
+              if (bookings.length === 0) {
+                toast.error('No leads available to download');
+                return;
+              }
+              const headers = ['Name', 'Phone', 'Email', 'Service', 'Vehicle', 'Date', 'Time', 'Status', 'Notes', 'Submitted At'];
+              const csvContent = [
+                headers.join(','),
+                ...bookings.map(b => {
+                  const row = [
+                    b.name || '',
+                    b.phone || '',
+                    b.email || '',
+                    b.service || '',
+                    b.vehicle_details || '',
+                    b.date || '',
+                    b.time || '',
+                    b.status || '',
+                    b.notes || '',
+                    b.created_at ? new Date(b.created_at).toLocaleString() : ''
+                  ];
+                  return row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',');
+                })
+              ].join('\n');
+              const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.setAttribute('href', url);
+              link.setAttribute('download', `primetech_leads_${new Date().toISOString().split('T')[0]}.csv`);
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              toast.success('Leads downloaded as CSV');
+            }}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-xl shadow-sm text-sm font-semibold transition-colors flex items-center gap-2"
+          >
+            <Download size={18} />
+            <span className="hidden sm:inline">Download CSV</span>
+          </button>
+
           <div className="bg-white px-5 py-2.5 rounded-xl shadow-sm border border-gray-200/60 flex items-center gap-2">
             <span className="text-gray-500 text-sm font-medium">Total Leads:</span>
             <span className="font-bold text-gray-900 text-lg">{bookings.length}</span>
