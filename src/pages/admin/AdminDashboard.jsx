@@ -87,6 +87,10 @@ const AdminDashboard = () => {
       // Then add/overwrite with local items (guarantees local edits are preserved on refresh)
       localData.forEach(item => {
         const idStr = String(item.id);
+        // If Supabase has live database records, dismiss mock seed items
+        if (supabaseData.length > 0 && idStr.startsWith('local_seed_')) {
+          return;
+        }
         if (!deleted.includes(idStr)) {
           if (overrides[idStr]) {
             item.status = overrides[idStr];
