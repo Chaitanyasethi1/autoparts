@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { Lock, User, ShieldCheck, ArrowLeft, KeyRound } from 'lucide-react'
+import { Lock, User, ArrowLeft, KeyRound } from 'lucide-react'
 import { toast } from 'sonner'
 
 export const AdminLogin = () => {
-  const [identifier, setIdentifier] = useState('officialrohitaggarwal1@gmail.com')
+  const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
@@ -24,11 +24,6 @@ export const AdminLogin = () => {
       toast.success('Logged in successfully! Welcome Admin.')
       navigate('/admin/dashboard')
     }
-  }
-
-  const fillCredentials = (email) => {
-    setIdentifier(email)
-    setPassword('AuToPaRtS@PrImEtEcH')
   }
 
   return (
@@ -61,7 +56,7 @@ export const AdminLogin = () => {
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               className="w-full bg-zinc-950 border border-white/10 rounded-lg p-3.5 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all outline-none font-body"
-              placeholder="officialrohitaggarwal1@gmail.com"
+              placeholder="Enter your admin email or ID"
             />
           </div>
 
@@ -75,7 +70,7 @@ export const AdminLogin = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-zinc-950 border border-white/10 rounded-lg p-3.5 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all outline-none font-body"
-              placeholder="AuToPaRtS@PrImEtEcH"
+              placeholder="Enter your password"
             />
           </div>
 
@@ -87,36 +82,6 @@ export const AdminLogin = () => {
             {loading ? 'Authenticating...' : 'Sign In as Admin'}
           </button>
         </form>
-
-        <div className="mt-6 p-4 bg-zinc-950/80 rounded-xl border border-white/5 text-xs text-zinc-400 space-y-2">
-          <div className="flex items-center justify-between font-bold text-zinc-300">
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>Admin Access Info:</span>
-            </div>
-            <span className="text-[10px] text-zinc-500 uppercase">Click to auto-fill</span>
-          </div>
-
-          <div className="flex flex-col gap-1.5 font-mono text-[11px]">
-            <button
-              type="button"
-              onClick={() => fillCredentials('officialrohitaggarwal1@gmail.com')}
-              className="text-left bg-zinc-900 hover:bg-zinc-800 p-2 rounded border border-white/5 transition-colors text-zinc-300 flex justify-between"
-            >
-              <span>Email: <strong className="text-white">officialrohitaggarwal1@gmail.com</strong></span>
-            </button>
-            <button
-              type="button"
-              onClick={() => fillCredentials('info@primetechauto.ca')}
-              className="text-left bg-zinc-900 hover:bg-zinc-800 p-2 rounded border border-white/5 transition-colors text-zinc-300 flex justify-between"
-            >
-              <span>Email: <strong className="text-white">info@primetechauto.ca</strong></span>
-            </button>
-            <div className="bg-zinc-900/60 p-2 rounded border border-white/5 text-zinc-300 flex justify-between">
-              <span>Password: <strong className="text-emerald-400">AuToPaRtS@PrImEtEcH</strong></span>
-            </div>
-          </div>
-        </div>
 
       </div>
     </div>
