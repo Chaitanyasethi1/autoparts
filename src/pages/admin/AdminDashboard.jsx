@@ -1,103 +1,166 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
-import { Trash2, CheckCircle, XCircle, Clock, Check, RefreshCw, Car, Mail, Phone, Calendar, Download } from 'lucide-react';
+import { supabase, isSupabaseConfigured } from '../../lib/supabase';
+import { getLocalBookings, updateLocalBookingStatus, deleteLocalBooking, getBookingOverrides, getDeletedBookingIds } from '../../lib/leadService';
+import { Trash2, CheckCircle, XCircle, Clock, Check, RefreshCw, Car, Mail, Phone, Calendar } from 'lucide-react';
 import { toast } from 'sonner';
 
 const AdminDashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
-    // Auto-clear any stale localStorage booking data from old code
-    // So every device automatically shows only real Supabase data
-    localStorage.removeItem('primetech_bookings');
-    localStorage.removeItem('primetech_booking_overrides');
-    localStorage.removeItem('primetech_deleted_bookings');
     fetchBookings();
   }, []);
 
   const fetchBookings = async () => {
     try {
       setIsRefreshing(true);
-      
-      const { data, error } = await supabase
-        .from('bookings')
-        .select('*')
-        .order('created_at', { ascending: false });
+      setError(null);
 
-      if (error) {
-        console.error('Supabase fetch error:', error);
-        toast.error('Could not load bookings. Check database connection.');
-        return;
-      }
-
-      const mapped = (data || []).map(b => ({
+      // 1. Get local storage bookings (with seed fallback & status overrides applied)
+      const localData = getLocalBookings().map(b => ({
         id: String(b.id),
-        name: b.name || 'N/A',
-        email: b.email || '',
-        phone: b.phone || '',
-        service: b.service_type || b.service || 'General Service',
-        date: b.preferred_date || b.date || '',
-        time: b.preferred_time || b.time || '',
-        vehicle_details: b.vehicle_details || '',
-        notes: b.message || b.notes || '',
+        name: b.name,
+        email: b.email,
+        phone: b.phone,
+        service: b.service_type || b.service,
+        date: b.preferred_date || b.date,
+        time: b.preferred_time || b.time,
+        vehicle_details: b.vehicle_details,
+        notes: b.message || b.notes,
         status: b.status || 'Pending',
         created_at: b.created_at || new Date().toISOString(),
+        source: b.source || 'Website Form'
       }));
 
-      setBookings(mapped);
+      // 2. Attempt fetching from Supabase ONLY if legitimately configured
+      let supabaseData = [];
+      if (isSupabaseConfigured()) {
+        try {
+          if (supabase && typeof supabase.from === 'function') {
+            const { data, error: sbError } = await supabase
+              .from('bookings')
+              .select('*')
+              .order('created_at', { ascending: false });
+
+            if (!sbError && Array.isArray(data)) {
+              supabaseData = data.map(b => ({
+                id: String(b.id),
+                name: b.name,
+                email: b.email,
+                phone: b.phone,
+                service: b.service_type || b.service,
+                date: b.preferred_date || b.date,
+                time: b.preferred_time || b.time,
+                vehicle_details: b.vehicle_details,
+                notes: b.message || b.notes,
+                status: b.status || 'Pending',
+                created_at: b.created_at,
+                source: 'Supabase Cloud'
+              }));
+            }
+          }
+        } catch (sbErr) {
+          console.warn('Supabase fetch bypassed, using local store:', sbErr);
+        }
+      }
+
+      // Merge and deduplicate by ID:
+      // Local changes & status overrides ALWAYS have priority so refresh never wipes modifications
+      const overrides = getBookingOverrides();
+      const deleted = getDeletedBookingIds();
+      const bookingMap = new Map();
+
+      // First add Supabase items (if not deleted)
+      supabaseData.forEach(item => {
+        const idStr = String(item.id);
+        if (!deleted.includes(idStr)) {
+          if (overrides[idStr]) {
+            item.status = overrides[idStr];
+          }
+          bookingMap.set(idStr, item);
+        }
+      });
+
+      // Then add/overwrite with local items (guarantees local edits are preserved on refresh)
+      localData.forEach(item => {
+        const idStr = String(item.id);
+        if (!deleted.includes(idStr)) {
+          if (overrides[idStr]) {
+            item.status = overrides[idStr];
+          }
+          bookingMap.set(idStr, item);
+        }
+      });
+
+      const uniqueBookings = Array.from(bookingMap.values()).sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+
+      setBookings(uniqueBookings);
     } catch (err) {
       console.error('Error fetching bookings:', err);
-      toast.error('Database error. Please try again.');
+      // Fallback directly to local bookings so dashboard never crashes
+      setBookings(getLocalBookings());
     } finally {
       setLoading(false);
       setIsRefreshing(false);
     }
   };
 
-
   const updateStatus = async (id, newStatus) => {
     const stringId = String(id);
+    const targetBooking = bookings.find(b => String(b.id) === stringId);
 
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .update({ status: newStatus })
-        .eq('id', id);
+      // 1. Immediately update local storage and persistent overrides
+      updateLocalBookingStatus(stringId, newStatus, targetBooking);
 
-      if (error) throw error;
-      
-      setBookings(prev => prev.map(booking => 
+      // 2. Update Supabase if configured and not local-only ID
+      if (isSupabaseConfigured() && !stringId.startsWith('local_')) {
+        try {
+          await supabase.from('bookings').update({ status: newStatus }).eq('id', id);
+        } catch (sbErr) {
+          console.warn('Supabase status update error:', sbErr);
+        }
+      }
+
+      setBookings(prev => prev.map(booking =>
         String(booking.id) === stringId ? { ...booking, status: newStatus } : booking
       ));
-      toast.success(`Status updated: ${newStatus}`);
+      toast.success(`Booking status saved: ${newStatus}`);
     } catch (err) {
       console.error('Error updating status:', err);
-      toast.error('Failed to update status. Try again.');
+      toast.error('Failed to update status.');
     }
   };
 
   const deleteBooking = async (id) => {
     if (!window.confirm('Are you sure you want to permanently delete this booking?')) return;
-    
+
     const stringId = String(id);
     try {
-      const { error } = await supabase
-        .from('bookings')
-        .delete()
-        .eq('id', id);
+      // 1. Delete from local storage and record in persistent deleted list
+      deleteLocalBooking(stringId);
 
-      if (error) throw error;
-      
+      // 2. Delete from Supabase if configured and not local
+      if (isSupabaseConfigured() && !stringId.startsWith('local_')) {
+        try {
+          await supabase.from('bookings').delete().eq('id', id);
+        } catch (sbErr) {
+          console.warn('Supabase delete error:', sbErr);
+        }
+      }
+
       setBookings(prev => prev.filter(booking => String(booking.id) !== stringId));
-      toast.success('Booking deleted successfully.');
+      toast.success('Booking permanently removed.');
     } catch (err) {
       console.error('Error deleting booking:', err);
-      toast.error('Failed to delete booking. Try again.');
+      toast.error('Failed to delete booking.');
     }
   };
-
 
   const getStatusBadge = (status) => {
     const baseClasses = "px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 w-fit border";
@@ -131,7 +194,7 @@ const AdminDashboard = () => {
           <p className="text-gray-500 mt-1">Real-time incoming customer appointment requests</p>
         </div>
         <div className="flex items-center gap-3">
-          <button 
+          <button
             onClick={fetchBookings}
             disabled={isRefreshing}
             className="p-2.5 text-gray-500 hover:text-primary hover:bg-red-50 rounded-xl transition-all disabled:opacity-50"
@@ -139,48 +202,6 @@ const AdminDashboard = () => {
           >
             <RefreshCw size={20} className={isRefreshing ? 'animate-spin' : ''} />
           </button>
-          
-          <button 
-            onClick={() => {
-              if (bookings.length === 0) {
-                toast.error('No leads available to download');
-                return;
-              }
-              const headers = ['Name', 'Phone', 'Email', 'Service', 'Vehicle', 'Date', 'Time', 'Status', 'Notes', 'Submitted At'];
-              const csvContent = [
-                headers.join(','),
-                ...bookings.map(b => {
-                  const row = [
-                    b.name || '',
-                    b.phone || '',
-                    b.email || '',
-                    b.service || '',
-                    b.vehicle_details || '',
-                    b.date || '',
-                    b.time || '',
-                    b.status || '',
-                    b.notes || '',
-                    b.created_at ? new Date(b.created_at).toLocaleString() : ''
-                  ];
-                  return row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',');
-                })
-              ].join('\n');
-              const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-              const url = URL.createObjectURL(blob);
-              const link = document.createElement('a');
-              link.setAttribute('href', url);
-              link.setAttribute('download', `primetech_leads_${new Date().toISOString().split('T')[0]}.csv`);
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-              toast.success('Leads downloaded as CSV');
-            }}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 rounded-xl shadow-sm text-sm font-semibold transition-colors flex items-center gap-2"
-          >
-            <Download size={18} />
-            <span className="hidden sm:inline">Download CSV</span>
-          </button>
-
           <div className="bg-white px-5 py-2.5 rounded-xl shadow-sm border border-gray-200/60 flex items-center gap-2">
             <span className="text-gray-500 text-sm font-medium">Total Leads:</span>
             <span className="font-bold text-gray-900 text-lg">{bookings.length}</span>
@@ -267,7 +288,7 @@ const AdminDashboard = () => {
                             <option value="Cancelled">Cancelled</option>
                           </select>
                           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
-                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                           </div>
                         </div>
                         <button

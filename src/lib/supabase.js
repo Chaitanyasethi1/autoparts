@@ -1,19 +1,15 @@
 import { createClient } from '@supabase/supabase-js'
 
-const SUPABASE_PROJECT_URL = 'https://btfwztodwawihweorpwp.supabase.co'
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_NpdYoLNpEzsitnAuX6gt0Q_XH8qO1R4'
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || SUPABASE_PROJECT_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || SUPABASE_PUBLISHABLE_KEY
-
+// IMPORTANT: Replace these with your actual Supabase URL and anon key.
+// These are currently set up to pull from environment variables on Vercel.
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://YOUR_PROJECT_ID.supabase.co'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_ANON_KEY'
 export const isSupabaseConfigured = () => {
   return Boolean(
-    supabaseUrl &&
-    !supabaseUrl.includes('YOUR_PROJECT_ID') &&
-    supabaseAnonKey &&
-    !supabaseAnonKey.includes('YOUR_ANON_KEY')
+    import.meta.env.VITE_SUPABASE_URL &&
+    !import.meta.env.VITE_SUPABASE_URL.includes('YOUR_PROJECT_ID') &&
+    import.meta.env.VITE_SUPABASE_ANON_KEY &&
+    !import.meta.env.VITE_SUPABASE_ANON_KEY.includes('YOUR_ANON_KEY')
   )
 }
-
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-

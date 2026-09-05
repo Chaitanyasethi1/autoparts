@@ -244,10 +244,11 @@ const servicesList = [
     img: "/assets/service-exhaust-real.jpg",
     alt: "Exhaust repairs and muffler replacements"
   },
+
   {
     title: "Tire Repairs, Installations & Rotations",
     desc: "Flat tire repairs, professional mounting and computer wheel balancing, regular tire rotations, and seasonal tire changeovers (on or off rims).",
-    img: "/assets/service-alignment-real.jpg",
+    img: "/assets/tire-service-new.jpg",
     alt: "Tire mounting and wheel balancing service",
     badge: "Wheel & Tire Care"
   },
