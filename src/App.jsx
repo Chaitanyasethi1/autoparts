@@ -874,9 +874,12 @@ const Footer = () => {
         
         <div className="stripe-accent w-full mt-12 mb-6" />
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-body text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} Primetech Auto & Tires. All rights reserved.</p>
-          <div className="flex items-center gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 items-center gap-4 font-body text-xs text-muted-foreground">
+          <p className="text-center lg:text-left">© {new Date().getFullYear()} Primetech Auto & Tires. All rights reserved.</p>
+          <p className="text-center whitespace-nowrap">
+            Website Developed by <span className="text-foreground font-semibold">ABS (Aggarwal Business Solutions)</span>
+          </p>
+          <div className="flex items-center justify-center lg:justify-end gap-6">
             <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
             <Link to="/admin" className="hover:text-primary transition-colors text-zinc-400 font-semibold">Admin Portal</Link>
